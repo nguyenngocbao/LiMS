@@ -1,0 +1,106 @@
+<div style="display:flex; padding: 20px 0 12px 0px;  align-items: center;">
+  <span style="margin-right: 12px;margin-left: 0pt font-family: Roboto;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.19;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: #004750;
+">The Protocol Template File</span>
+  <span style="flex: 1 1 auto"></span>
+  <span style="margin: 6px 12px 0 12px ;font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.17;
+  letter-spacing: 0.4px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.6);">Version:<b>1.0</b></span>
+  <span style="margin:6px 12px 0 12px;font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.17;
+  letter-spacing: 0.4px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.6);">Last Modified: <b>Mar 22, 2019</b></span>
+  <span style="margin-right: 24px">|</span>
+  <!-- status nomal -->
+  <span [hidden]="statusView != 1">
+    <button (click)="openDialog()" mat-icon-button color="primary">
+      <mat-icon svgIcon="upload-outline"></mat-icon>
+    </button>
+    <button mat-icon-button color="primary">
+      <mat-icon svgIcon="download-outline"></mat-icon>
+    </button>
+  </span>
+  <!-- status megre -->
+  <span [hidden]="statusView != 2">
+    <button mat-icon-button color="primary">
+      <mat-icon svgIcon="git"></mat-icon>
+    </button>
+  </span>
+
+
+</div>
+
+<div fxLayout="row">
+  <div class="item item-1" [fxFlex]="wigthEle[0]"
+    style="height: 730px;border: 1px solid #CCCCCC; border-right-style: none; background-color: #FAFAFA; overflow: auto">
+    <app-tree (getView)="viewContent($event)" [dataTree]="dataTree"></app-tree>
+  </div>
+  <div class="item item-2" [fxFlex]="wigthEle[1]">
+
+    <div style="width: 100%">
+      <app-editor *ngIf="loadEditor" id="protocal" [(data)]="contentFile" [tinyConfig]="tinyConfig"
+        [editable]="editable"> </app-editor>
+
+    </div>
+
+
+  </div>
+  <div class="item item-3" [fxFlex]="wigthEle[2]" [hidden]="statusView != 2">
+    <div style="height: 730px;border: 1px solid #CCCCCC;background-color: #FAFAFA;">
+      <div style="border: 1px solid #CCCCCC">
+        <p style="color: rgba(0, 0, 0, 0.87);margin: 0.6em 1em">Track Change Protocol(7)</p>
+      </div>
+      <div style="height: 690px;overflow: auto;">
+        <div style="padding: 0em 1em;background-color: #FFFFFF;border: 1px solid #CCCCCC;margin: 1em;" *ngFor="let item of [1,2,3,4,5,6,7,8]; let i=index">
+          <div style="display:flex;">
+            <div style="display:flex;justify-content: center;align-items: center">
+                <b >Change:</b>
+                <span style="text-overflow: ellipsis">{{a}}</span>
+            </div>
+           
+            <span style="flex: 1 1 auto"></span>
+            <button mat-icon-button color="primary">
+              <mat-icon svgIcon="check"></mat-icon>
+            </button>
+          </div>
+          <div style="display:flex">
+            <div style="display:flex;justify-content: center;align-items: center" >
+                <b style="text-align: center">To:</b>
+                <span style="text-overflow: ellipsis">{{a}}</span>
+            </div>
+            
+            <span style="flex: 1 1 auto"></span>
+            <button mat-icon-button >
+              <mat-icon svgIcon="close"></mat-icon>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+  </div>

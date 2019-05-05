@@ -1,0 +1,21 @@
+<div [class.processBar]="processBar" [style.display]="processBar ? 'flex':'none'">
+  <div>
+    <mat-spinner strokeWidth="5"></mat-spinner>
+  </div>
+</div>
+<div [class.mainContent]="processBar" >
+<mat-tab-group backgroundColor='grey' style="margin-top: 8px; padding: 0 16px" [(selectedIndex)]="tabOpen" (selectedTabChange)="tabSwitch($event)" (animationDone)="updateEditor($event)">
+    <mat-tab label="PROTOCOL" [disabled]="isDisable[0]">
+        <app-protocol [loadEditor]="tabIndex == 0" (processbar)="onProcessbar($event)"></app-protocol>
+    </mat-tab>
+    <mat-tab label="COMMON" [disabled]="isDisable[1]">
+        <app-common [loadEditor]="tabIndex == 1" (processbar)="onProcessbar($event)"></app-common>
+    </mat-tab>
+    <mat-tab label="SAP" [disabled]="isDisable[2]">
+      <app-sap [loadEditor]="tabIndex == 2" (processbar)="onProcessbar($event)" ></app-sap>
+    </mat-tab>
+    <mat-tab label="SPEC" [disabled]="isDisable[3]">
+      <app-spec [loadEditor]="tabIndex == 3" (processbar)="onProcessbar($event)"></app-spec>
+    </mat-tab>
+  </mat-tab-group>
+</div>

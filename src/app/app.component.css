@@ -1,0 +1,9 @@
+.example-sidenav{
+    width: 350px;
+   
+}
+.example-container{
+}
+.mat-drawer-side {
+   box-shadow: rgba(0,0,0,0.19) 0px 1px 4px 0px;
+}

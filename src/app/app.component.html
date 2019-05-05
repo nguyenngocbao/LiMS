@@ -1,0 +1,10 @@
+<mat-drawer-container class="example-container" style="height: 100vh;">
+    <mat-drawer #drawer class="example-sidenav" mode="side" [opened]="statusMenu">
+        <app-slider-left></app-slider-left>
+    </mat-drawer>
+
+    <mat-drawer-content style="background-color: white;">
+        <app-navbar (openMenu)="openMenu($event)"></app-navbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

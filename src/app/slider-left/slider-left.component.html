@@ -1,0 +1,44 @@
+<mat-toolbar style="background-color: #FFFFFF;">
+  <mat-toolbar-row>
+    <div style="display:flex;justify-content: center;width: 100%">
+      <span style="color: #128474">LiMS</span>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-divider></mat-divider>
+<div id='cssmenu'>
+  <ul>
+    <li>
+      <a routerLink="" title='Home' [class.selected]="onSelected('/welcome')">
+        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em"> Home</span></a>
+    </li>
+    <li>
+      <a title="Program" routerLink="/program" [class.selected]="onSelected('/program')">
+        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Reserve Book</span>
+      </a>
+    </li>
+    <li>
+      <a title="Sqa practice" routerLink="/sqa/practice" [class.selected]="onSelected('/sqa/practice')">
+        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button><span style="margin-left: 2em">Loan Book</span></a>
+    </li>
+    <li>
+      <a routerLink="/entranceTest" title="Entrance Test" [class.selected]="onSelected('/entranceTest')">
+        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Return Book</span></a>
+    </li>
+
+
+    <li class='has-sub'>
+      <a title="Management">
+          <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Management</span></a>
+      <ul>
+        <li>
+          <a title="Book" routerLink="/contest" [class.selected]="onSelected('/contest')">
+            <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Books</span></a>
+        </li>
+        <li>
+          <a title="Book" routerLink="/contest" [class.selected]="onSelected('/contest')">
+            <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Loan Book</span></a>
+        </li>
+
+      </ul>
+    </li>

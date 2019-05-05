@@ -1,0 +1,19 @@
+.title{
+    font-family: Roboto;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.21;
+  letter-spacing: 0.2px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.treenode:hover{
+  cursor: pointer;
+
+}
+.active{
+  color:#128474;
+}

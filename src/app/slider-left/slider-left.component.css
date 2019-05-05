@@ -1,0 +1,41 @@
+#cssmenu,#cssmenu ul,#cssmenu li,#cssmenu a {margin: 0;padding: 0;border: 0;list-style: none;font-weight: normal;text-decoration: none;line-height: 1;font-size: 14px;position: relative;}
+#cssmenu a {line-height: 1.3;padding: 12px 15px;}
+
+#cssmenu > ul > li {cursor: pointer;}
+/* #cssmenu > ul > li:first-child {border-top:none;} */
+/* #cssmenu > ul > li:last-child {border-bottom:1px solid #3d3d3d;} */
+/* #cssmenu > ul > li:last-child > a {border-bottom: 1px solid #161616;} */
+#cssmenu > ul > li > a {margin: 10px 15px 0;
+    font-size: 14px;display: block;color: #000;background: #fff;padding: 15px 15px; font-size: 17px;}
+#cssmenu > ul > li > a:hover {text-decoration: none; color: #fff;
+    background-color: #4caf50;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(76,175,80,.4);
+}
+#cssmenu > ul > li.active {font-weight:700;}
+#cssmenu > ul > li.home .close-menu{background: #212b37;color: #fff;font-size:18px;font-weight:700;padding: 12px 15px;display:block}
+#cssmenu > ul > li.has-sub > a:after {content: '';position: absolute;top: 15px;right: 10px;border: 5px solid transparent;border-left: 5px solid #000;}
+#cssmenu > ul > li.has-sub.active > a:after {right: 14px;top: 17px;border: 5px solid transparent;border-top: 5px solid #000;}
+#cssmenu ul ul {padding: 0;display: none;}
+#cssmenu ul ul.expand {height:200px;overflow:auto}
+#cssmenu ul ul a {background: #E1E7EB;display: block;color: #000;padding: 15px 40px; font-size: 17px;}
+#cssmenu ul ul a:hover {background: rgba(33, 150, 243, 0.70) !important; color: #fff }
+/* #cssmenu ul ul li {border-bottom: 1px solid #c9c9c9;} */
+#cssmenu ul ul li.odd a {background: #e5e5e5;}
+/* #cssmenu ul ul li:last-child {border: none;} */
+.hiden{
+   display: none;
+}
+.selected {
+   text-decoration: none !important;
+   background: rgba(33, 150, 243, 0.84)  !important;
+   color: #fff !important;
+}
+.iconasideleft{
+   margin-right: 10px;
+}
+li.sub > a:after {content: '';position: absolute;top: 15px;right: 10px;border: 5px solid transparent;border-left: 5px solid #000;}
+li.sub.active > a:after {right: 14px;top: 17px;border: 5px solid transparent;border-top: 5px solid #000;}
+.iconasideleftSub{
+   margin-left: 15% !important;
+   margin-right: 10px;
+}
