@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from './shared/services/book.services';
+import { MatDialog } from '@angular/material';
+import { BookDetailComponent } from './book-detail/book-detail.component';
 
 export interface PeriodicElement {
   name: string;
@@ -28,12 +31,25 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class BookManagementComponent implements OnInit {
   
   
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol','action'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['no', 'name', 'quantity', 'type','author','action'];
+  dataSource ;
 
-  constructor() { }
+  constructor(public service: BookService,public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.dataSource = this.service.getBook();
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(BookDetailComponent, {
+      width: '80%',
+      data: { name: '', version: '' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.status == 'ok') {
+
+      }
+    });
   }
 
 }
