@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from './shared/services/book.services';
 
 export interface PeriodicElement {
   name: string;
@@ -28,12 +29,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class BookManagementComponent implements OnInit {
   
   
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol','action'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['no', 'name', 'quantity', 'type','author','action'];
+  dataSource ;
 
-  constructor() { }
+  constructor(public service: BookService) { }
 
   ngOnInit() {
+    this.dataSource = this.service.getBook();
   }
 
 }
