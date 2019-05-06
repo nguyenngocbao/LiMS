@@ -1,18 +1,23 @@
-<div mat-dialog-title><h4  style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b" >Upload New Protocol </h4></div>
+<div mat-dialog-title><h4  style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b" >Add Book </h4></div>
 <div mat-dialog-content>
     <form class="example-form" [formGroup]="form">
         <mat-form-field style="width:100%">
           <input matInput placeholder="Name" formControlName="name">
         </mat-form-field>
-   
-        <mat-form-field style="width:100%">
-          <input matInput placeholder="Version" formControlName="version">
+        <mat-form-field style="width:50%" [hidden]="selectedFile">
+          <input [hidden]="selectedFile" disabled matInput placeholder="File name" formControlName="image">
         </mat-form-field>
-  
-        <mat-form-field style="width:264px">
-          <input disabled matInput placeholder="File name" formControlName="fileName">
-        </mat-form-field>
+        <img [hidden]="!selectedFile" id="avatar" src="{{imgsrc}}" style=" border: 1px solid #a1a1a1; width:120px; height:120px;">
         <button mat-raised-button style="margin-left: 8px" (click)="fileinput.click()">Browse</button>
+        <mat-form-field style="width:100%">
+            <input matInput placeholder="Quantity" formControlName="quantity">
+        </mat-form-field>
+        <mat-form-field style="width:100%">
+            <input matInput placeholder="Type" formControlName="type">
+        </mat-form-field>
+        <mat-form-field style="width:100%">
+            <input matInput placeholder="Author" formControlName="author">
+        </mat-form-field>
       </form>
       <input type="file" id="imgupload" (change)="onFileSelected($event)" style="display: none" #fileinput />
 </div>

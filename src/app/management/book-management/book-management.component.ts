@@ -19,10 +19,10 @@ export class BookManagementComponent implements OnInit {
   ngOnInit() {
     this.dataSource = this.service.getBook();
   }
-  openDialog(): void {
+  openDialog(id): void {
     const dialogRef = this.dialog.open(BookDetailComponent, {
       width: '80%',
-      data: { name: '', version: '' }
+      data: { id: id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
