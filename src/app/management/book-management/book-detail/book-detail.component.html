@@ -5,7 +5,7 @@
           <input matInput placeholder="Name" formControlName="name">
         </mat-form-field>
         <mat-form-field style="width:50%" [hidden]="selectedFile">
-          <input [hidden]="selectedFile" disabled matInput placeholder="File name" formControlName="image">
+          <input [hidden]="selectedFile" disabled matInput placeholder="Image" formControlName="image">
         </mat-form-field>
         <img [hidden]="!selectedFile" id="avatar" src="{{imgsrc}}" style=" border: 1px solid #a1a1a1; width:120px; height:120px;">
         <button mat-raised-button style="margin-left: 8px" (click)="fileinput.click()">Browse</button>

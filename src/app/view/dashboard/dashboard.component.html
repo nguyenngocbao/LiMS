@@ -1,0 +1,37 @@
+<div style="padding: 1em">
+  <mat-toolbar style="display: flex;background-color: #FFFFFF">
+    <span>Dashboard</span>
+    <span style="flex: auto"></span>
+    <span>
+        <div class="input-group">
+            <input id="inputGroupSelect04">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button"><mat-icon svgIcon="magnify"></mat-icon></button>
+            </div>
+          </div>
+    </span>
+    
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <div class=" row " style=" margin: 0px; padding: 0px">
+    <div class="col-md-4" style="padding: 1em 1em" *ngFor="let item of [1,2,3,4,5,6,7,8,9]">
+      <div class="card-book">
+        <div style="padding: 1em 1em 0em 1em">
+          <span style="display: flex;justify-content: center;">
+            <img src="https://salt.tikicdn.com/cache/200x200/ts/product/72/5a/3a/0574296cfae195f71ca9e964ef56abe9.jpg"
+              style="width: auto;height: 100%; margin: auto;display: block;">
+          </span>
+          <p>Thế giới ba không</p>
+          <p>Thể loại: Truyện</p>
+        </div>
+        <mat-divider></mat-divider>
+        <div style="display:flex; justify-content: flex-end;padding: 0.5em 1em">
+          <button mat-stroked-button color="primary">Reserve</button>
+          <button mat-stroked-button style="color: red;margin-left:0.5em">Loan</button></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
