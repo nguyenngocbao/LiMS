@@ -1,4 +1,4 @@
-<div mat-dialog-title><h4  style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b" >Add Book </h4></div>
+<div mat-dialog-title><h4  style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b" >{{edit ? 'Edit Book ':'Add Book'}} </h4></div>
 <div mat-dialog-content>
     <form class="example-form" [formGroup]="form">
         <mat-form-field style="width:100%">

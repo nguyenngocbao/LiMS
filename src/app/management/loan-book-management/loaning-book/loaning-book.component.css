@@ -1,0 +1,12 @@
+.mat-column-book{
+    min-width: 40%;
+}
+.mat-column-user{
+    max-width: 20%;
+}
+.mat-column-dateRequest{
+    max-width: 20%;
+}
+.mat-column-action{
+    text-align: center
+}

@@ -15,6 +15,7 @@ export class BookDetailComponent implements OnInit {
   selectedFile: File;
   fileName = '';
   imgsrc
+  edit = true
   constructor(public dialogRef: MatDialogRef<BookDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder) { }
 
   ngOnInit() {
