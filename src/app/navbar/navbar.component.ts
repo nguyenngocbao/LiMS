@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core'
+import { MatDialog } from '@angular/material';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-navbar',
@@ -10,13 +12,19 @@ export class NavbarComponent implements OnInit {
   openMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
   statusMenu = false
   
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
   onOpenMenu() {
     this.statusMenu = !this.statusMenu;
     this.openMenu.emit(this.statusMenu);
+  }
+  openLogin(): void {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '500px',
+    });
+
   }
 
 }

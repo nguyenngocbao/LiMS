@@ -1,0 +1,19 @@
+<div mat-dialog-title>
+  <h4 style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b">The Libarry System Management</h4>
+</div>
+<div mat-dialog-content>
+  <form class="example-form" [formGroup]="form">
+    <mat-form-field style="width:100%">
+      <input  matInput placeholder="Username" formControlName="name">
+    </mat-form-field>
+    <mat-form-field style="width:100%">
+      <input type="password" matInput placeholder="password" formControlName="password">
+    </mat-form-field>
+  </form>
+  
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: flex-end;">
+
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button (click)="onSubmit()" color="primary">Login</button>
+</div>

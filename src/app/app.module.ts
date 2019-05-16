@@ -10,15 +10,20 @@ import { MaterialModule } from './shared/material.module'
 import { NavbarComponent } from './navbar/navbar.component';
 import { SliderLeftComponent } from './slider-left/slider-left.component';
 import * as $ from 'jquery';
+import { LoginComponent } from './login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
-    AppComponent,NavbarComponent, SliderLeftComponent
+    AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent
   ],
   imports: [
     BrowserModule,  BrowserAnimationsModule,
-    AppRoutingModule, HttpClientModule , MaterialModule
+    AppRoutingModule, HttpClientModule , MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
+  entryComponents:[LoginComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
