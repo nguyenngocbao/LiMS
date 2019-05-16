@@ -9,12 +9,17 @@
 <div id='cssmenu'>
   <ul>
     <li>
-      <a routerLink="" title='Home' [class.selected]="onSelected('/')">
+      <a routerLink="/" title='Home' [class.selected]="onSelected('/')">
         <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em"> Home</span></a>
     </li>
     <li>
-      <a title="Program" routerLink="/home" [class.selected]="onSelected('/status')">
-        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Reserve Book</span>
+      <a title="Status Personal" routerLink="/status" [class.selected]="onSelected('/status')">
+        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Status Personal</span>
+      </a>
+    </li>
+    <li>
+      <a title="History" routerLink="/history" [class.selected]="onSelected('/history')">
+        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">History</span>
       </a>
     </li>
 

@@ -1,4 +1,3 @@
-### Poc on Biostats
 #INSTALL
 
 - install environment: 

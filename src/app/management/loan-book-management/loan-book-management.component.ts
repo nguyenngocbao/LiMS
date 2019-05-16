@@ -11,13 +11,10 @@ import { BookDetailComponent } from '../book-management/book-detail/book-detail.
 export class LoanBookManagementComponent implements OnInit {
 
   
-  displayedColumns: string[] = ['no', 'book', 'user', 'requestDate','action'];
-  dataSource ;
 
   constructor(public service: BookService,public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.dataSource = this.service.getBook();
   }
 
 }
