@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from 'src/app/management/book-management/shared/services/book.services';
 
 @Component({
   selector: 'app-status-returned',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatusReturnedComponent implements OnInit {
 
-  constructor() { }
+  displayedColumns: string[] = ['no', 'name', 'quantity', 'type','author','action'];
+  dataSource ;
+
+  constructor(public service: BookService) { }
 
   ngOnInit() {
+    this.dataSource = this.service.getBook();
   }
 
 }

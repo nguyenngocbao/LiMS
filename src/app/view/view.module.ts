@@ -10,6 +10,7 @@ import { StatusRequestLoanComponent } from './status-personal/status-request-loa
 import { StatusLoaningComponent } from './status-personal/status-loaning/status-loaning.component';
 import { StatusReserveComponent } from './status-personal/status-reserve/status-reserve.component';
 import { StatusReturnedComponent } from './status-personal/status-returned/status-returned.component';
+import { BookService } from '../management/book-management/shared/services/book.services';
 
 @NgModule({
   declarations: [DashboardComponent, StatusPersonalComponent, StatusRequestLoanComponent, StatusLoaningComponent, StatusReserveComponent, StatusReturnedComponent],
@@ -19,6 +20,6 @@ import { StatusReturnedComponent } from './status-personal/status-returned/statu
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-  ]
+  ], providers: [BookService],
 })
 export class ViewModule { }
