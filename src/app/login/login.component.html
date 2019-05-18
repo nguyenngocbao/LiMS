@@ -1,19 +1,21 @@
 <div mat-dialog-title>
-  <h4 style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b">The Libarry System Management</h4>
+  <h4 style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b">Đăng nhập</h4>
 </div>
 <div mat-dialog-content>
   <form class="example-form" [formGroup]="form">
     <mat-form-field style="width:100%">
-      <input  matInput placeholder="Username" formControlName="name">
+      <input  matInput placeholder="Tên đăng nhập" formControlName="name">
     </mat-form-field>
     <mat-form-field style="width:100%">
-      <input type="password" matInput placeholder="password" formControlName="password">
+      <input type="password" matInput placeholder="Mật khẩu" formControlName="password">
     </mat-form-field>
+    <div style="display: flex;">
+      <span style="color: #00796b">Đăng ký</span><span style="flex:auto"></span> <span  style="color: red">Quên mật khẩu?</span>
+    </div>
   </form>
   
 </div>
-<div mat-dialog-actions style="display: flex; justify-content: flex-end;">
-
-  <button mat-raised-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button (click)="onSubmit()" color="primary">Login</button>
+<div mat-dialog-actions style="display: flex; justify-content: flex-end; margin-top:0.5em">
+  <button mat-raised-button (click)="onCancel()">Hủy</button>
+  <button mat-raised-button (click)="onSubmit()" color="primary">Đăng nhập</button>
 </div>

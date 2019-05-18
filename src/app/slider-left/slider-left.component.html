@@ -10,30 +10,54 @@
   <ul>
     <li>
       <a routerLink="/" title='Home' [class.selected]="onSelected('/')">
-        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em"> Home</span></a>
+        <button mat-icon-button>
+          <mat-icon svgIcon="view-dashboard"></mat-icon>
+        </button> <span style="margin-left: 2em">Trang chủ</span></a>
     </li>
     <li>
       <a title="Status Personal" routerLink="/status" [class.selected]="onSelected('/status')">
-        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Status Personal</span>
+        <button mat-icon-button>
+          <mat-icon svgIcon="view-dashboard"></mat-icon>
+        </button> <span style="margin-left: 2em">Danh sách yêu cầu</span>
       </a>
     </li>
     <li>
       <a title="History" routerLink="/history" [class.selected]="onSelected('/history')">
-        <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">History</span>
+        <button mat-icon-button>
+          <mat-icon svgIcon="view-dashboard"></mat-icon>
+        </button> <span style="margin-left: 2em">Lịch sử mượn sách</span>
       </a>
     </li>
-
+    <li>
+      <a title="Request New Book" routerLink="/newBook" [class.selected]="onSelected('/newBook')">
+        <button mat-icon-button>
+          <mat-icon svgIcon="view-dashboard"></mat-icon>
+        </button> <span style="margin-left: 2em">Yêu cầu mua sách mới</span>
+      </a>
+    </li>
     <li class='has-sub'>
       <a title="Management">
-          <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Management</span></a>
+        <button mat-icon-button>
+          <mat-icon svgIcon="view-dashboard"></mat-icon>
+        </button> <span style="margin-left: 2em">Quản lý</span></a>
       <ul>
         <li>
           <a title="Book" routerLink="/management/book" [class.selected]="onSelected('/management/book')">
-            <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Books</span></a>
+            <button mat-icon-button>
+              <mat-icon svgIcon="view-dashboard"></mat-icon>
+            </button> <span style="margin-left: 2em">Sách</span></a>
         </li>
         <li>
           <a title="Book" routerLink="/management/loan" [class.selected]="onSelected('/management/loan')">
-            <button mat-icon-button ><mat-icon svgIcon="view-dashboard"></mat-icon></button> <span style="margin-left: 2em">Loan Book</span></a>
+            <button mat-icon-button>
+              <mat-icon svgIcon="view-dashboard"></mat-icon>
+            </button> <span style="margin-left: 2em">Mượn sách</span></a>
+        </li>
+        <li>
+          <a title="Book" routerLink="/management/newBook" [class.selected]="onSelected('/management/newBook')">
+            <button mat-icon-button>
+              <mat-icon svgIcon="view-dashboard"></mat-icon>
+            </button> <span style="margin-left: 2em">Mua sách mới</span></a>
         </li>
 
       </ul>

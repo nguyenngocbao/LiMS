@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BookManagementComponent } from './book-management/book-management.component';
 import { LoanBookManagementComponent } from './loan-book-management/loan-book-management.component';
+import { RequestNewBookManagementComponent } from './request-new-book-management/request-new-book-management.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'loan',
     component: LoanBookManagementComponent
+  },
+  {
+    path: 'newBook',
+    component: RequestNewBookManagementComponent
   }
 ];
 

@@ -11,9 +11,10 @@ import { LoanBookManagementComponent } from './loan-book-management/loan-book-ma
 import { RequestLoanBookComponent } from './loan-book-management/request-loan-book/request-loan-book.component';
 import { LoaningBookComponent } from './loan-book-management/loaning-book/loaning-book.component';
 import { ReturnBookComponent } from './loan-book-management/return-book/return-book.component';
+import { RequestNewBookManagementComponent } from './request-new-book-management/request-new-book-management.component';
 
 @NgModule({
-  declarations: [BookManagementComponent, BookDetailComponent, LoanBookManagementComponent, RequestLoanBookComponent, LoaningBookComponent, ReturnBookComponent],
+  declarations: [BookManagementComponent, BookDetailComponent, LoanBookManagementComponent, RequestLoanBookComponent, LoaningBookComponent, ReturnBookComponent, RequestNewBookManagementComponent],
   imports: [
     CommonModule,
     ManagementRoutingModule,

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StatusPersonalComponent } from './status-personal/status-personal.component';
 import { StatusReturnedComponent } from './status-personal/status-returned/status-returned.component';
+import { RequestNewBookComponent } from './request-new-book/request-new-book.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'history',
     component: StatusReturnedComponent
+  }
+  ,
+  {
+    path: 'newBook',
+    component: RequestNewBookComponent
   }
 ];
 

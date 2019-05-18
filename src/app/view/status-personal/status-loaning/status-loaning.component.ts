@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ViewService } from 'src/app/services/view.service';
 
 @Component({
   selector: 'app-status-loaning',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./status-loaning.component.css']
 })
 export class StatusLoaningComponent implements OnInit {
-
-  constructor() { }
+  data
+  constructor(private service: ViewService) { }
 
   ngOnInit() {
+    this.data = this.service.LOANING
   }
 
 }

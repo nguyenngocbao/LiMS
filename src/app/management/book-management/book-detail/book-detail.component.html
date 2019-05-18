@@ -1,28 +1,34 @@
-<div mat-dialog-title><h4  style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b" >{{edit ? 'Edit Book ':'Add Book'}} </h4></div>
+<div mat-dialog-title><h4  style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b" >{{title}} sách </h4></div>
 <div mat-dialog-content>
     <form class="example-form" [formGroup]="form">
         <mat-form-field style="width:100%">
-          <input matInput placeholder="Name" formControlName="name">
+          <input matInput placeholder="Tên sách" formControlName="name">
         </mat-form-field>
-        <mat-form-field style="width:50%" [hidden]="selectedFile">
-          <input [hidden]="selectedFile" disabled matInput placeholder="Image" formControlName="image">
+        <mat-form-field style="width:50%" [hidden]="selectedFile || view != 1">
+          <input  disabled matInput placeholder="Image" formControlName="image">
         </mat-form-field>
-        <img [hidden]="!selectedFile" id="avatar" src="{{imgsrc}}" style=" border: 1px solid #a1a1a1; width:120px; height:120px;">
+        <img [hidden]="!selectedFile && view == 1" id="avatar" src="{{imgsrc}}" style=" border: 1px solid #a1a1a1; width:120px; height:120px;">
         <button mat-raised-button style="margin-left: 8px" (click)="fileinput.click()">Browse</button>
         <mat-form-field style="width:100%">
-            <input matInput placeholder="Quantity" formControlName="quantity">
+            <input matInput placeholder="Số lượng" formControlName="quantity">
         </mat-form-field>
         <mat-form-field style="width:100%">
-            <input matInput placeholder="Type" formControlName="type">
+            <input matInput placeholder="Tác giả" formControlName="author">
         </mat-form-field>
         <mat-form-field style="width:100%">
-            <input matInput placeholder="Author" formControlName="author">
+                <input matInput placeholder="Nhà xuất bảng" formControlName="publisher">
         </mat-form-field>
+        <mat-form-field style="width:100%">
+                <input matInput placeholder="Danh mục" formControlName="catalogy">
+        </mat-form-field>
+        <mat-form-field style="width:100%">
+                <input matInput placeholder="Mô tả" formControlName="description">
+            </mat-form-field>
       </form>
       <input type="file" id="imgupload" (change)="onFileSelected($event)" style="display: none" #fileinput />
 </div>
 <div mat-dialog-actions style="display: flex; justify-content: flex-end;">
    
-    <button mat-raised-button (click)="onCancel()">Cancel</button>
-    <button mat-raised-button (click)="onSubmit()" color="primary">Submit</button>
+    <button mat-raised-button (click)="onCancel()">Hủy</button>
+    <button *ngIf="view != 3" mat-raised-button (click)="onSubmit()" color="primary">{{title}}</button>
 </div>

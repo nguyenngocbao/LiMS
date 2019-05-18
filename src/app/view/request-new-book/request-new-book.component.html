@@ -1,0 +1,41 @@
+<div style="margin: 2em 2em " class="mat-elevation-z8">
+
+  <div style="display:flex;align-items: center;background-color: #eeeeee ;padding: 10px 1em 10px 0px">
+    <span style="margin-right: 12px;margin-left: 1em; font-family: Roboto;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.19;
+      letter-spacing: 0.5px;
+      text-align: left;
+      color: #004750;">Yêu
+      cầu mua sách mới</span>
+    <span style="flex: 1 1 auto"></span>
+  </div>
+  <div style="padding: 1em 1.5em">
+    <div>
+      <form class="example-form" [formGroup]="form">
+        <mat-form-field style="width:100%">
+          <input matInput placeholder="Tên sách" formControlName="name">
+        </mat-form-field>
+        <mat-form-field style="width:100%">
+          <input matInput placeholder="Tác giả" formControlName="quantity">
+        </mat-form-field>
+        <mat-form-field  style="width:100%">
+          <textarea cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="4"
+          cdkAutosizeMaxRows="10"  placeholder="Lý do" matInput formControlName="type"></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+    <div style="display: flex; justify-content: flex-end;">
+      <button mat-raised-button (click)="onCancel()">Hủy</button>
+      <button mat-raised-button (click)="onSubmit()" color="primary">Gửi</button>
+    </div>
+
+  </div>
+
+
+</div>

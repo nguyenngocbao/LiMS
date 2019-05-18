@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StatusReserveComponent } from './status-reserve.component';
+import { RequestNewBookComponent } from './request-new-book.component';
 
-describe('StatusReserveComponent', () => {
-  let component: StatusReserveComponent;
-  let fixture: ComponentFixture<StatusReserveComponent>;
+describe('RequestNewBookComponent', () => {
+  let component: RequestNewBookComponent;
+  let fixture: ComponentFixture<RequestNewBookComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusReserveComponent ]
+      declarations: [ RequestNewBookComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StatusReserveComponent);
+    fixture = TestBed.createComponent(RequestNewBookComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

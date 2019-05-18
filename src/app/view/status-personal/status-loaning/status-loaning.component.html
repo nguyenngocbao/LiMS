@@ -1,18 +1,18 @@
 <div class=" row " style=" margin: 0px; padding: 0px">
-  <div class="col-md-4" style="padding: 1em 1em" *ngFor="let item of [1,2,3]">
+  <div class="col-md-4" style="padding: 1em 1em" *ngFor="let item of data">
     <div class="card-book">
       <div style="padding: 1em 1em 0em 1em">
         <span style="display: flex;justify-content: center;">
-          <img src="https://salt.tikicdn.com/cache/200x200/ts/product/72/5a/3a/0574296cfae195f71ca9e964ef56abe9.jpg"
+          <img src="{{item.image}}"
             style="width: auto;height: 100%; margin: auto;display: block;">
         </span>
-        <h5>Thế giới ba không</h5>
-        <p>Ngày mượn: 25/5/2019</p>
+        <h5>{{item.name}}</h5>
+        <p>Ngày mượn: {{item.requestDate}}</p>
         <p>Trạng thái: Đang mượn</p>
       </div>
       <mat-divider></mat-divider>
       <div style="display:flex; justify-content: flex-end;padding: 0.5em 1em">
-        <button mat-stroked-button  color="primary" style="margin-left:0.5em">Return</button></div>
+        <button mat-stroked-button  color="primary" style="margin-left:0.5em">Trả sách</button></div>
     </div>
 
   </div>

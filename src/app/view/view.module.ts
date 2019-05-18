@@ -11,15 +11,17 @@ import { StatusLoaningComponent } from './status-personal/status-loaning/status-
 import { StatusReserveComponent } from './status-personal/status-reserve/status-reserve.component';
 import { StatusReturnedComponent } from './status-personal/status-returned/status-returned.component';
 import { BookService } from '../management/book-management/shared/services/book.services';
+import { ViewService } from '../services/view.service';
+import { RequestNewBookComponent } from './request-new-book/request-new-book.component';
 
 @NgModule({
-  declarations: [DashboardComponent, StatusPersonalComponent, StatusRequestLoanComponent, StatusLoaningComponent, StatusReserveComponent, StatusReturnedComponent],
+  declarations: [DashboardComponent, StatusPersonalComponent, StatusRequestLoanComponent, StatusLoaningComponent, StatusReserveComponent, StatusReturnedComponent, RequestNewBookComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-  ], providers: [BookService],
+  ], providers: [BookService,ViewService],
 })
 export class ViewModule { }
