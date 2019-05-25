@@ -11,7 +11,7 @@
    text-decoration: none;
 	line-height: 1;
    font-family: Roboto;
-   font-size: 16px;
+   font-size: 12px;
    font-weight: normal;
    font-style: normal;
    font-stretch: normal;
@@ -36,7 +36,7 @@
 				display: block;
 				color: #004750;
 				padding: 10px 40px;
-            font-size: 17px;
+            font-size: 14px;
 				&:hover {
 					background:#00897b !important;
                color: #fff;
@@ -83,7 +83,7 @@
 				display: block;
 				color: #004750;
 				padding: 10px 15px;
-				font-size: 17px;
+				font-size: 14px;
 				&:hover {
 					text-decoration: none;
 					color: #fff;
@@ -120,7 +120,7 @@
 			>a {
 				&:after {
 					right: 14px;
-					top: 17px;
+					top: 14px;
 					border: 5px solid transparent;
 					border-top: 5px solid #004750;
 				}

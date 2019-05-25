@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../book-management/shared/services/book.services';
 import { MatDialog } from '@angular/material';
+import { ViewBookStatusComponent } from '../view-book-status/view-book-status.component';
 
 @Component({
   selector: 'app-request-loan-book',
@@ -16,6 +17,17 @@ export class RequestLoanBookComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = this.service.getLoanBook();
+  }
+  openDialog( id): void {
+    const dialogRef = this.dialog.open(ViewBookStatusComponent, {
+      width: '60vw', data: {
+        id: id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     
+    });
   }
 
 }

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BookManagementComponent } from './book-management/book-management.component';
 import { LoanBookManagementComponent } from './loan-book-management/loan-book-management.component';
 import { RequestNewBookManagementComponent } from './request-new-book-management/request-new-book-management.component';
+import { StatisticComponent } from './statistic/statistic.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'newBook',
     component: RequestNewBookManagementComponent
+  },
+  {
+    path: 'statistic',
+    component: StatisticComponent
   }
 ];
 

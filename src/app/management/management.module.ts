@@ -12,9 +12,11 @@ import { RequestLoanBookComponent } from './loan-book-management/request-loan-bo
 import { LoaningBookComponent } from './loan-book-management/loaning-book/loaning-book.component';
 import { ReturnBookComponent } from './loan-book-management/return-book/return-book.component';
 import { RequestNewBookManagementComponent } from './request-new-book-management/request-new-book-management.component';
+import { StatisticComponent } from './statistic/statistic.component';
+import { ViewBookStatusComponent } from './loan-book-management/view-book-status/view-book-status.component';
 
 @NgModule({
-  declarations: [BookManagementComponent, BookDetailComponent, LoanBookManagementComponent, RequestLoanBookComponent, LoaningBookComponent, ReturnBookComponent, RequestNewBookManagementComponent],
+  declarations: [BookManagementComponent, BookDetailComponent, LoanBookManagementComponent, RequestLoanBookComponent, LoaningBookComponent, ReturnBookComponent, RequestNewBookManagementComponent, StatisticComponent, ViewBookStatusComponent],
   imports: [
     CommonModule,
     ManagementRoutingModule,
@@ -23,6 +25,6 @@ import { RequestNewBookManagementComponent } from './request-new-book-management
     ReactiveFormsModule,
   ]
   , providers: [BookService],
-  entryComponents: [BookDetailComponent]
+  entryComponents: [BookDetailComponent,ViewBookStatusComponent]
 })
 export class ManagementModule { }

@@ -9,7 +9,8 @@
     line-height: 1.19;
     letter-spacing: 0.5px;
     text-align: left;
-    color: #004750;">Danh sách yêu cầu mượn sách</span>
+    color: #004750;">Danh
+      sách yêu cầu mượn sách</span>
     <span style="flex: 1 1 auto"></span>
 
   </div>
@@ -44,10 +45,13 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> </th>
       <td mat-cell *matCellDef="let element">
+        <button (click)="openDialog(element.id)" style="margin-left: 0.5em" mat-stroked-button >
+          Xem tình trạng sách
+        </button>
         <button style="margin-left: 0.5em" mat-stroked-button color="primary">
           Đồng ý
         </button>
-        <button style="margin-left: 0.5em;color: red" mat-stroked-button> 
+        <button style="margin-left: 0.5em;color: red" mat-stroked-button>
           Từ chối
         </button>
 

@@ -1,0 +1,9 @@
+a{
+    cursor: pointer;
+}
+a:hover{
+    text-decoration: underline !important;
+}
+option{
+    font-size: 12px;
+}
