@@ -1,11 +1,11 @@
 -----------------------------------------------------BE--------------------------------
 #INSTALL
 - Environment:(Maven and jdk)
--INSTALL: cd to BE folder
+- INSTALL: cd to BE folder
 	+ run command: mvn clean install
--RUN: cd to BE folder
+- RUN: cd to BE folder
 	+ run command: mvn spring-boot:run
--TEST:cd to BE folder
+- TEST:cd to BE folder
 	+ run command : mvn test
 
 -----------------------------------------------------FE--------------------------------
