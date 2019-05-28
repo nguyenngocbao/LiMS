@@ -7,7 +7,9 @@
 	+ run command: mvn spring-boot:run
 -TEST:cd to BE folder
 	+ run command : mvn test
+
 -----------------------------------------------------FE--------------------------------
+
 #INSTALL
 
 - install environment: 
