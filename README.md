@@ -2,8 +2,9 @@
 
  #INSTALL
 - Environment:(Maven and jdk)
-+ refer: - jdk(java_home): https://www.mkyong.com/maven/how-to-install-maven-in-windows/
-         - maven: https://www.mkyong.com/maven/how-to-install-maven-in-windows/
+        - refer: 
+                 + jdk(java_home): https://www.mkyong.com/maven/how-to-install-maven-in-windows/ 
+                 + maven: https://www.mkyong.com/maven/how-to-install-maven-in-windows/
 - INSTALL: cd to BE folder
 	+ run command: mvn clean install
 - RUN: cd to BE folder
