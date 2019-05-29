@@ -1,9 +1,19 @@
 <div mat-dialog-title>
-    <h4 style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b">Tình trạng sách</h4>
-  </div>
-  <div mat-dialog-content>
-    abc
-    
+  <h4 style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b">Tình trạng sách</h4>
+</div>
+<div mat-dialog-content>
+  <div>
+    <div style="padding: 1em 1em 0em 1em">
+      <span style="display: flex;justify-content: center;">
+        <img src="{{item.image}}" style="width: auto;height: 100%; margin: auto;display: block;">
+      </span>
+      <h5>{{item.name}}</h5>
+      <p>Tác giả: {{item.author}}</p>
+      <p>Tổng số lượng sách: 5</p>
+      <p>Số lượng có thể mượn: 5</p>
+      <p>Số người đang mượn sách này: 2</p>
+    </div>
+
   </div>
   <div mat-dialog-actions style="display: flex; justify-content: flex-end; margin-top:0.5em">
     <button mat-raised-button (click)="onCancel()">Từ chối</button>
