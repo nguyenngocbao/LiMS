@@ -1,15 +1,3 @@
------------------------------------------------------BE--------------------------------
-#INSTALL
-- Environment:(Maven and jdk)
-- INSTALL: cd to BE folder
-	+ run command: mvn clean install
-- RUN: cd to BE folder
-	+ run command: mvn spring-boot:run
-- TEST:cd to BE folder
-	+ run command : mvn test
-
------------------------------------------------------FE--------------------------------
-
 #INSTALL
 
 - install environment: 
@@ -30,9 +18,9 @@
 #START
 
 - edit server name at UI\src\environments\environment.ts:
-	+ at line: API: '{server name}' (ex: API: 'http://localhost:8181')
+	+ at line: API: '{server name}' (ex: API: 'http://192.168.191.232:9000')
 - open teminal
-- cd to client folder (FE folder)
+- cd to client folder (UI folder)
 - run command: ng s -o  
 - open google chrome type localhost:4200 
 
