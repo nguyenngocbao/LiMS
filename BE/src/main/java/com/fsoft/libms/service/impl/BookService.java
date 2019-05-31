@@ -81,7 +81,7 @@ public class BookService extends AbstractService implements IBookService {
 		Book book = editBook(bookData, id);
 		String fileName = String.format("%s-%s", book.getIsbn(), bookImageFile.getOriginalFilename());
 		book.setImage(String.format("%s%s", "/api/upload/", fileName));
-		uploadFile.deleteFile(book.getImage());
+		uploadFile.deleteFile(book.getImage().replace("/api/upload/", ""));
 		uploadFile.storeFile(bookImageFile, fileName);
 		return bookRepository.saveAndFlush(book);
 	}
