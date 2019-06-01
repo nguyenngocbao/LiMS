@@ -19,6 +19,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public void deleteByUsername( String username );
     
-    @Query( "select u from User u where u.username = ?1")
-    public User getDefaultLanguageByName( String username );
 }
