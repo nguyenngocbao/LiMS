@@ -1,9 +1,8 @@
 package com.fsoft.libms.repository;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.fsoft.libms.model.Role;
@@ -14,6 +13,5 @@ import com.fsoft.libms.model.Role;
  */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    @Query("select r from Role r where r.authority = ?1")
-    List<Role> findByAuthority(String authority);
+    Set<Role> findByAuthority(String authority);
 }

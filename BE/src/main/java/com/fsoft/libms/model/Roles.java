@@ -8,5 +8,5 @@ package com.fsoft.libms.model;
 public interface Roles {
     public static final String ADMIN = "ROLE_ADMIN";
     public static final String VIEW = "ROLE_TEACHER";
-    public static final String EDIT = "ROLE_USER";
+    public static final String USER = "ROLE_USER";
 }

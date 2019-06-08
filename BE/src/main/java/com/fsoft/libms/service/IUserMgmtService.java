@@ -1,5 +1,12 @@
 package com.fsoft.libms.service;
 
+import java.io.IOException;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fsoft.libms.exception.LibMsException;
 import com.fsoft.libms.model.User;
 
@@ -14,7 +21,7 @@ public interface IUserMgmtService {
      * @param user
      * @throws LibMsException
      */
-    public void createUser( User user ) throws LibMsException;
+    public void createUser( String data, MultipartFile image ) throws LibMsException, JsonProcessingException, IOException;
 
     /**
      *
@@ -22,7 +29,7 @@ public interface IUserMgmtService {
      * @throws LibMsException
      *             editUser
      */
-    public void editUser( User user ) throws LibMsException;
+    public void editUser( String data, MultipartFile avatar ) throws LibMsException, JsonProcessingException, IOException;
 
     /**
      *
@@ -48,7 +55,7 @@ public interface IUserMgmtService {
      * @return
      * @throws LibMsException
      */
-    User findUserByName( String username ) throws LibMsException;
+    public User findUserByName( String username ) throws LibMsException;
 
 
 
@@ -57,9 +64,11 @@ public interface IUserMgmtService {
      * 
      * @return
      */
-    public boolean isAdminOrEdit();
+    public boolean isAdmin();
     
-    public void updatePassword( String username, String oldPasswordScreen, String newPassword ) throws LibMsException;
+    public void changePassword( String data ) throws JsonProcessingException, IOException, LibMsException;
+    
+    public Page<User> getList(Pageable pageable);
 
 
 
