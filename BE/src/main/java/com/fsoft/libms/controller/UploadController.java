@@ -49,5 +49,30 @@ public class UploadController extends AbstractController {
 				.body(resource);
 
 	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/user/{filename:.+}", method = RequestMethod.GET)
+	public ResponseEntity<Resource> getAvatarFile(@PathVariable String filename, HttpServletRequest request)
+			throws LibMsException {
+		// Load file as Resource
+		Resource resource = uploadService.loadFileAsResourceAvatar(filename);
+		// Try to determine file's content type
+		String contentType = null;
+		try {
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		} catch (IOException ex) {
+			LOGGER.info("Could not determine file type.");
+		}
+
+		// Fallback to the default content type if type could not be determined
+		if (contentType == null) {
+			contentType = "application/octet-stream";
+		}
+
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+
+	}
 
 }

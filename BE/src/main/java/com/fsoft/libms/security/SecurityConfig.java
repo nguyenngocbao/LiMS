@@ -100,10 +100,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 	}
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		// let unauthenticated user can create account
-	}
+
+    @Override
+    public void configure( WebSecurity web ) throws Exception {
+	//let unauthenticated user can create account
+	web.ignoring().antMatchers( "/api/user/create", "/api/user/detail/**", "/api/upload/**" );
+    }
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
