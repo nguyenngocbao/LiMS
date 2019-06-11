@@ -1,0 +1,17 @@
+<header>
+    <div class="text-center">
+        <img id="avatar"src="https://openclipart.org/download/277084/Male-Avatar-3.svg" style="border-radius: 50%; border: 1px solid #a1a1a1; width:120px; height:120px;">
+        <input type="file" id="imgupload" accept="image/*" style="display:none"/> 
+        <p>{{username}}</p>
+    </div>
+</header>
+<div class="text-center">
+    <span>0/100</span>
+    <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>    
+</div>
+<footer style="float: right; margin-top:10px;">
+    <button class="btn my-sm-0" (click)="onClose()">Cancel</button>
+
+</footer>
+    
+    

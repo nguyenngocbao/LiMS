@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core'
+import '../assets/css/styles.css'
+import '../assets/css/toastr.css'
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core'
 })
 export class AppComponent implements OnInit {
   ngOnInit(){
-    
+
   }
   title = 'Biostats'
   statusMenu = false;

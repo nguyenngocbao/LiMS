@@ -1,3 +1,4 @@
+import { ProfileComponent } from './../profile/profile.component';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core'
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
@@ -11,7 +12,7 @@ export class NavbarComponent implements OnInit {
   @Output()
   openMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
   statusMenu = false
-  
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -25,6 +26,15 @@ export class NavbarComponent implements OnInit {
       width: '500px',
     });
 
+  }
+  profile() :void {
+    this.dialog.open(ProfileComponent, {
+      width: '500px'
+    })
+  }
+
+  hasLogin() {
+    return localStorage.getItem('token')
   }
 
 }
