@@ -3,20 +3,24 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
+
+import { AbtractComponents } from '../shared/utils/AbtractComponents';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends AbtractComponents implements OnInit {
 
   form: FormGroup;
   loginSubscription: Subscription
 
   constructor(public dialogRef: MatDialogRef<LoginComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
-    private userService: UserService, private toastrService: ToastrService) { }
+    private userService: UserService,public toastr: ToastrManager) { 
+      super(toastr)
+    }
 
   ngOnInit() {
     this.initForm()
@@ -38,7 +42,7 @@ export class LoginComponent implements OnInit {
     this.dialogRef.close();
 }
   onSubmit(): void {
-    this.toastrService.success('Login successfully')
+    this.notifySucccess('Login successfully')
     localStorage.removeItem('token')
     if (this.loginSubscription) {
       this.loginSubscription.unsubscribe()
@@ -47,10 +51,9 @@ export class LoginComponent implements OnInit {
     .subscribe((rs) => {
       this.onClose()
       localStorage.setItem('token', rs.token)
-      this.toastrService.success('Login successfully')
     }, (_) => {
       this.onClose()
-      this.toastrService.error('Login failed')
+      this.notifyError('Login failed')
     })
 
   }

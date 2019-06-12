@@ -1,11 +1,9 @@
 import { ProfileComponent } from './profile/profile.component';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { ToastrModule, ToastrService } from 'ngx-toastr'
-import {MatSidenavModule} from '@angular/material/sidenav'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'
 import { MatIconRegistry } from '@angular/material'
 import { MaterialModule } from './shared/material.module'
@@ -15,6 +13,7 @@ import * as $ from 'jquery';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
+import { ToastrModule, ToastrManager } from 'ng6-toastr-notifications';
 @NgModule({
   declarations: [
     AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent
@@ -24,12 +23,10 @@ import { UserService } from './services/user.service';
     AppRoutingModule, HttpClientModule , MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-center-center',
-      preventDuplicates: true
-    })
+    ToastrModule.forRoot(
+      )
   ],
-  providers: [UserService, ToastrService],
+  providers: [UserService,ToastrManager],
   entryComponents:[LoginComponent, ProfileComponent],
   bootstrap: [AppComponent]
 })
