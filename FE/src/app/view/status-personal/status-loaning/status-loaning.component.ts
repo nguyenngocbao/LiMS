@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewService } from 'src/app/services/view.service';
+import { ViewService } from 'src/app/shared/services/view.service';
 
 @Component({
   selector: 'app-status-loaning',
@@ -7,11 +7,36 @@ import { ViewService } from 'src/app/services/view.service';
   styleUrls: ['./status-loaning.component.css']
 })
 export class StatusLoaningComponent implements OnInit {
-  data
-  constructor(private service: ViewService) { }
-
+  data;
+  status
+  constructor(private service: ViewService) {
+   }
   ngOnInit() {
-    this.data = this.service.LOANING
+    this.loadRequest()
   }
+  onDelete(id){
+    console.log(id)
+    this.delete(id);
+  }
+  loadRequest() {
+    this.service.loadLoaning().subscribe(data => {
+      this.data = data
+    })
+  }
+ delete(id){
+   this.service.deleteRequest(id).subscribe(data=>{
+
+   },err=>{},()=>{
+     this.loadRequest()
+   })
+ }
+ returnBook(id){
+  this.service.returnBooks(id).subscribe(data=>{
+
+  },err=>{},()=>{
+    this.loadRequest()
+  })
+
+ }
 
 }

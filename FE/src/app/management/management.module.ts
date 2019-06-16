@@ -14,9 +14,26 @@ import { ReturnBookComponent } from './loan-book-management/return-book/return-b
 import { RequestNewBookManagementComponent } from './request-new-book-management/request-new-book-management.component';
 import { StatisticComponent } from './statistic/statistic.component';
 import { ViewBookStatusComponent } from './loan-book-management/view-book-status/view-book-status.component';
+import { RejectFormComponent } from './loan-book-management/view-book-status/reject-form/reject-form.component';
+import { ConfirmGetBookComponent } from './loan-book-management/confirm-get-book/confirm-get-book.component';
+import { CategoryListComponent } from './category-management/category-list/category-list.component';
+import { CategoryDetailComponent } from './category-management/category-detail/category-detail.component';
+import { CategoryService } from '../services/category.service';
 
 @NgModule({
-  declarations: [BookManagementComponent, BookDetailComponent, LoanBookManagementComponent, RequestLoanBookComponent, LoaningBookComponent, ReturnBookComponent, RequestNewBookManagementComponent, StatisticComponent, ViewBookStatusComponent],
+  declarations: [ConfirmGetBookComponent,
+    BookManagementComponent, 
+    BookDetailComponent, 
+    LoanBookManagementComponent, 
+    RequestLoanBookComponent, 
+    LoaningBookComponent, 
+    ReturnBookComponent, 
+    RequestNewBookManagementComponent, 
+    StatisticComponent, 
+    ViewBookStatusComponent,
+    CategoryListComponent,
+    CategoryDetailComponent
+  ],
   imports: [
     CommonModule,
     ManagementRoutingModule,
@@ -24,7 +41,7 @@ import { ViewBookStatusComponent } from './loan-book-management/view-book-status
     FormsModule,
     ReactiveFormsModule,
   ]
-  , providers: [BookService],
-  entryComponents: [BookDetailComponent,ViewBookStatusComponent]
+  , providers: [BookService, CategoryService],
+  entryComponents: [BookDetailComponent,ViewBookStatusComponent,CategoryDetailComponent]
 })
 export class ManagementModule { }

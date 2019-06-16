@@ -20,7 +20,12 @@ public class CategoryService extends AbstractService implements ICategoryService
 	@Autowired
 	private IUploadImageService uploadImage;
 
-	public Category addCategory(String data) {
+	public Category addCategory(String data) throws LibMsException {
+		Category cate = categoryRepo.findByName(data);
+		if (cate != null) {
+			throw new LibMsException(String.format("Danh mục %s đã tồn tại", data));
+		}
+		
 		Category category = new Category();
 		category.setName(data);
 		return categoryRepo.saveAndFlush(category);

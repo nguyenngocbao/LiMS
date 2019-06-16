@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration>
+	<Properties>
+		<Property name="log-path">logs</Property>
+		<Property name="archive">${log-path}/archive</Property>
+	</Properties>
+	<Appenders>
+		
+		<!-- log system info -->
+		<RollingFile name="serverlog" fileName="${log-path}/serverlog.log"
+					 filePattern="${archive}/serverlog_%d{dd-MM-yyyy}.log">
+			<PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%L - %msg%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="12" />
+		</RollingFile>
+
+
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="serverlog" />
+		</Root>
+
+	</Loggers>
+</Configuration>
+

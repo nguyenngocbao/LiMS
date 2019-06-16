@@ -1,4 +1,4 @@
-import { UserService } from './../services/user.service';
+
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 
 import { AbtractComponents } from '../shared/utils/AbtractComponents';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { UserService } from '../shared/services/user.service';
+import { ShareService } from '../services/share.service';
 
 @Component({
   selector: 'app-login',
@@ -42,7 +44,6 @@ export class LoginComponent extends AbtractComponents implements OnInit {
     this.dialogRef.close();
 }
   onSubmit(): void {
-    this.notifySucccess('Login successfully')
     localStorage.removeItem('token')
     if (this.loginSubscription) {
       this.loginSubscription.unsubscribe()
@@ -51,8 +52,10 @@ export class LoginComponent extends AbtractComponents implements OnInit {
     .subscribe((rs) => {
       this.onClose()
       localStorage.setItem('token', rs.token)
+      localStorage.setItem('fullName', rs.fullName)
+      this.notifySucccess('Login successfully')
+      ShareService.loginEvent.emit("login")
     }, (_) => {
-      this.onClose()
       this.notifyError('Login failed')
     })
 

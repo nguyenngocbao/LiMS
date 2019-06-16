@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   {
     path: 'management',
-    loadChildren: '../app/management/management.module#ManagementModule'
+    loadChildren: '../app/management/management.module#ManagementModule',
+    canActivate: [AuthService]
   },
   {
     path: '',

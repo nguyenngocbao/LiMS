@@ -32,91 +32,74 @@ import com.fsoft.libms.security.token.JWTAuthenticationFilter;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity( securedEnabled = true )
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    @Autowired
-    private RestAuthenticationSuccessHandler authenticationSuccessHandler;
-    @Autowired
-    private CustomAccessDeniedHandler accessDeniedHandler;
-    @Autowired
-    private JWTAuthenticationFilter tokenAuthenticationFilter;
-    @Autowired
-    private UserDetailsService userDetailService;
+	@Autowired
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	@Autowired
+	private RestAuthenticationSuccessHandler authenticationSuccessHandler;
+	@Autowired
+	private CustomAccessDeniedHandler accessDeniedHandler;
+	@Autowired
+	private JWTAuthenticationFilter tokenAuthenticationFilter;
+	@Autowired
+	private UserDetailsService userDetailService;
 
-    //    private final TokenProvider tokenProvider;
+	// private final TokenProvider tokenProvider;
 
-    public SecurityConfig() {
-	super();
-	SecurityContextHolder.setStrategyName( SecurityContextHolder.MODE_INHERITABLETHREADLOCAL );
-    }
+	public SecurityConfig() {
+		super();
+		SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+	}
 
-    /**
-     * <li>search user</li>
-     * <li>search roles for user would return the single granted authority The
-     * role prefix that will be prepended to each role name (defaults to
-     * "ROLE_").</li>
-     */
-    @Override
-    @Autowired
-    protected void configure( AuthenticationManagerBuilder auth ) throws Exception {
-	auth.userDetailsService( userDetailService ).passwordEncoder( passwordEncoder() );
-    }
+	/**
+	 * <li>search user</li>
+	 * <li>search roles for user would return the single granted authority The role
+	 * prefix that will be prepended to each role name (defaults to "ROLE_").</li>
+	 */
+	@Override
+	@Autowired
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
+	}
 
-    @Override
-    protected void configure( HttpSecurity http ) throws Exception {
-	// @formatter:off
-	http
-		// if Spring MVC is on classpath and no CorsConfigurationSource is provided,
-		// Spring Security will use CORS configuration provided to Spring MVC
-		// refer: https://docs.spring.io/spring-security/site/docs/current/reference/html/cors.html
-		// since there is a bug with login
-	.cors()
-	.and()
-        		.csrf().disable()
-        		.exceptionHandling()
-        		.authenticationEntryPoint(restAuthenticationEntryPoint)
-		.and()
-			.authorizeRequests().anyRequest().authenticated()
-//			.and()
-//			.apply( securityConfigurerAdapter() )
-		.and()
-			.formLogin()
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		// @formatter:off
+		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
+				.and().authorizeRequests().anyRequest().authenticated()
+				// .and().apply( securityConfigurerAdapter() )
+				.and().formLogin().loginProcessingUrl("/login")
 				.successHandler(authenticationSuccessHandler)
-				.failureHandler(new SimpleUrlAuthenticationFailureHandler())
-		.and()
-			.logout()
-			.deleteCookies("JSESSIONID")
-		.and()
-			.exceptionHandling()
-			.accessDeniedHandler(accessDeniedHandler);
-//		.and().
-//			// let un-authen user can create account
-//			authorizeRequests().antMatchers("/user/create").permitAll();
-	// @formatter:on
-	http.addFilterBefore( tokenAuthenticationFilter, BasicAuthenticationFilter.class );
+				.failureHandler(new SimpleUrlAuthenticationFailureHandler()).and().logout().deleteCookies("JSESSIONID")
+				.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+		// .and().
+		// // let un-authen user can create account
+		// authorizeRequests().antMatchers("/user/create").permitAll();
+		// @formatter:on
+		http.addFilterBefore(tokenAuthenticationFilter, BasicAuthenticationFilter.class);
 
-    }
+	}
 
-    /**
-     * Create bean to process CORS <br/>
-     * Refer
-     * {@link https:docs.spring.io/spring-security/site/docs/current/reference/html/cors.html}
-     * 
-     * @return
-     */
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-	CorsConfiguration configuration = new CorsConfiguration();
-	configuration.setAllowCredentials( true );
-	configuration.addAllowedOrigin( "*" );
-	configuration.addAllowedHeader( "*" );
-	configuration.setAllowedMethods( Arrays.asList( "GET", "POST", "PUT", "DELETE" ) );
-	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	source.registerCorsConfiguration( "/**", configuration );
-	return source;
-    }
+	/**
+	 * Create bean to process CORS <br/>
+	 * Refer
+	 * {@link https:docs.spring.io/spring-security/site/docs/current/reference/html/cors.html}
+	 * 
+	 * @return
+	 */
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowCredentials(true);
+		configuration.addAllowedOrigin("*");
+		configuration.addAllowedHeader("*");
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+
 
     @Override
     public void configure( WebSecurity web ) throws Exception {
@@ -124,8 +107,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	web.ignoring().antMatchers( "/api/user/create", "/api/user/detail/**", "/api/upload/**" );
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-	return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

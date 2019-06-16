@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,6 +22,8 @@ public class Category {
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Book> books = new ArrayList<>();
+	@Transient
+	private int numberOfBooks;
 
 	public List<Book> getBooks() {
 		return books;
@@ -49,5 +52,10 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public int getNumberOfBooks() {
+		return books.size();
+	}
+
 
 }

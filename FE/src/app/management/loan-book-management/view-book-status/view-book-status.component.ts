@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { BookService } from '../../book-management/shared/services/book.services';
+import { LoanBookService } from '../../book-management/shared/services/loanBook.services';
 
 @Component({
   selector: 'app-view-book-status',
@@ -8,18 +10,80 @@ import { MatDialogRef } from '@angular/material';
 })
 export class ViewBookStatusComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<ViewBookStatusComponent>, ) { }
-  BOOKS = [
-    { id: 1, name: 'Sự kết thúc của thời đại giả kim', image: 'https://salt.tikicdn.com/cache/200x200/ts/product/49/70/ff/145b8f5b9bd04c6f19262680f5d58bc5.jpg', quantity: 5, type: 'Truyện', author: 'Mervyn King', available: true },
-    { id: 2, name: 'Thế giới ba không', image: 'https://salt.tikicdn.com/cache/200x200/ts/product/72/5a/3a/0574296cfae195f71ca9e964ef56abe9.jpg', quantity: 5, type: 'Truyện', author: 'Muhammad Yunus', available: true },
-    { id: 3, name: 'Anh Đã Quên Em Chưa?', image: 'https://salt.tikicdn.com/cache/200x200/ts/product/87/b8/5f/bc45e30fd21ebb1c1cafade52766e069.jpg', quantity: 5, type: 'Truyện', author: 'Tuệ Mẫn', available: false },
-    { id: 4, name: 'Hành Trình Về Phương Đông', image: 'https://salt.tikicdn.com/cache/200x200/media/catalog/product/h/a/hanh_trinh_ve_phuong_dong_2.jpg', quantity: 5, type: 'Truyện', author: 'Baird T. Spalding', available: true },
-    { id: 5, name: 'Sống Thực Tế Giữa Đời Thực Dụng', image: 'https://salt.tikicdn.com/cache/200x200/ts/product/25/d6/2c/f88080bba78a779fb78e1b76b73a9813.jpg', quantity: 5, type: 'Truyện', author: 'Mễ Mông', available: true }
-    , { id: 5, name: 'All The Rule - Sống Bản Lĩnh Theo Cách Một Quý Cô', image: 'https://salt.tikicdn.com/cache/200x200/ts/product/78/07/33/0f93c8df023372177fab695d0ea531ca.png', quantity: 5, type: 'Truyện', author: 'Ellen Fein, Sherrie Schneider', available: true }
-  ]
-  item
+  constructor(public dialogRef: MatDialogRef<ViewBookStatusComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+    , public service: LoanBookService) {
+    this.status = {
+      WAITING: { text: "Đang chờ phê duyệt", color: '#ffff00' },
+      LOANING_ACCEPT: { text: "Đã chấp nhận", color: '#ffff00' },
+      LOANING_REJECT: { text: "Đã từ chối", color: '#ffff00' }
+    }
+  }
+  status
+  displayedColumns: string[] = ['no', 'book', 'dateRequest', 'action'];
+  displayedColumnBook: string[] = ['no', 'user', 'dateRequest', 'action'];
+  dataSource;
+  dataSourceBook;
+  dataSourceUser;
+  reject = false;
   ngOnInit() {
-    this.item = this.BOOKS[2]
+    this.getStatusBook()
+    this.getStatusUser()
+  }
+  getStatusBook() {
+    this.service.getRequestByBook(this.data.book.id).subscribe(
+      data => {
+        this.dataSourceBook = data
+        this.getStatus(data)
+      }
+    )
+
+
+  }
+  request
+  remain
+  getStatus(data: any) {
+    this.request = data.length;
+    this.remain = data.findIndex(element => {
+      return element.status == 'WAITING'
+    })
+
+
+  }
+  getStatusUser() {
+    this.service.getRequestByUser(this.data.user.id).subscribe(
+      data => {
+        this.dataSourceUser = data
+      }
+    )
+
+  }
+  onAccept() {
+    this.service.loaningAccept(this.data.id).subscribe(
+      data => {
+
+      }, err => { }, () => {
+        const data = { status: 'ok' }
+        this.dialogRef.close(data);
+      }
+    )
+
+  }
+  onReject(reason) {
+    this.service.loaningReject(this.data.id, reason).subscribe(
+      data => {
+
+      }, err => { }, () => {
+        const data = { status: 'ok' }
+        this.dialogRef.close(data);
+      }
+    )
+
+  }
+  onCancel() {
+    const data = { status: 'no' }
+    this.dialogRef.close(data);
+
   }
 
 }

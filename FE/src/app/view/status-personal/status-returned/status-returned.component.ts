@@ -14,7 +14,7 @@ export class StatusReturnedComponent implements OnInit {
   constructor(public service: BookService) { }
 
   ngOnInit() {
-    this.dataSource = this.service.getBook();
+    //this.dataSource = this.service.getBook();
   }
 
 }

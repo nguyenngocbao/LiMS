@@ -76,5 +76,10 @@ public class UserController extends AbstractController {
 		return userService.findUserByName(username);
 	}
 	
+	@GetMapping(value = "/isAdmin")
+	public boolean isAdmin() {
+		return userService.isAdmin();
+	}
+	
 	
 }
