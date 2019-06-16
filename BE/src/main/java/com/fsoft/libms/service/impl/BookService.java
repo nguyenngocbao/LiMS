@@ -223,6 +223,31 @@ public class BookService extends AbstractService implements IBookService {
 	public Book getBookById(long id) {
 		return bookRepository.findById(id);
 	}
+	
+	public Page<Book> getBooksBySearch(long category, String filter, String search, Pageable pageable) {
+		List<Book> books = new ArrayList<Book>();
+		Page<Book> pageDefault = new PageImpl<>(books, pageable, books.size());
+		if (category == 0) {
+			switch(filter) {
+			case "name":
+				return bookRepository.findByNameContaining(search, pageable);
+			case "author":
+				return bookRepository.findByAuthorContaining(search, pageable);
+			default: 
+				return pageDefault;
+			}
+		} else {
+			Category cate = categoryRepo.findById(category);
+			switch(filter) {
+			case "name":
+				return bookRepository.findByNameContainingAndCategory(search, cate, pageable);
+			case "author":
+				return bookRepository.findByAuthorContainingAndCategory(search, cate, pageable);
+			default:
+				return pageDefault;
+			}
+		}
+	}
 	@Transactional
 	public Book test() {
 		Long id = new Long(1);

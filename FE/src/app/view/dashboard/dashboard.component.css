@@ -2,3 +2,7 @@ div.card-book{
     box-shadow:0 0 20px rgba(0,0,0,.1); 
    
 }
+.form-group > label {
+    font-size: 14px;
+    margin: 0;
+}

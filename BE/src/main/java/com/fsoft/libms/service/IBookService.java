@@ -15,4 +15,5 @@ public interface IBookService {
 	public Book addBook(Book book, MultipartFile bookImageFile, long categoryId) throws LibMsException;
 	public Book getBookById(long id);
 	public Page<Book> getListBook(Pageable pageable);
+	public Page<Book> getBooksBySearch(long category, String filter, String search, Pageable pageable);
 }

@@ -19,6 +19,7 @@ import { AuthInterceptor } from './services/auth.interceptor.service';
 import { AuthService } from './services/auth.service';
 import { ShareService } from './services/share.service';
 import { RegisterComponent } from './register/register.component';
+import { CategoryService } from './services/category.service';
 @NgModule({
   declarations: [
     AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent, RegisterComponent
@@ -31,7 +32,7 @@ import { RegisterComponent } from './register/register.component';
     ToastrModule.forRoot(
       )
   ],
-  providers: [UserService, AuthService, ShareService,ToastrManager, {
+  providers: [UserService, AuthService, ShareService,ToastrManager, CategoryService, {
     provide : HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi   : true,

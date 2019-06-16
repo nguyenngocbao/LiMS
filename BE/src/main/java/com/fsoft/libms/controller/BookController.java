@@ -63,6 +63,14 @@ public class BookController {
 		return bookService.getBooks(categoryId, pageable);
 	}
 	
+	@GetMapping(value="/search")
+	public Page<Book> filterBook(@RequestParam(value="category", required=false) long category,
+			@RequestParam(value="search", required=false) String search,
+			@RequestParam(value="filter", required=false) String filter,
+			Pageable pageable) {
+		return bookService.getBooksBySearch(category, filter, search, pageable);
+	}
+	
 	@GetMapping()
 	public Page<Book> getAllBook(Pageable pageable) {
 		return bookService.getListBook(pageable);
