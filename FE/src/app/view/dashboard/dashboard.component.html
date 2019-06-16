@@ -4,8 +4,8 @@
     <span style="flex: auto"></span>
    
     <span style="margin-left: 0.5em">
-      <div class="input-group">
-        <input id="inputGroupSelect04" >
+      <!-- <div class="input-group">
+        <input id="inputGroupSelect04" placeholder="Tìm kiếm theo tên/tác giả">
         <div class="input-group-append">
             <select  style="font-size: 14px;font-family:Roboto " >
                 <option >Tên sách</option>
@@ -16,8 +16,37 @@
             <mat-icon svgIcon="magnify"></mat-icon>
           </button>
         </div>
+      </div> -->
+      <div class="input-group">
+          <div class="form-group">
+            <input style="margin-top: 34px;" type="text" class="form-control" placeholder="Tìm kiếm tên sách/tác giả" 
+             aria-describedby="basic-addon2" [(ngModel)]="search">
+            </div>
+        <div class="input-group-append">
+            <div class="form-group">
+                <label for="filter">Tiêu chí</label>
+                <select class="form-control" id="filter" [(ngModel)] = "filter" (ngModelChange) = "searchBookChanged()">
+                  <option value="name">Tên sách</option>
+                  <option value="author">Tác giả</option>
+                </select>
+              </div>
+              <div class="form-group">
+                  <label for="category">Thể loại</label>
+                  <select class="form-control" id="category" style="max-width: 150px;" [(ngModel)] = "category" (ngModelChange) = "searchBookChanged()">
+                    <option value="0">Tất cả</option>
+                    <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                  </select>
+                </div>
+        
+            <div class="form-group">
+              <button class="btn btn-outline-success" type="button" style="margin-top: 34px;" (click)="searchBook()">
+                  <mat-icon svgIcon="magnify"></mat-icon>
+                </button>
+            </div>
+        </div>
       </div>
     </span>
+    
 
   </mat-toolbar>
   <mat-divider></mat-divider>

@@ -20,9 +20,21 @@ export class ViewService {
 
     listBooks(data): Observable<Page>{
         let httpParams = new HttpParams()
-        httpParams.append('size', data.size || 10)
-        httpParams.append('page', data.page || 0)
+        .set('size', data.size || 10)
+        .set('page', data.page || 0)
         return this.http.get<Page>(`${this.API_URL}/api/book`, {params: httpParams})
+    }
+
+    searchBook(data) {
+        console.log(data)
+        let httpParams = new HttpParams()
+        .set('filter', data.filter)
+        .set('category', data.category)
+        .set('search', data.search)
+        .set('page', data.page)
+        .set('size', data.size)
+        console.log(httpParams)
+        return this.http.get<Page>(`${this.API_URL}/api/book/search`, {params: httpParams})
     }
     
     loadRequest(): Observable<any>{

@@ -18,7 +18,6 @@ import { RejectFormComponent } from './loan-book-management/view-book-status/rej
 import { ConfirmGetBookComponent } from './loan-book-management/confirm-get-book/confirm-get-book.component';
 import { CategoryListComponent } from './category-management/category-list/category-list.component';
 import { CategoryDetailComponent } from './category-management/category-detail/category-detail.component';
-import { CategoryService } from '../services/category.service';
 
 @NgModule({
   declarations: [ConfirmGetBookComponent,
@@ -41,7 +40,7 @@ import { CategoryService } from '../services/category.service';
     FormsModule,
     ReactiveFormsModule,
   ]
-  , providers: [BookService, CategoryService],
+  , providers: [BookService],
   entryComponents: [BookDetailComponent,ViewBookStatusComponent,CategoryDetailComponent]
 })
 export class ManagementModule { }

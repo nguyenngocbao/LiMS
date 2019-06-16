@@ -12,8 +12,8 @@ export class BookService {
    
     getBooks(data): Observable<Page>{
         let httpParams = new HttpParams()
-        httpParams.append('size', data.size || 10)
-        httpParams.append('page', data.page || 0)
+        .set('size', data.size || 10)
+        .set('page', data.page || 0)
         return this.http.get<Page>(this.API_URL, {params: httpParams})
     }
 
