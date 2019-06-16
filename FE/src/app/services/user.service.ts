@@ -16,6 +16,15 @@ export class UserService {
         return this.http.post(`${this.API_URL}/login`, body);
     }
 
+    public register(data, file): Observable<any> {
+        // tslint:disable-next-line:prefer-const
+        let body = new FormData();
+        body.append('data', JSON.stringify(data));
+        body.append('file', file);
+        return this.http.post(`${this.API_URL}/api/user/create`, body);
+    }
+
+
     public logout() {
         localStorage.removeItem('token');
         window.location.reload();

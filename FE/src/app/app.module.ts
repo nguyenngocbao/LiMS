@@ -17,9 +17,10 @@ import { ToastrModule, ToastrManager } from 'ng6-toastr-notifications';
 import { AuthInterceptor } from './services/auth.interceptor.service';
 import { AuthService } from './services/auth.service';
 import { ShareService } from './services/share.service';
+import { RegisterComponent } from './register/register.component';
 @NgModule({
   declarations: [
-    AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent
+    AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent, RegisterComponent
   ],
   imports: [
     BrowserModule,  BrowserAnimationsModule,
@@ -34,7 +35,7 @@ import { ShareService } from './services/share.service';
     useClass: AuthInterceptor,
     multi   : true,
   }],
-  entryComponents:[LoginComponent, ProfileComponent],
+  entryComponents:[LoginComponent, ProfileComponent, RegisterComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
