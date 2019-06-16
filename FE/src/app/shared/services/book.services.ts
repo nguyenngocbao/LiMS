@@ -30,7 +30,7 @@ export class BookService {
     }
     loadRequest(): Observable<any>{
         let header = new HttpHeaders();
-        header = header.append('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2MDcwMDE5M30.tw7x6C0IZ3fsfe9AwwRrxybwroQh2KrKzvrJBz2NL3l0L88BRHllOUDtxWf3EEGQxz-de78Xxrb-t_KOk7v6bQ');
+        header = header.append('Authorization', localStorage.getItem('token'));
         return this.http.get(`${this.API_URL}/api/loan/request`,
             { headers: header });
     }

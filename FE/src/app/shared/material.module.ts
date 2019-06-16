@@ -45,9 +45,11 @@ import {
   MatTreeModule,
 } from '@angular/material';
 import { PlatformModule } from '@angular/cdk/platform';
+import { ImagePipe } from './pipes/image.pipe';
 
 @NgModule({
-  exports: [
+  declarations:[ImagePipe],
+  exports: [ImagePipe,
     FlexLayoutModule,
     A11yModule,
     CdkStepperModule,
@@ -91,7 +93,7 @@ import { PlatformModule } from '@angular/cdk/platform';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    PlatformModule
+    PlatformModule,
   ],
 })
 export class MaterialModule {}

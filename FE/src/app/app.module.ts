@@ -18,6 +18,7 @@ import { ConfirmComponent } from './shared/components/confirm/confirm.component'
 import { AuthInterceptor } from './services/auth.interceptor.service';
 import { AuthService } from './services/auth.service';
 import { ShareService } from './services/share.service';
+import { ImagePipe } from './shared/pipes/image.pipe';
 @NgModule({
   declarations: [
     AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent

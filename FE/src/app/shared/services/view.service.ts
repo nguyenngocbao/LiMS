@@ -13,7 +13,7 @@ export class ViewService {
     getBooks(): Observable<any> {
         let header = new HttpHeaders();
         header = header.append('Authorization', localStorage.getItem('token'));
-        return this.http.get(`${this.API_URL}/api/book/category/1`,
+        return this.http.get(`${this.API_URL}/api/book`,
             { headers: header });
     }
     loadRequest(): Observable<any>{

@@ -25,6 +25,10 @@ export class DashboardComponent implements OnInit {
     this.service.getBooks().subscribe(data => {
       this.books = data.content
       console.log(data);
+
+
+
+      
     })
   }
   openLoanBook(item){

@@ -83,9 +83,11 @@ export class BookDetailComponent extends AbtractComponents implements OnInit {
       this.notifySucccess('Thêm sách thành công')
     }, (err) => {
       this.notifyError(err.error ? err.error.message : 'Thêm sách không thành công')
+    },()=>{
+      const data = { status: 'ok' }
+       this.dialogRef.close(data);
     })
-    // const data = { status: 'ok' }
-    // this.dialogRef.close(data);
+    //
 
   }
 
@@ -97,9 +99,11 @@ export class BookDetailComponent extends AbtractComponents implements OnInit {
       this.onCancel({status: 'success'})
     }, (err) => {
       this.notifyError(err.error ? err.error.message : 'Chỉnh sửa thông tin sách không thành công')
+    },()=>{
+      const data = { status: 'ok' }
+       this.dialogRef.close(data);
     })
-    // const data = { status: 'ok' }
-    // this.dialogRef.close(data);
+    // 
 
   }
   /*Handle file */
