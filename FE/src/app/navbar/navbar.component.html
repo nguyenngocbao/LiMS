@@ -12,4 +12,13 @@
     </button>
     <button mat-raised-button (click)="openLogin()" color="primary" *ngIf = "!hasLogin()">Đăng nhập</button>
   </mat-toolbar-row>
+  <div class="profile" *ngIf = "hasLogin() && openProfile">
+    <ul>
+      <li>Đổi mật khẩu</li>
+      <hr>
+      <li (click) ="personal()">Hồ sơ cá nhân</li>
+      <hr>
+      <li (click) = "logout()">Đăng xuất</li>
+    </ul>
+  </div>
 </mat-toolbar>

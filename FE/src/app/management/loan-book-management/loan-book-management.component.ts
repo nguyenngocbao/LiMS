@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BookService } from '../book-management/shared/services/book.services';
 import { BookDetailComponent } from '../book-management/book-detail/book-detail.component';
+import { LoanBookService } from '../book-management/shared/services/loanBook.services';
 
 @Component({
   selector: 'app-loan-book-management',
@@ -12,7 +13,7 @@ export class LoanBookManagementComponent implements OnInit {
 
   
 
-  constructor(public service: BookService,public dialog: MatDialog) { }
+  constructor(public service: LoanBookService,public dialog: MatDialog) { }
 
   ngOnInit() {
   }

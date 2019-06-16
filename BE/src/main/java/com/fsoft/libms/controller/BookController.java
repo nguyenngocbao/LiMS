@@ -34,10 +34,10 @@ public class BookController {
 		return bookService.editBook(data, id);
 	}
 
-	@PutMapping(value = "/file/{id}")
-	public Book editBookAndUploadImage(@RequestParam String data, @PathVariable("id") Long id,
+	@PostMapping(value = "/file/{id}")
+	public void editBookAndUploadImage(@RequestParam String data, @PathVariable("id") Long id,
 			@RequestParam("file") MultipartFile file) throws LibMsException {
-		return bookService.editBook(id, data, file);
+		 bookService.editBook(id, data, file);
 	}
 	@GetMapping(value = "/test")
 	public Book test() throws LibMsException {
@@ -62,7 +62,13 @@ public class BookController {
 	}
 
 	@GetMapping(value="/category/{id}")
-	public Page<Book> getAllBook(@PathVariable("id") Long categoryId, Pageable pageable) {
+	public Page<Book> getBooks(@PathVariable("id") Long categoryId, Pageable pageable) {
 		return bookService.getBooks(categoryId, pageable);
 	}
+	
+	@GetMapping()
+	public Page<Book> getAllBook(Pageable pageable) {
+		return bookService.getListBook(pageable);
+	}
+	
 }

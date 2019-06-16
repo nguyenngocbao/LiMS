@@ -44,3 +44,32 @@ color: #ffffff;
     margin-left: 1em; 
 
 }
+
+.profile {
+    position: absolute;
+    right: 5px;
+    top: 65px;
+    z-index: 2000;
+}
+.profile ul li {
+    list-style: none;
+    font-size: 15px;
+    padding: 0px 15px;
+    cursor: pointer;
+}
+
+.profile ul {
+    margin-left: 0px;
+    padding-left: 0px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fff;
+    
+}
+.profile ul li:first-child {
+    padding-top: 15px;
+}
+
+.profile ul li:last-child {
+    padding-bottom: 15px;
+}

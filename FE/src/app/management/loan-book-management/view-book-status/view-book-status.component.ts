@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BookService } from '../../book-management/shared/services/book.services';
+import { LoanBookService } from '../../book-management/shared/services/loanBook.services';
 
 @Component({
   selector: 'app-view-book-status',
@@ -11,7 +12,7 @@ export class ViewBookStatusComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<ViewBookStatusComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-    , public service: BookService) {
+    , public service: LoanBookService) {
     this.status = {
       WAITING: { text: "Đang chờ phê duyệt", color: '#ffff00' },
       LOANING_ACCEPT: { text: "Đã chấp nhận", color: '#ffff00' },
@@ -24,6 +25,7 @@ export class ViewBookStatusComponent implements OnInit {
   dataSource;
   dataSourceBook;
   dataSourceUser;
+  reject = false;
   ngOnInit() {
     this.getStatusBook()
     this.getStatusUser()

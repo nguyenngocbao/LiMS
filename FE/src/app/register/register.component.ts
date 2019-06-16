@@ -6,20 +6,19 @@ import { Subscription } from 'rxjs';
 
 import { AbtractComponents } from '../shared/utils/AbtractComponents';
 import { ToastrManager } from 'ng6-toastr-notifications';
-import { UserService } from '../shared/services/user.service';
 import { ShareService } from '../services/share.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html'
 })
-export class LoginComponent extends AbtractComponents implements OnInit {
+export class RegisterComponent extends AbtractComponents implements OnInit {
 
   form: FormGroup;
   loginSubscription: Subscription
 
-  constructor(public dialogRef: MatDialogRef<LoginComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
+  constructor(public dialogRef: MatDialogRef<RegisterComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
     private userService: UserService,public toastr: ToastrManager) { 
       super(toastr)
     }

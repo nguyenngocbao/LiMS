@@ -4,8 +4,13 @@ import { BookManagementComponent } from './book-management/book-management.compo
 import { LoanBookManagementComponent } from './loan-book-management/loan-book-management.component';
 import { RequestNewBookManagementComponent } from './request-new-book-management/request-new-book-management.component';
 import { StatisticComponent } from './statistic/statistic.component';
+import { CategoryListComponent } from './category-management/category-list/category-list.component';
 
 const routes: Routes = [
+  {
+    path: 'category-list',
+    component: CategoryListComponent
+  },
   {
     path: 'book',
     component: BookManagementComponent

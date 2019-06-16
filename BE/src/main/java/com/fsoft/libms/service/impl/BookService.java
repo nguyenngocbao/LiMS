@@ -77,16 +77,64 @@ public class BookService extends AbstractService implements IBookService {
 	/**
 	 * edit book information if this book exists
 	 */
-	public Book editBook(long id, String bookData, MultipartFile bookImageFile) throws LibMsException {
-		Book book = editBook(bookData, id);
-		String fileName = String.format("%s-%s", book.getIsbn(), bookImageFile.getOriginalFilename());
-		book.setImage(String.format("%s%s", "/api/upload/", fileName));
-		uploadFile.deleteFile(book.getImage().replace("/api/upload/", ""));
-		uploadFile.storeFile(bookImageFile, fileName);
-		return bookRepository.saveAndFlush(book);
-	}
-
 	@Transactional
+	public void editBook(long id, String bookData, MultipartFile bookImageFile) throws LibMsException {
+		Book bookEdit = bookRepository.findById(id);
+		if (bookEdit != null) {
+			JsonNode node;
+			try {
+				node = objMapper.readTree(bookData);
+				JsonNode name = node.at(BOOK_NAME);
+				JsonNode description = node.at(BOOK_DESCRIPTION);
+				JsonNode isbn = node.at(BOOK_ISBN);
+				JsonNode author = node.at(BOOK_AUTHOR);
+				JsonNode publisher = node.at(BOOK_PUBLISHER);
+				JsonNode quantity = node.at(BOOK_QUANTITY);
+				JsonNode categoryId = node.at(BOOK_CATEGORY);
+				String fileName = String.format("%s-%s", bookEdit.getIsbn(), bookImageFile.getOriginalFilename());
+				uploadFile.deleteFile(bookEdit.getImage().replace("/api/upload/", ""));
+				bookEdit.setImage(String.format("%s%s", "/api/upload/", fileName));
+				if (!categoryId.isMissingNode()) {
+					Category category = categoryRepo.findById(categoryId.asLong());
+					if (category != null) {
+						bookEdit.setCategory(category);
+					} else {
+						throw new LibMsException("Category with id " + categoryId.asLong() + " not found");
+					}
+				}
+
+				if (!name.isMissingNode()) {
+					bookEdit.setName(name.asText());
+				}
+				if (!description.isMissingNode()) {
+					bookEdit.setDescription(description.asText());
+				}
+				if (!isbn.isMissingNode()) {
+					bookEdit.setIsbn(isbn.asText());
+				}
+				if (!author.isMissingNode()) {
+					bookEdit.setAuthor(author.asText());
+				}
+				if (!publisher.isMissingNode()) {
+					bookEdit.setPublisher(publisher.asText());
+				}
+				if (!quantity.isMissingNode()) {
+					bookEdit.setQuantity((short)quantity.asInt());
+				}
+			
+				bookRepository.save(bookEdit);
+				uploadFile.storeFile(bookImageFile, fileName);
+			} catch (Exception e) {
+				LOGGER.error("Unable to read input. " + e.getMessage(), e);
+				throw new LibMsException("Unable to read input. " + e.getMessage());
+			}
+
+		} else {
+			throw new LibMsException(BOOK_NOT_FOUND);
+		}
+	
+	}
+@Transactional
 	public Book editBook(String data, long id) throws LibMsException {
 		Book bookEdit = bookRepository.findById(id);
 		if (bookEdit != null) {
@@ -109,23 +157,23 @@ public class BookService extends AbstractService implements IBookService {
 						throw new LibMsException("Category with id " + categoryId.asLong() + " not found");
 					}
 				}
-				if (name.isMissingNode()) {
+				if (!name.isMissingNode()) {
 					bookEdit.setName(name.asText());
 				}
-				if (description.isMissingNode()) {
+				if (!description.isMissingNode()) {
 					bookEdit.setDescription(description.asText());
 				}
-				if (isbn.isMissingNode()) {
-					bookEdit.setDescription(isbn.asText());
+				if (!isbn.isMissingNode()) {
+					bookEdit.setIsbn(isbn.asText());
 				}
-				if (author.isMissingNode()) {
-					bookEdit.setDescription(author.asText());
+				if (!author.isMissingNode()) {
+					bookEdit.setAuthor(author.asText());
 				}
-				if (publisher.isMissingNode()) {
-					bookEdit.setDescription(publisher.asText());
+				if (!publisher.isMissingNode()) {
+					bookEdit.setPublisher(publisher.asText());
 				}
-				if (quantity.isMissingNode()) {
-					bookEdit.setDescription(quantity.asText());
+				if (!quantity.isMissingNode()) {
+					bookEdit.setQuantity((short)quantity.asInt());
 				}
 				return bookRepository.saveAndFlush(bookEdit);
 			} catch (Exception e) {
@@ -164,6 +212,10 @@ public class BookService extends AbstractService implements IBookService {
 			Page<Book> page = new PageImpl<>(books, pageable, books.size());
 			return page;
 		}
+	}
+	
+	public Page<Book> getListBook(Pageable pageable) {
+		return bookRepository.findAll(pageable);
 	}
 
 	public Book getBookById(long id) {

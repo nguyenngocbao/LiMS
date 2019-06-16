@@ -35,12 +35,18 @@
         </button> <span style="margin-left: 2em">Yêu cầu mua sách mới</span>
       </a>
     </li>
-    <li class='has-sub'>
+    <li class='has-sub' [hidden] = "!hasAdmin">
       <a title="Management">
         <button mat-icon-button>
           <mat-icon svgIcon="view-dashboard"></mat-icon>
         </button> <span style="margin-left: 2em">Quản lý</span></a>
       <ul>
+        <li>
+          <a title="Book" routerLink="/management/category-list" [class.selected]="onSelected('/management/category-list')">
+            <button mat-icon-button>
+              <mat-icon svgIcon="view-dashboard"></mat-icon>
+            </button> <span style="margin-left: 2em">Thể loại sách</span></a>
+        </li>
         <li>
           <a title="Book" routerLink="/management/book" [class.selected]="onSelected('/management/book')">
             <button mat-icon-button>
@@ -68,3 +74,5 @@
 
       </ul>
     </li>
+    </ul>
+    </div>

@@ -7,5 +7,6 @@ import com.fsoft.libms.model.Category;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 	public Category findById(long id);
+	public Category findByName(String name);
 
 }

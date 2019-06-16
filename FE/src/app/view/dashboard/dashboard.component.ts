@@ -10,9 +10,13 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  books
 
   constructor(private service: ViewService,public dialog: MatDialog) { }
+  books = []
+  length = 0
+  pageSize = 10
+  pageSizeOptions : number[] = [5, 10, 25, 100]
+  pageIndex = 0
 
   ngOnInit() {
     this.loadBook()
@@ -35,6 +39,10 @@ export class DashboardComponent implements OnInit {
       }
     });
 
+  }
+
+  changePage(_) {
+    this.books = this.service.getBook()
   }
 
 }
