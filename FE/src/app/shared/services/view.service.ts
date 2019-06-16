@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Page } from 'src/app/model/page.model';
 
 @Injectable()
 export class ViewService {
@@ -13,9 +14,17 @@ export class ViewService {
     getBooks(): Observable<any> {
         let header = new HttpHeaders();
         header = header.append('Authorization', localStorage.getItem('token'));
-        return this.http.get(`${this.API_URL}/api/book`,
+        return this.http.get(`${this.API_URL}/api/book/category/1`,
             { headers: header });
     }
+
+    listBooks(data): Observable<Page>{
+        let httpParams = new HttpParams()
+        httpParams.append('size', data.size || 10)
+        httpParams.append('page', data.page || 0)
+        return this.http.get<Page>(`${this.API_URL}/api/book`, {params: httpParams})
+    }
+    
     loadRequest(): Observable<any>{
         let header = new HttpHeaders();
         header = header.append('Authorization',localStorage.getItem('token'));

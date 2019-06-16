@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ViewService } from 'src/app/shared/services/view.service';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { MatDialog } from '@angular/material';
+import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,17 +16,30 @@ export class DashboardComponent implements OnInit {
   constructor(private service: ViewService,public dialog: MatDialog) { }
   books = []
   length = 0
-  pageSize = 10
-  pageSizeOptions : number[] = [5, 10, 25, 100]
+  pageSize = 6
+  pageSizeOptions : number[] = [6, 12, 24]
   pageIndex = 0
+  loadBookSubscription: Subscription
 
   ngOnInit() {
     this.loadBook()
   }
   loadBook() {
-    this.service.getBooks().subscribe(data => {
-      this.books = data.content
-      console.log(data);
+    if (this.loadBookSubscription) {
+      this.loadBookSubscription.unsubscribe()
+    }
+    let data = {
+      page: this.pageIndex,
+      size: this.pageSize
+    }
+    this.loadBookSubscription = this.service.listBooks(data).subscribe(rs => {
+      this.books = rs.content
+      this.length = rs.totalElements
+      this.books = this.books.map((b) => {
+        b.image = `${environment.API}/${b.image}`
+        return b
+      }
+      )
     })
   }
   openLoanBook(item){
@@ -42,7 +57,7 @@ export class DashboardComponent implements OnInit {
   }
 
   changePage(_) {
-    this.books = this.service.getBook()
+    this.loadBook()
   }
 
 }
