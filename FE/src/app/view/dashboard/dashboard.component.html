@@ -41,4 +41,10 @@
 
   </div>
 
+  <mat-paginator [length] = "length"
+  [pageSize] = "pageSize"
+  [pageSizeOptions] = "pageSizeOptions"
+  (page) = "changePage($event)"
+  ></mat-paginator>
+
 </div>

@@ -16,4 +16,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	  
 	  public Book findById (long id);
 	  
+	  public Page<Book> findAll(Pageable pageable);
 }

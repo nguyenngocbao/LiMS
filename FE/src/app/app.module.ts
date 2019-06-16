@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { MatIconRegistry } from '@angular/material'
 import { MaterialModule } from './shared/material.module'
 import { NavbarComponent } from './navbar/navbar.component';
@@ -14,6 +14,9 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { ToastrModule, ToastrManager } from 'ng6-toastr-notifications';
+import { AuthInterceptor } from './services/auth.interceptor.service';
+import { AuthService } from './services/auth.service';
+import { ShareService } from './services/share.service';
 @NgModule({
   declarations: [
     AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent
@@ -26,7 +29,11 @@ import { ToastrModule, ToastrManager } from 'ng6-toastr-notifications';
     ToastrModule.forRoot(
       )
   ],
-  providers: [UserService,ToastrManager],
+  providers: [UserService, AuthService, ShareService,ToastrManager, {
+    provide : HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi   : true,
+  }],
   entryComponents:[LoginComponent, ProfileComponent],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -19,6 +19,13 @@ export class UserService {
     public logout() {
         localStorage.removeItem('token');
         window.location.reload();
+    }
+
+    public isAdmin(): Observable<boolean> {
+        if (! localStorage.getItem('token')) {
+            return of(false)
+        }
+        return this.http.get<boolean>(`${this.API_URL}/api/user/isAdmin`)
     }
 
 

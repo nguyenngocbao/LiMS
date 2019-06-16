@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { ShareService } from '../services/share.service';
 declare var $: any;
 @Component({
   selector: 'app-slider-left',
@@ -7,11 +9,15 @@ declare var $: any;
   styleUrls: ['./slider-left.component.scss']
 })
 export class SliderLeftComponent implements OnInit {
-
-  constructor(private router: Router, ) { }
+  hasAdmin = false
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
     this.handleMenu()
+    this.checkAdmin()
+    ShareService.loginEvent.subscribe((_login) => {
+      this.checkAdmin()
+    })
 
   }
   onSelected(url: string): boolean {
@@ -73,6 +79,12 @@ export class SliderLeftComponent implements OnInit {
     });
 
 
+  }
+
+  checkAdmin() {
+    this.userService.isAdmin().subscribe((admin) => {
+      this.hasAdmin = admin
+    })
   }
 
 }
