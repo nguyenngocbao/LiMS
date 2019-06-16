@@ -1,9 +1,9 @@
 package com.fsoft.libms.model;
 
 /**
- * Defines status of the loaning book
+ * Defines the loaning process status
  *
  */
 public enum LoanStatus {
-    WAITING, LOANING, RETURNED, DENY, RESERVE
+	RESERVE, WAITING, LOANING_ACCEPT, LOANING_REJECT,LOANING,RETURNING, RETURNED
 }

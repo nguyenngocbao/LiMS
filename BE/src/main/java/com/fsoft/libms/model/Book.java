@@ -62,6 +62,22 @@ public class Book {
 
 	public Book() {
 	}
+	
+
+	public Book(String isbn, String name, Date dateCreated, String author, String description, String publisher,
+			String image, Category category, short quantity) {
+		super();
+		this.isbn = isbn;
+		this.name = name;
+		this.dateCreated = dateCreated;
+		this.author = author;
+		this.description = description;
+		this.publisher = publisher;
+		this.image = image;
+		this.category = category;
+		this.quantity = quantity;
+	}
+
 
 	public long getId() {
 		return id;

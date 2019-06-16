@@ -12,8 +12,9 @@ import { SliderLeftComponent } from './slider-left/slider-left.component';
 import * as $ from 'jquery';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from './services/user.service';
 import { ToastrModule, ToastrManager } from 'ng6-toastr-notifications';
+import { UserService } from './shared/services/user.service';
+import { ConfirmComponent } from './shared/components/confirm/confirm.component';
 @NgModule({
   declarations: [
     AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent

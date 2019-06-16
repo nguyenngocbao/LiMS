@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewService } from 'src/app/services/view.service';
+import { ViewService } from 'src/app/shared/services/view.service';
 
 @Component({
   selector: 'app-status-reserve',

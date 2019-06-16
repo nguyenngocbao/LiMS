@@ -92,6 +92,6 @@ import { PlatformModule } from '@angular/cdk/platform';
     PortalModule,
     ScrollingModule,
     PlatformModule
-  ]
+  ],
 })
 export class MaterialModule {}

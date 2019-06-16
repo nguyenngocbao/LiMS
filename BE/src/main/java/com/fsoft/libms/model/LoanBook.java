@@ -3,6 +3,7 @@ package com.fsoft.libms.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,7 +23,10 @@ public class LoanBook implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "loan_id")
-	private int id;
+	private long id;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true )
+	@JoinColumn(name = "code_id")
+	private CodeId code;
 	@OneToOne
 	@JoinColumn(name = "book_id")
 	private Book book;
@@ -37,8 +41,61 @@ public class LoanBook implements Serializable {
 	private long loanDate;
 	@Column(name = "return_date")
 	private long returnDate;
+	@Column(name = "reason_reject")
+	private String reason;
+	@Column(name = "disable_")
+	private boolean disable;
 	
 	
+	
+
+	public boolean isDisable() {
+		return disable;
+	}
+
+
+
+	public void setDisable(boolean disable) {
+		this.disable = disable;
+	}
+
+
+
+	public CodeId getCode() {
+		return code;
+	}
+
+
+
+	public void setCode(CodeId code) {
+		this.code = code;
+	}
+
+
+
+	public String getReason() {
+		return reason;
+	}
+
+
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+
+
+	
+
+
+
+	
+
+
+
+
+
+
 
 	@Enumerated(EnumType.STRING)
 	private LoanStatus status;
@@ -47,9 +104,19 @@ public class LoanBook implements Serializable {
 		super();
 	}
 
-	public int getId() {
+	
+
+	public long getId() {
 		return id;
 	}
+
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
 
 	public void setId(int id) {
 		this.id = id;
@@ -115,12 +182,14 @@ public class LoanBook implements Serializable {
 		return serialVersionUID;
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((book == null) ? 0 : book.hashCode());
-		result = prime * result + id;
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + (int) (loanDate ^ (loanDate >>> 32));
 		result = prime * result + (int) (requestDate ^ (requestDate >>> 32));
 		result = prime * result + (int) (reserveDate ^ (reserveDate >>> 32));
@@ -129,6 +198,8 @@ public class LoanBook implements Serializable {
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -163,8 +234,8 @@ public class LoanBook implements Serializable {
 			return false;
 		return true;
 	}
-	
 
+	
 	
 
 

@@ -15,7 +15,20 @@ export class ReturnBookComponent implements OnInit {
   constructor(public service: BookService,public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.dataSource = this.service.getLoanBook();
+    //this.dataSource = this.service.getLoanBook();
+    this.loadRequest()
+  }
+  loadRequest(){
+    this.service.loadRequestReturning().subscribe(data =>{
+      this.dataSource = data;
+    })
+  }
+  openDialog( data): void {
+   
+  }
+  confirmReturnBook(id){
+    this.service.confirmReturn(id).subscribe(data =>{},err=>{},()=>{this.loadRequest()})
+
   }
 
 }

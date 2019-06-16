@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../book-management/shared/services/book.services';
 import { MatDialog } from '@angular/material';
-import { ViewBookStatusComponent } from '../view-book-status/view-book-status.component';
 
 @Component({
-  selector: 'app-request-loan-book',
-  templateUrl: './request-loan-book.component.html',
-  styleUrls: ['./request-loan-book.component.css']
+  selector: 'app-confirm-get-book',
+  templateUrl: './confirm-get-book.component.html',
+  styleUrls: ['./confirm-get-book.component.css']
 })
-export class RequestLoanBookComponent implements OnInit {
+export class ConfirmGetBookComponent implements OnInit {
 
+  
   displayedColumns: string[] = ['no', 'book', 'user', 'dateRequest','action'];
   dataSource ;
 
@@ -20,19 +20,16 @@ export class RequestLoanBookComponent implements OnInit {
     this.loadRequest()
   }
   loadRequest(){
-    this.service.loadRequest().subscribe(data =>{
+    this.service.loadRequestAccept().subscribe(data =>{
       this.dataSource = data;
     })
   }
   openDialog( data): void {
-    const dialogRef = this.dialog.open(ViewBookStatusComponent, {
-      width: '80vw', data: data
-    });
+   
+  }
+  confirmGetBook(id){
+    this.service.confirmGetBook(id).subscribe(data =>{},err=>{},()=>{this.loadRequest()})
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.loadRequest()
-     
-    });
   }
 
 }

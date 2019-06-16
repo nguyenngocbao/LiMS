@@ -157,7 +157,7 @@ public class BookService extends AbstractService implements IBookService {
 
 	public Page<Book> getBooks(long categoryId, Pageable pageable) {
 		Category category = categoryRepo.findById(categoryId);
-		if (category != null ) {
+		if (category != null) {
 			return bookRepository.findByCategory(category, pageable);
 		} else {
 			List<Book> books = new ArrayList<Book>();
@@ -168,5 +168,33 @@ public class BookService extends AbstractService implements IBookService {
 
 	public Book getBookById(long id) {
 		return bookRepository.findById(id);
+	}
+	@Transactional
+	public Book test() {
+		Long id = new Long(1);
+		Book a1 = new Book("1232", "Su ket thuc cua nha gia kim", new Date(), "Mervyn King", "", "",
+				"https://salt.tikicdn.com/cache/200x200/ts/product/49/70/ff/145b8f5b9bd04c6f19262680f5d58bc5.jpg",
+				categoryRepo.findById(id), (short) 2);
+		Book a2 = new Book("1233", "The gioi ba khong", new Date(), "Mervyn King", "", "",
+				"https://salt.tikicdn.com/cache/200x200/ts/product/72/5a/3a/0574296cfae195f71ca9e964ef56abe9.jpg",
+				categoryRepo.findById(id), (short) 2);
+		Book a3 = new Book("1234", "Anh con nho hay da quen", new Date(), "Mervyn King", "", "",
+				"https://salt.tikicdn.com/cache/200x200/ts/product/87/b8/5f/bc45e30fd21ebb1c1cafade52766e069.jpg",
+				categoryRepo.findById(id), (short) 2);
+		Book a4 = new Book("1235", "Hanh trinh ve phuong dong", new Date(), "Mervyn King", "", "",
+				"https://salt.tikicdn.com/cache/200x200/media/catalog/product/h/a/hanh_trinh_ve_phuong_dong_2.jpg",
+				categoryRepo.findById(id), (short) 2);
+		Book a5 = new Book("1236", "Song thuc te giua doi thuc dung", new Date(), "Mervyn King", "", "",
+				"https://salt.tikicdn.com/cache/200x200/ts/product/25/d6/2c/f88080bba78a779fb78e1b76b73a9813.jpg",
+				categoryRepo.findById(id), (short) 2);
+		List<Book> list = new ArrayList<>();
+		list.add(a1);
+		list.add(a2);
+		list.add(a3);
+		list.add(a4);
+		list.add(a5);
+		bookRepository.save(list);
+
+		return null;
 	}
 }

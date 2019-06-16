@@ -10,7 +10,12 @@ public interface ILoanBookService {
 	 * loan book
 	 * 
 	 */
-	public void loanBook(long id) throws LibMsException;
+	public List<LoanBook> getAll() throws LibMsException;
+	/**
+	 * loan book
+	 * 
+	 */
+	public LoanBook loanBook(long id) throws LibMsException;
 
 	/**
 	 * cancel loan
@@ -42,5 +47,18 @@ public interface ILoanBookService {
 	 * get all the books that user reserve
 	 */
 	public List<LoanBook> getReserve();
+	public List<LoanBook> getRequest();
+	public void deleteRequest(Long id);
+	public List<LoanBook> getRequestByBook(Long id);
+	public List<LoanBook> getRequestByUser(Long id);
+	public void acceptLoaning(long id);
+	public void rejectLoaning(long id, String reason);
+	void confirmReturn(long id);
+	void confirmLoaning(long id);
+	public List<LoanBook> getRequestOnly();
+	List<LoanBook> getRequestAccept();
+	List<LoanBook> getRequestLoaing();
+	public void disable(long id);
+	public List<LoanBook> getRequestReturning();
 
 }

@@ -14,9 +14,11 @@ import { ReturnBookComponent } from './loan-book-management/return-book/return-b
 import { RequestNewBookManagementComponent } from './request-new-book-management/request-new-book-management.component';
 import { StatisticComponent } from './statistic/statistic.component';
 import { ViewBookStatusComponent } from './loan-book-management/view-book-status/view-book-status.component';
+import { RejectFormComponent } from './loan-book-management/view-book-status/reject-form/reject-form.component';
+import { ConfirmGetBookComponent } from './loan-book-management/confirm-get-book/confirm-get-book.component';
 
 @NgModule({
-  declarations: [BookManagementComponent, BookDetailComponent, LoanBookManagementComponent, RequestLoanBookComponent, LoaningBookComponent, ReturnBookComponent, RequestNewBookManagementComponent, StatisticComponent, ViewBookStatusComponent],
+  declarations: [BookManagementComponent, BookDetailComponent, LoanBookManagementComponent, RequestLoanBookComponent, LoaningBookComponent, ReturnBookComponent, RequestNewBookManagementComponent, StatisticComponent, ViewBookStatusComponent, RejectFormComponent, ConfirmGetBookComponent],
   imports: [
     CommonModule,
     ManagementRoutingModule,

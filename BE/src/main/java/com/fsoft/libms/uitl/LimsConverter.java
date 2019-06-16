@@ -17,6 +17,7 @@ import com.fsoft.libms.model.Book;
 public class LimsConverter {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(LimsConverter.class);
 	private static final String ID_NODE = "/id";
+	private static final String REASON_NODE = "/reason";
 	private static final String CATEGORY_ID_NODE = "/catagory_id";
 	private static final String NAME_NODE = "/name";
 	private static final String QUANTITY_NODE = "/quantity";
@@ -54,6 +55,18 @@ public class LimsConverter {
 
 	private Book getBookFromNode(JsonNode node) {
 		return null;
+	}
+
+	public String convertToReason(String data) throws LibMsException {
+		String reason = "";
+		try {
+			JsonNode root = objMapper.readTree(data);
+			reason = root.at(REASON_NODE).asText();
+		} catch (IOException e) {
+			LOGGER.error("Unable to read input. " + e.getMessage(), e);
+			throw new LibMsException("Unable to read input. " + e.getMessage());
+		}
+		return reason;
 	}
 
 }
