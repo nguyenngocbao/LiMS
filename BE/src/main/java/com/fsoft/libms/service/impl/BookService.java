@@ -194,6 +194,8 @@ public class BookService extends AbstractService implements IBookService {
 		Book book = bookRepository.findById(id);
 		if (book != null) {
 			bookRepository.delete(id);
+			
+			
 			if (book.getImage() != null) {
 				uploadFile.deleteFile(book.getImage().replace("/api/upload/", ""));
 			}

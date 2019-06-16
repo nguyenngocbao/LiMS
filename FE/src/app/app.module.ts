@@ -18,10 +18,10 @@ import { ConfirmComponent } from './shared/components/confirm/confirm.component'
 import { AuthInterceptor } from './services/auth.interceptor.service';
 import { AuthService } from './services/auth.service';
 import { ShareService } from './services/share.service';
-import { ImagePipe } from './shared/pipes/image.pipe';
+import { RegisterComponent } from './register/register.component';
 @NgModule({
   declarations: [
-    AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent
+    AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent, RegisterComponent
   ],
   imports: [
     BrowserModule,  BrowserAnimationsModule,
@@ -36,7 +36,7 @@ import { ImagePipe } from './shared/pipes/image.pipe';
     useClass: AuthInterceptor,
     multi   : true,
   }],
-  entryComponents:[LoginComponent, ProfileComponent],
+  entryComponents:[LoginComponent, ProfileComponent, RegisterComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

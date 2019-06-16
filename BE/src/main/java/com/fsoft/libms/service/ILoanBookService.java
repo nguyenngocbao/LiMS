@@ -60,5 +60,6 @@ public interface ILoanBookService {
 	List<LoanBook> getRequestLoaing();
 	public void disable(long id);
 	public List<LoanBook> getRequestReturning();
+	public List<LoanBook> loaningBook();
 
 }

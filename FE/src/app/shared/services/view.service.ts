@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Page } from 'src/app/model/page.model';
 
 @Injectable()
 export class ViewService {
+  
  
     public API_URL = environment.API;
     constructor(private http: HttpClient) {
@@ -16,6 +18,14 @@ export class ViewService {
         return this.http.get(`${this.API_URL}/api/book`,
             { headers: header });
     }
+
+    listBooks(data): Observable<Page>{
+        let httpParams = new HttpParams()
+        httpParams.append('size', data.size || 10)
+        httpParams.append('page', data.page || 0)
+        return this.http.get<Page>(`${this.API_URL}/api/book`, {params: httpParams})
+    }
+    
     loadRequest(): Observable<any>{
         let header = new HttpHeaders();
         header = header.append('Authorization',localStorage.getItem('token'));
@@ -68,6 +78,12 @@ export class ViewService {
         return this.http.post(`${this.API_URL}/api/loan/return`, JSON.stringify(body),
             { headers: header });
     }
+    disable(id: any) {
+        let body = { id: id }
+        let header = new HttpHeaders();
+        return this.http.post(`${this.API_URL}/api/loan/disable`, JSON.stringify(body),
+            { headers: header });
+      }
 
     BOOKS = [
         { id: 1, name: 'Sự kết thúc của thời đại giả kim', image: 'https://salt.tikicdn.com/cache/200x200/ts/product/49/70/ff/145b8f5b9bd04c6f19262680f5d58bc5.jpg', quantity: 5, type: 'Truyện', author: 'Mervyn King', available: true },

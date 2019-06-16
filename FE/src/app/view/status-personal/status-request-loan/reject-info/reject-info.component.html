@@ -1,0 +1,12 @@
+<div mat-dialog-title >
+  <h4 style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b">Lý do</h4>
+  <mat-divider></mat-divider>
+</div>
+
+<div mat-dialog-content style="min-height: 5em;">
+  <b style=" text-align: center">{{data.reason}}</b>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: flex-end;margin-top: 0.5em">
+  <button mat-raised-button (click)="onCancel()">Hủy</button>
+  <button mat-raised-button (click)="onSubmit()" color="primary">Đã xem</button>
+</div>

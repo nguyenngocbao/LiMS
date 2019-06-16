@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class LoanBookService {
-    public API_URL = `${environment.API}/api/book`;
+    public API_URL = `${environment.API}`;
     constructor(private http: HttpClient) { }
     loadRequest(): Observable<any>{
         let header = new HttpHeaders();
