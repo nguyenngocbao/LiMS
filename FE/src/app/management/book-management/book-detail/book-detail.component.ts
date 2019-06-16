@@ -68,7 +68,7 @@ export class BookDetailComponent extends AbtractComponents implements OnInit {
       description: ['', [Validators.required]],
       author: ['', [Validators.required]],
       publisher: ['', [Validators.required]],
-      category: ['', [Validators.required]],
+      category: [this.categorySelected, [Validators.required]],
       isbn: ['', [Validators.required]]
     })
   }
@@ -141,7 +141,10 @@ export class BookDetailComponent extends AbtractComponents implements OnInit {
         isbn: book.isbn,
         image: `${environment.API}/${book.image}`,
         category: book.category.id
-      })
+      }
+     
+      )
+      this.categorySelected =  book.category.id
     })
   }
 

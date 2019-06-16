@@ -3,7 +3,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core'
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
 import { ShareService } from '../services/share.service';
-import { UserService } from '../services/user.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-navbar',

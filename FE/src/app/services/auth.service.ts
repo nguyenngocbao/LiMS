@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { CanActivate } from '@angular/router/src/utils/preactivation';
-import { UserService } from './user.service';
+
 import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
 import { Router } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
+import { UserService } from '../shared/services/user.service';
 
 @Injectable()
 export class AuthService implements CanActivate {

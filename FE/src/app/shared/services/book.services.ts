@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class BookService {
+    public API_URL = environment.API;
+    constructor(private http: HttpClient) {
+    }
     BOOKS = [
         {id: 1,name: 'Mắt biếc',image: '', quantity: 5,type: 'Truyện', author: 'Nguyễn Nhật Ánh'},
         {id: 2,name: 'Đảo mộng mơ',image: '', quantity: 5,type: 'Truyện', author: 'Nguyễn Nhật Ánh'},
@@ -21,5 +27,11 @@ export class BookService {
     }
     getLoanBook(){
         return this.LOANBOOKS
+    }
+    loadRequest(): Observable<any>{
+        let header = new HttpHeaders();
+        header = header.append('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2MDcwMDE5M30.tw7x6C0IZ3fsfe9AwwRrxybwroQh2KrKzvrJBz2NL3l0L88BRHllOUDtxWf3EEGQxz-de78Xxrb-t_KOk7v6bQ');
+        return this.http.get(`${this.API_URL}/api/loan/request`,
+            { headers: header });
     }
 }

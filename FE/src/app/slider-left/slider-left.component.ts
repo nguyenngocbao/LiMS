@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
+
 import { ShareService } from '../services/share.service';
+import { UserService } from '../shared/services/user.service';
 declare var $: any;
 @Component({
   selector: 'app-slider-left',

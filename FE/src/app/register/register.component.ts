@@ -1,4 +1,4 @@
-import { UserService } from './../services/user.service';
+
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 import { AbtractComponents } from '../shared/utils/AbtractComponents';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { ShareService } from '../services/share.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-register',

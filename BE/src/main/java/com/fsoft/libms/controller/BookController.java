@@ -39,6 +39,10 @@ public class BookController {
 			@RequestParam("file") MultipartFile file) throws LibMsException {
 		 bookService.editBook(id, data, file);
 	}
+	@GetMapping(value = "/test")
+	public Book test() throws LibMsException {
+		return bookService.test();
+	}
 
 	@PostMapping(value="/category/{id}")
 	public Book addBook(@RequestParam String data, @RequestParam("file") MultipartFile file, @PathVariable("id") Long categoryId)

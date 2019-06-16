@@ -16,7 +16,7 @@ export class RequestNewBookManagementComponent implements OnInit {
   constructor(public service: BookService,public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.dataSource = this.service.NEWBOOK
+    //this.dataSource = this.service.NEWBOOK
   }
   openLogin(): void {
     const dialogRef = this.dialog.open(BookDetailComponent, {
