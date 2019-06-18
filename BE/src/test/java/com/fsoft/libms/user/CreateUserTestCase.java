@@ -207,5 +207,43 @@ public class CreateUserTestCase extends BaseTestCase {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * create user successfully by admin user
+	 * */
+	
+	@Test
+	public void testCreateUserSuccessfullyByAdmin() throws Exception {
+		String data = "{\"role\": \"TEACHER\", \"username\":\"tttthuy\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
+		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
+		mockMvc.perform(fileUpload("/api/user/admin/create").file(avatar).param("data", data)
+				.header( HEADER_STRING, tokenAdmin() )).andExpect(status().is(200));
+		assertEquals(3, userRepo.findAll().size());
+		User userCreate = userRepo.findByUsername("tttthuy");
+		assertFalse(userCreate.equals(null));
+		assertEquals("tttthuy", userCreate.getUsername());
+		Set<Role> roles = roleRepo.findByAuthority("TEACHER");
+		assertEquals(roles.size(), userCreate.getAuthorities().size());
+		assertTrue(userCreate.getAuthorities().containsAll(roles));
+	}
+	
+	/**
+	 * 
+	 * create user failed by user created that is not admin
+	 * */
+	
+	@Test
+	public void testCreateUserFailedByNotAdmin() throws Exception {
+		String data = "{\"role\": \"TEACHER\", \"username\":\"tttthuy\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
+		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
+		mockMvc.perform(fileUpload("/api/user/admin/create").file(avatar).param("data", data)
+				.header( HEADER_STRING, tokenUser() )).andExpect(status().is(403));
+		assertEquals(2, userRepo.findAll().size());
+		User userCreate = userRepo.findByUsername("tttthuy");
+		assertTrue(userCreate == null);
+	}
+	
+	
 
 }
