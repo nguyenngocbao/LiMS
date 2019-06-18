@@ -3,6 +3,7 @@ package com.fsoft.libms;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -41,7 +42,8 @@ public abstract class BaseTestCase {
 
 	//Get file from resources folder
 	ClassLoader classLoader = getClass().getClassLoader();
-	Path path = Paths.get( classLoader.getResource( fileName ).getFile() );
+//	Path path = Paths.get( classLoader.getResource( fileName ).getFile() );
+	Path path = new File(classLoader.getResource(fileName).getFile()).toPath();
 	byte[] content = Files.readAllBytes( path );
 	return content;
 
@@ -84,7 +86,7 @@ public abstract class BaseTestCase {
      * get token of user with role is user
      */
     public String tokenUser() throws Exception {
-	MvcResult response = mockMvc.perform( post( "/login" ).param( "username", "user" ).param( "password", "test" ) ).andExpect( status().is( 200 ) ).andReturn();
+	MvcResult response = mockMvc.perform( post( "/login" ).param( "username", "usernormal" ).param( "password", "test" ) ).andExpect( status().is( 200 ) ).andReturn();
 	UserTokenState userTokenState = mapper.readValue( response.getResponse().getContentAsString(), UserTokenState.class );
 	return userTokenState.getToken();
     }

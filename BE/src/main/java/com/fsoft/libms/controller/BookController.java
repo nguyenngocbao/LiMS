@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsoft.libms.exception.LibMsException;
 import com.fsoft.libms.model.Book;
 import com.fsoft.libms.model.BookStatus;
+import com.fsoft.libms.model.Roles;
 import com.fsoft.libms.service.impl.BookService;
 
 @RestController
@@ -29,26 +31,26 @@ import com.fsoft.libms.service.impl.BookService;
 public class BookController {
 	@Autowired
 	private BookService bookService;
-
+	@Secured(Roles.ADMIN)
 	@PutMapping(value = "/{id}")
 	public Book editBook(@RequestBody String data, @PathVariable("id") Long id) throws LibMsException {
 		return bookService.editBook(data, id);
 	}
-
+	@Secured(Roles.ADMIN)
 	@PostMapping(value = "/file/{id}")
 	public void editBookAndUploadImage(@RequestParam String data, @PathVariable("id") Long id,
 			@RequestParam("file") MultipartFile file) throws LibMsException {
 		 bookService.editBook(id, data, file);
 	}
 	
-
+	@Secured(Roles.ADMIN)
 	@PostMapping(value="/category/{id}")
 	public Book addBook(@RequestParam String data, @RequestParam("file") MultipartFile file, @PathVariable("id") Long categoryId)
 			throws LibMsException, JsonParseException, JsonMappingException, IOException {
 		Book book = new ObjectMapper().readValue(data, Book.class);
 		return bookService.addBook(book, file, categoryId);
 	}
-
+	@Secured(Roles.ADMIN)
 	@DeleteMapping(value= "/{id}")
 	public void deleteBook(@PathVariable long id) throws LibMsException {
 		bookService.deleteBook(id);
