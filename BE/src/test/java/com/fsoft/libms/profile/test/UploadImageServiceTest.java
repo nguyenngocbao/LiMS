@@ -1,4 +1,4 @@
-package com.fsoft.libms.service.impl;
+package com.fsoft.libms.profile.test;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +20,8 @@ import com.fsoft.libms.security.token.TokenProvider;
 import com.fsoft.libms.service.IUploadImageService;
 
 @Service
-@Profile("dev")
-public class UploadImageService implements IUploadImageService {
+@Profile("test")
+public class UploadImageServiceTest implements IUploadImageService {
 	private final Path fileStorageLocation;
 	private final Path fileStorageLocationAvatar;
 	@Autowired
@@ -31,10 +31,10 @@ public class UploadImageService implements IUploadImageService {
 	private static final String NOT_STORE_FILE = "Could not store file";
 	private static final String TRY = ". Please try again!";
 	private static final String FILE_NOT_FOUND = "File not found";
-	private static final String folder = "uploads";
-	private static final String folderAvatar = "avatars";
+	public static final String folder = "uploads_test";
+	public static final String folderAvatar = "avatars_test";
 
-	public UploadImageService() throws LibMsException {
+	public UploadImageServiceTest() throws LibMsException {
 		this.fileStorageLocation = Paths.get(folder).toAbsolutePath().normalize();
 		this.fileStorageLocationAvatar = Paths.get(folderAvatar).toAbsolutePath().normalize();
 		try {
