@@ -1,3 +1,3 @@
 export enum ConfirmType{
-    DASHBOARD,CANCEL,RETURN
+    DASHBOARD,CANCEL,RETURN,RESERVE
 }

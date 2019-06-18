@@ -8,6 +8,7 @@ import { Page } from 'src/app/model/page.model';
 @Injectable()
 export class ViewService {
   
+  
  
     public API_URL = environment.API;
     constructor(private http: HttpClient) {
@@ -43,6 +44,12 @@ export class ViewService {
         header = header.append('Authorization',localStorage.getItem('token'));
         return this.http.get(`${this.API_URL}/api/loan/request`,
             { headers: header });
+    }
+    loadReserve(): Observable<any> {
+        let header = new HttpHeaders();
+        return this.http.get(`${this.API_URL}/api/loan/reserve`,
+            { headers: header });
+        
     }
     deleteRequest(id){
         let header = new HttpHeaders();

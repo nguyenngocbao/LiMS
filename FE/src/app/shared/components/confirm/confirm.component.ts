@@ -21,6 +21,9 @@ export class ConfirmComponent implements OnInit {
       case ConfirmType.DASHBOARD:
         this.content = 'Bạn muốn mượn quyển sách này?'
         break;
+      case ConfirmType.RESERVE:
+        this.content = 'Bạn muốn đặt trước quyển sách này?'
+        break;
       case ConfirmType.RETURN:
         this.content = 'Bạn muốn trả quyển sách này?'
         break;
@@ -42,6 +45,9 @@ export class ConfirmComponent implements OnInit {
       case ConfirmType.DASHBOARD:
         this.loanBook()
         break;
+      case ConfirmType.RESERVE:
+        this.reserveBook()
+        break;
       default:
         const data = { status: 'ok' }
         this.dialogRef.close(data);
@@ -59,9 +65,12 @@ export class ConfirmComponent implements OnInit {
 
   }
   reserveBook() {
-    this.service.reserveBooks(this.data.id).subscribe(data => { console.log(data) },
+    this.service.reserveBooks(this.data.item.id).subscribe(data => { console.log(data) },
       err => { },
-      () => { })
+      () => {
+        const data = { status: 'ok' }
+        this.dialogRef.close(data);
+       })
   }
   returnBook() {
     this.service.returnBooks(this.data.id).subscribe(data => { console.log(data) },

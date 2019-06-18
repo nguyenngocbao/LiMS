@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsoft.libms.exception.LibMsException;
 import com.fsoft.libms.model.Book;
+import com.fsoft.libms.model.BookStatus;
 import com.fsoft.libms.service.impl.BookService;
 
 @RestController
@@ -64,7 +65,7 @@ public class BookController {
 	}
 	
 	@GetMapping(value="/search")
-	public Page<Book> filterBook(@RequestParam(value="category", required=false) long category,
+	public Page<BookStatus> filterBook(@RequestParam(value="category", required=false) long category,
 			@RequestParam(value="search", required=false) String search,
 			@RequestParam(value="filter", required=false) String filter,
 			Pageable pageable) {

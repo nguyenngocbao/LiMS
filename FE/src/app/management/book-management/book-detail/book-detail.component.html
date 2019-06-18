@@ -27,8 +27,12 @@
                 </mat-select>
         </mat-form-field>
         <mat-form-field style="width:100%">
-                <input matInput placeholder="Mô tả" formControlName="description">
-            </mat-form-field>
+                <!-- <input matInput placeholder="Mô tả" formControlName="description"> -->
+                <textarea cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="10"  placeholder="Mô tảo" matInput formControlName="description"></textarea>
+        </mat-form-field>
       </form>
       <input type="file" id="imgupload" (change)="onFileSelected($event)" style="display: none" #fileinput />
 </div>

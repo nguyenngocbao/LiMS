@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fsoft.libms.exception.LibMsException;
 import com.fsoft.libms.model.Book;
+import com.fsoft.libms.model.BookStatus;
 
 public interface IBookService {
 	public Page<Book> getBooks(long categoryId, Pageable pageable);
@@ -15,5 +16,5 @@ public interface IBookService {
 	public Book addBook(Book book, MultipartFile bookImageFile, long categoryId) throws LibMsException;
 	public Book getBookById(long id);
 	public Page<Book> getListBook(Pageable pageable);
-	public Page<Book> getBooksBySearch(long category, String filter, String search, Pageable pageable);
+	public Page<BookStatus> getBooksBySearch(long category, String filter, String search, Pageable pageable);
 }

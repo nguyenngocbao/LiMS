@@ -86,8 +86,9 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 
 	@Override
 	public List<LoanBook> getReserve() {
-		// TODO Auto-generated method stub
-		return null;
+		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.RESERVE);
+		User user = userRepo.findByUsername(tokenProvider.getAuthToken().getName());
+		return loanBookRepo.findByUserAndDisableAndStatusIn(user,false, liStatus);
 	}
 
 	public long getTime() {

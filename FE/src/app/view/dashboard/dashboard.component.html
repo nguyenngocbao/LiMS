@@ -2,7 +2,7 @@
   <mat-toolbar style="display: flex;background-color: #FFFFFF">
     <span>Trang chủ</span>
     <span style="flex: auto"></span>
-   
+
     <span style="margin-left: 0.5em">
       <!-- <div class="input-group">
         <input id="inputGroupSelect04" placeholder="Tìm kiếm theo tên/tác giả">
@@ -18,62 +18,67 @@
         </div>
       </div> -->
       <div class="input-group">
-          <div class="form-group">
-            <input style="margin-top: 34px;" type="text" class="form-control" placeholder="Tìm kiếm tên sách/tác giả" 
-             aria-describedby="basic-addon2" [(ngModel)]="search">
-            </div>
+        <div class="form-group">
+          <input style="margin-top: 34px;" type="text" class="form-control" placeholder="Tìm kiếm tên sách/tác giả"
+            aria-describedby="basic-addon2" [(ngModel)]="search">
+        </div>
         <div class="input-group-append">
-            <div class="form-group">
-                <label for="filter">Tiêu chí</label>
-                <select class="form-control" id="filter" [(ngModel)] = "filter" (ngModelChange) = "searchBookChanged()">
-                  <option value="name">Tên sách</option>
-                  <option value="author">Tác giả</option>
-                </select>
-              </div>
-              <div class="form-group">
-                  <label for="category">Thể loại</label>
-                  <select class="form-control" id="category" style="max-width: 150px;" [(ngModel)] = "category" (ngModelChange) = "searchBookChanged()">
-                    <option value="0">Tất cả</option>
-                    <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
-                  </select>
-                </div>
-        
-            <div class="form-group">
-              <button class="btn btn-outline-success" type="button" style="margin-top: 34px;" (click)="searchBook()">
-                  <mat-icon svgIcon="magnify"></mat-icon>
-                </button>
-            </div>
+          <div class="form-group">
+            <label for="filter">Tiêu chí</label>
+            <select class="form-control" id="filter" [(ngModel)]="filter" (ngModelChange)="searchBookChanged()">
+              <option value="name">Tên sách</option>
+              <option value="author">Tác giả</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="category">Thể loại</label>
+            <select class="form-control" id="category" style="max-width: 150px;" [(ngModel)]="category" (ngModelChange)="searchBookChanged()">
+              <option value="0">Tất cả</option>
+              <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-outline-success" type="button" style="margin-top: 34px;" (click)="searchBook()">
+              <mat-icon svgIcon="magnify"></mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </span>
-    
+
 
   </mat-toolbar>
   <mat-divider></mat-divider>
   <div class=" row " style=" margin: 0px; padding: 0px">
     <div class="col-md-4" style="padding: 1em 1em;" *ngFor="let item of books">
       <div class="card-book">
-        <div style="padding: 1em 1em 0em 1em;">
+        <div style="padding: 1em 1em 1em 1em;" class="container">
           <span style="display: flex;justify-content: center;">
-            <img src="{{item.image | image}}" style="width: auto;height: 100%; margin: auto;display: block;">
+            <img src="{{item.book.image | image}}" style="width: auto;height: 100%; margin: auto;display: block;">
           </span>
-          <h5>{{item.name}}</h5>
-          <p>Tác giả: {{item.author}}</p>
+          <div>
+            <h5>{{item.book.name}}</h5>
+            <p style="margin-bottom: 0em;">Tác giả: {{item.book.author}}</p>
+          </div>
+
+          <div class="overlay">
+            <div class="text">
+              <button (click)="openViewDetail(item.book)" mat-raised-button>Xem chi tiết</button>
+            </div>
+          </div>
         </div>
         <mat-divider></mat-divider>
         <div style="display:flex; justify-content: flex-end;padding: 0.5em 1em">
-          <!-- <button *ngIf="'false'" mat-stroked-button color="accent">Đặt trước</button> -->
-          <button (click)="openLoanBook(item)"  mat-stroked-button color="primary" style="margin-left:0.5em">Mượn sách</button></div>
+          <button *ngIf="!item.status" (click)="openReserveBook(item.book)" mat-stroked-button color="accent">Đặt trước</button>
+          <button *ngIf="item.status" (click)="openLoanBook(item.book)" mat-stroked-button color="primary" style="margin-left:0.5em">Mượn
+            sách</button></div>
       </div>
 
     </div>
 
   </div>
 
-  <mat-paginator [length] = "length"
-  [pageSize] = "pageSize"
-  [pageSizeOptions] = "pageSizeOptions"
-  (page) = "changePage($event)"
-  ></mat-paginator>
+  <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="changePage($event)"></mat-paginator>
 
 </div>
