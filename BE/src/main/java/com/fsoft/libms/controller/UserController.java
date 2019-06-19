@@ -61,9 +61,15 @@ public class UserController extends AbstractController {
 	}
 	
 	@PutMapping(value="/change-password")
-	public void forgetPassword(@RequestBody String data) throws JsonProcessingException, IOException, LibMsException {
+	public void changePassword(@RequestBody String data) throws JsonProcessingException, IOException, LibMsException {
 		userService.changePassword(data);
 	}
+	@CrossOrigin
+	@PutMapping(value="/forget-password")
+	public void forgetPassword(@RequestBody String data) throws LibMsException {
+		userService.forgetPassword(data);
+	}
+	
 	@CrossOrigin
 	@GetMapping(value="/list")
 	public Page<User> getUsers(Pageable pageable) {

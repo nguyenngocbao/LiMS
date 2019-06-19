@@ -87,7 +87,6 @@ export class CategoryDetailComponent extends AbtractComponents implements OnInit
         this.onCancel({status: 'success'})
         this.notifySucccess('Thêm thể loại mới thành công')
       }, (err) => {
-        console.log(err)
         this.notifyError(err.error ? err.error.message : 'Thêm thể loại không thành công')
       })
   }
@@ -98,18 +97,21 @@ export class CategoryDetailComponent extends AbtractComponents implements OnInit
         this.onCancel({status: 'success'})
         this.notifySucccess('Chỉnh sửa thành công')
       }, (err) => {
-        console.log(err)
         this.notifyError(err.error ? err.error.message : 'Chỉnh sửa không thành công')
       })
   }
 
-  loadCategoryDetail(id) {
+  loadCategoryDetail(id, pageInfo?: any) {
     if (this.loadCategorySubscription) {
       this.loadCategorySubscription.unsubscribe()
     }
+    let data = {
+      size: pageInfo ? pageInfo.pageSize : this.pageSize,
+      page: pageInfo ? pageInfo.pageIndex : this.pageIndex
+    }
     this.loadCategorySubscription = forkJoin(
       this.categoryService.get(id),
-      this.bookService.getBooksByCategory(id, {size: this.pageSize, page: this.pageIndex})
+      this.bookService.getBooksByCategory(id, data)
 
     ).subscribe((rs) => {
       this.info = rs[0]
@@ -122,8 +124,8 @@ export class CategoryDetailComponent extends AbtractComponents implements OnInit
     })
   }
 
-  changePage() {
-    this.bookService.getBooksByCategory(this.data.id, {size: this.pageSize, page: this.pageIndex})
+  changePage(event) {
+    this.bookService.getBooksByCategory(this.data.id, event)
     .subscribe((books) => {
       this.books = books.content
       this.length = books.totalElements

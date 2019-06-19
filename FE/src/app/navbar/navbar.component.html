@@ -14,7 +14,7 @@
   </mat-toolbar-row>
   <div class="profile" *ngIf = "hasLogin() && openProfile">
     <ul>
-      <li>Đổi mật khẩu</li>
+      <li (click) = "changePassword()">Đổi mật khẩu</li>
       <hr>
       <li (click) ="personal()">Hồ sơ cá nhân</li>
       <hr>

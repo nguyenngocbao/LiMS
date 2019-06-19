@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -30,6 +31,7 @@ import com.fsoft.libms.repository.RoleRepository;
 import com.fsoft.libms.repository.UserRepository;
 import com.fsoft.libms.security.token.JWTBasedAuthentication;
 import com.fsoft.libms.security.token.TokenProvider;
+import com.fsoft.libms.service.IMailService;
 import com.fsoft.libms.service.IUploadImageService;
 import com.fsoft.libms.service.IUserMgmtService;
 
@@ -54,6 +56,9 @@ public class DefaultUserMgmtService implements IUserMgmtService {
 
 	@Autowired
 	private IUploadImageService uploadFile;
+	
+	@Autowired
+	private IMailService mailService;
 
 	private static final String USER_EXIST = "Username already exists";
 	private static final String USER_NOT_FOUND = "Username '%s' not found";
@@ -242,17 +247,17 @@ public class DefaultUserMgmtService implements IUserMgmtService {
 		JsonNode retypePassword = node.at(RETYPE_PASSWORD);
 		JsonNode oldPassword = node.at(OLD_PASSWORD);
 		if (newPassword.isMissingNode() || retypePassword.isMissingNode() || oldPassword.isMissingNode()) {
-			throw new LibMsException("New password, retype password and old password are required");
-		}
-		if (!newPassword.asText().equals(retypePassword.asText())) {
-			throw new LibMsException("New password and retype password are not matched");
+			throw new LibMsException("Mật khẩu cũ, mật khẩu mới và nhập lại mật khẩu là bắt buộc");
 		}
 		if (!passwordEncoder.matches(oldPassword.asText(), tokenProvider.getAuthToken().getPrincipal().getPassword())) {
-			throw new LibMsException("Old password is invalid");
+			throw new LibMsException("Mật khẩu cũ không đúng");
+		}
+		if (!newPassword.asText().equals(retypePassword.asText())) {
+			throw new LibMsException("Mật khẩu mới và nhập lại mật khẩu mới không khớp với nhau");
 		}
 
 		if (newPassword.asText().length() < 6)
-			throw new LibMsException("password is very short");
+			throw new LibMsException("Mật khẩu quá ngắn (<6 ký tự)");
 
 		User user = userRepo.findByUsername(tokenProvider.getAuthToken().getName());
 		user.setPassword(passwordEncoder.encode(newPassword.asText()));
@@ -304,8 +309,33 @@ public class DefaultUserMgmtService implements IUserMgmtService {
 
 	@Override
 	public void createUserByAdmin(String data) throws LibMsException, JsonProcessingException, IOException {
-		// TODO Auto-generated method stub
 		createUser(data, null);
+	}
+	
+	public void forgetPassword(String data) throws LibMsException {
+		User user = null;
+		Pattern pat = Pattern.compile(FORMAT_EMAIL);
+		if (pat.matcher(data).matches())
+			user = userRepo.findByEmail(data);
+		if (user == null) {
+			user = userRepo.findByUsername(data);
+		}
+		if (user == null) {
+			throw new LibMsException("Tài khoản người dùng không tồn tại");
+		}
+		String[] mail = {user.getEmail()};
+		Random rd = new Random();
+		int numberRandom = rd.nextInt(999999);
+		String newPassword = String.format("%06d", numberRandom);
+		try {
+			
+			mailService.sendMail(mail, "Thay đổi mật khẩu", "Mật khẩu mới của bạn là: " + newPassword);
+			user.setPassword(passwordEncoder.encode(newPassword));
+			userRepo.save(user);
+        } catch (Exception e) {
+            throw new LibMsException("Gửi mail không thành công");
+        }
+	
 	}
 
 }

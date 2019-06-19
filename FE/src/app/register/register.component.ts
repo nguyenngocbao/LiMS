@@ -63,7 +63,8 @@ export class RegisterComponent extends AbtractComponents implements OnInit {
         email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@\\S+')]],
         fullName: ['', [Validators.required]],
         pathImages: ['', [Validators.required]]
-      })
+      },
+      this.passwordMatchValidator)
     }
   }
   /*ACTION */
@@ -107,6 +108,11 @@ export class RegisterComponent extends AbtractComponents implements OnInit {
     }
 
   }
+
+  passwordMatchValidator(g: FormGroup) {
+    return g.get('password').value === g.get('retypePassword').value
+        ? null : { 'mismatch': true };
+}
 
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];

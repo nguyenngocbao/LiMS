@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Page } from 'src/app/model/page.model';
+import { registerNgModuleType } from '@angular/core/src/linker/ng_module_factory_loader';
 @Injectable()
 export class UserService {
     public API_URL = environment.API;
@@ -53,6 +54,14 @@ export class UserService {
         .set('size', data.size || 10)
         .set('page', data.page || 0)
         return this.http.get<Page>(`${this.API_URL}/api/user/list`, {params: httpParams})
+    }
+
+    public changePassword(data): Observable<any> {
+        return this.http.put(`${this.API_URL}/api/user/change-password`, data)
+    }
+
+    public forgetPassword(data): Observable<any> {
+        return this.http.put(`${this.API_URL}/api/user/forget-password`, data)
     }
 
 }

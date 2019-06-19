@@ -79,7 +79,6 @@ export class UserListComponent extends AbtractComponents implements OnInit {
       }
   }
   changePage(event) {
-    console.log(event)
     this.getListUser(event)
   }
 

@@ -70,6 +70,8 @@ public interface IUserMgmtService {
     public void changePassword( String data ) throws JsonProcessingException, IOException, LibMsException;
     
     public Page<User> getList(Pageable pageable);
+    
+    public void forgetPassword(String data) throws LibMsException;
 
 
 

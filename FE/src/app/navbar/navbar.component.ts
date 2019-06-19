@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
 import { ShareService } from '../services/share.service';
 import { UserService } from '../shared/services/user.service';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 @Component({
   selector: 'app-navbar',
@@ -40,6 +41,12 @@ export class NavbarComponent implements OnInit {
       width: '500px'
     })
   }
+
+  changePassword() {
+    this.dialog.open(ChangePasswordComponent, {
+     width: '500px'
+   })
+ }
 
   hasLogin() {
     return localStorage.getItem('token')
