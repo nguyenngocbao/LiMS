@@ -61,7 +61,7 @@ public class BookController {
 	public Book getBook(@PathVariable long id) throws LibMsException {
 		return bookService.getBookById(id);
 	}
-
+	
 	@GetMapping(value="/category/{id}")
 	public Page<Book> getBooks(@PathVariable("id") Long categoryId, Pageable pageable) {
 		return bookService.getBooks(categoryId, pageable);

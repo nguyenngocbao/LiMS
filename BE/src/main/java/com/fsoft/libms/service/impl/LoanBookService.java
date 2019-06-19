@@ -1,5 +1,6 @@
 package com.fsoft.libms.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fsoft.libms.exception.LibMsException;
 import com.fsoft.libms.model.Book;
+import com.fsoft.libms.model.BookStatus;
 import com.fsoft.libms.model.CodeId;
 import com.fsoft.libms.model.LoanBook;
 import com.fsoft.libms.model.LoanStatus;
@@ -36,14 +38,43 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 	@Override
 	@Transactional
 	public LoanBook loanBook(long id) throws LibMsException {
-		LoanBook request = new LoanBook();
-		request.setBook(bookRepo.findById(id));
-		request.setRequestDate(getTime());
-		request.setCode(new CodeId());
-		request.setStatus(LoanStatus.WAITING);
-		request.setUser(userRepo.findByUsername(tokenProvider.getAuthToken().getName()));
-		return loanBookRepo.saveAndFlush(request);
+		if(validateLoanBook(id)) {
+			LoanBook request = new LoanBook();
+			request.setBook(bookRepo.findById(id));
+			request.setRequestDate(getTime());
+			request.setCode(new CodeId());
+			request.setStatus(LoanStatus.WAITING);
+			request.setUser(userRepo.findByUsername(tokenProvider.getAuthToken().getName()));
+			return loanBookRepo.saveAndFlush(request);
+		}else {
+			throw new LibMsException("");
+		}
+		
+		
+	}
 
+	private boolean validateLoanBook(long id) throws LibMsException {
+		if (!bookRepo.exists(id)) {
+			throw new LibMsException("Sách không tồn tại");
+		}
+		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.WAITING, LoanStatus.LOANING_ACCEPT,
+				LoanStatus.LOANING);
+		Book book = bookRepo.findById(id);
+			boolean available = loanBookRepo.countByBookAndStatusIn(book, liStatus) < book.getQuantity();
+		if (!available) {
+			throw new LibMsException("Sách đã bị mượn hết");
+		}
+		if(loanBookRepo.countByBookAndUserAndStatusIn( book,userRepo.findByUsername(tokenProvider.getAuthToken().getName()),liStatus) > 0) {
+			throw new LibMsException("Bạn đã đang yêu cầu hoặc mượn quyển sách này rồi");
+		}
+		if(loanBookRepo.countByUserAndStatusIn( userRepo.findByUsername(tokenProvider.getAuthToken().getName()),liStatus) >= 3) {
+			throw new LibMsException("Bạn đã mượn quá 3 quyển sách");
+		}
+		return true;
+		
+		
+		
+		
 	}
 
 	@Override
@@ -54,9 +85,18 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 	@Transactional
 	@Override
 	public void returnBook(long id) throws LibMsException {
-		LoanBook loan = loanBookRepo.findById(id);
-		loan.setStatus(LoanStatus.RETURNING);
-		loanBookRepo.saveAndFlush(loan);
+		if(loanBookRepo.exists(id)) {
+			LoanBook loan = loanBookRepo.findById(id);
+			if(loan.getStatus().equals(LoanStatus.LOANING)) {
+				loan.setStatus(LoanStatus.RETURNING);
+				loanBookRepo.saveAndFlush(loan);
+			}else {
+				throw new LibMsException("ban dang khong muon quyen sach nay");
+			}	
+		}else {
+			throw new LibMsException("khong co yeu cau");
+		}
+		
 
 	}
 
@@ -74,14 +114,44 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 	@Transactional
 	@Override
 	public void reserveBook(long id) throws LibMsException {
-		LoanBook request = new LoanBook();
-		request.setBook(bookRepo.findById(id));
-		request.setReserveDate(getTime());
-		request.setCode(new CodeId());
-		request.setStatus(LoanStatus.RESERVE);
-		request.setUser(userRepo.findByUsername(tokenProvider.getAuthToken().getName()));
-		loanBookRepo.saveAndFlush(request);
+		if(loanBookRepo.exists(id)) { 
+			Book book = bookRepo.findById(id);
+			validateReserve(book);
+			LoanBook request = new LoanBook();
+			request.setBook(book);
+			request.setReserveDate(getTime());
+			request.setCode(new CodeId());
+			request.setStatus(LoanStatus.RESERVE);
+			request.setUser(userRepo.findByUsername(tokenProvider.getAuthToken().getName()));
+			loanBookRepo.saveAndFlush(request);
+		}else {
+			throw new LibMsException("khong ton tai");
+		}
+		
 
+	}
+	private boolean validateReserve(Book book) throws LibMsException{
+		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.WAITING, LoanStatus.LOANING_ACCEPT,
+				LoanStatus.LOANING,LoanStatus.RESERVE);
+			boolean available = loanBookRepo.countByBookAndStatusIn(book, liStatus) < book.getQuantity();
+		if (available) {
+			throw new LibMsException("Sách có thể mượn được");
+		}
+		if(loanBookRepo.countByBookAndUserAndStatusIn( book,userRepo.findByUsername(tokenProvider.getAuthToken().getName()),liStatus) > 0) {
+			throw new LibMsException("Bạn đã đang yêu cầu hoặc mượn quyển sách này rồi");
+		}
+		if(loanBookRepo.countByUserAndStatusIn( userRepo.findByUsername(tokenProvider.getAuthToken().getName()),liStatus) >= 3) {
+			throw new LibMsException("Bạn đã mượn quá 3 quyển sách");
+		}
+		List<LoanStatus> liStatusRe = Arrays.asList(LoanStatus.RESERVE);
+		boolean availableRe = loanBookRepo.countByBookAndUserNotAndStatusIn(book,userRepo.findByUsername(tokenProvider.getAuthToken().getName()), liStatusRe) >= book.getQuantity();
+		System.out.println(loanBookRepo.findByBookAndUserNotAndStatusIn(book,userRepo.findByUsername(tokenProvider.getAuthToken().getName()), liStatusRe));
+		if (availableRe) {
+			throw new LibMsException("Sách vượt quá số lượng cho đặt trước");
+		}
+		return true;
+		
+		
 	}
 
 	@Override
@@ -210,10 +280,14 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 	}
 	private void autoChangeReserveBook(Book book) {
 		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.RESERVE);
-		LoanBook liLoan = loanBookRepo.findByStatusInOrderByReserveDateDesc(liStatus).get(0);
-		liLoan.setStatus(LoanStatus.WAITING);
-		liLoan.setRequestDate(getTime());
-		loanBookRepo.saveAndFlush(liLoan);
+		List<LoanBook> liLoans = loanBookRepo.findByStatusInOrderByReserveDateDesc(liStatus);
+		if(liLoans.size() > 0) {
+			LoanBook liLoan = liLoans.get(0);
+			liLoan.setStatus(LoanStatus.WAITING);
+			liLoan.setRequestDate(getTime());
+			loanBookRepo.saveAndFlush(liLoan);
+		}
+		
 		
 	}
 	

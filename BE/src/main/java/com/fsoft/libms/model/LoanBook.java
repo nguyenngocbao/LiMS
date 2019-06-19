@@ -8,13 +8,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-@Entity(name = "loan_book")
+@Entity()
+@Table(name = "loan_book")
 public class LoanBook implements Serializable {
 	/**
 	 * 
@@ -24,13 +27,29 @@ public class LoanBook implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "loan_id")
 	private long id;
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true )
+	@OneToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true )
 	@JoinColumn(name = "code_id")
 	private CodeId code;
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "book_id")
 	private Book book;
-	@OneToOne
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 	@Column(name = "reserve_date")
@@ -47,7 +66,8 @@ public class LoanBook implements Serializable {
 	private boolean disable;
 	
 	
-	
+	public LoanBook() {
+	}
 
 	public boolean isDisable() {
 		return disable;
@@ -100,9 +120,7 @@ public class LoanBook implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LoanStatus status;
 
-	public LoanBook() {
-		super();
-	}
+	
 
 	
 

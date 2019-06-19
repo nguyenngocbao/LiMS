@@ -17,16 +17,16 @@
     <div>
       <form class="example-form" [formGroup]="form">
         <mat-form-field style="width:100%">
-          <input matInput placeholder="Tên sách" formControlName="name">
+          <input matInput placeholder="Tên sách" formControlName="bookName">
         </mat-form-field>
         <mat-form-field style="width:100%">
-          <input matInput placeholder="Tác giả" formControlName="quantity">
+          <input matInput placeholder="Tác giả" formControlName="author">
         </mat-form-field>
         <mat-form-field  style="width:100%">
           <textarea cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
           cdkAutosizeMinRows="4"
-          cdkAutosizeMaxRows="10"  placeholder="Lý do" matInput formControlName="type"></textarea>
+          cdkAutosizeMaxRows="10"  placeholder="Lý do" matInput formControlName="reason"></textarea>
         </mat-form-field>
       </form>
     </div>

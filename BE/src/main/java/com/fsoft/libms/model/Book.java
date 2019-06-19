@@ -63,6 +63,19 @@ public class Book {
 	public Book() {
 	}
 	
+	
+
+	public Book(long id, String is,String name, String author, String publisher,  short quantity) {
+		super();
+		this.id = id;
+		this.isbn = is;
+		this.name = name;
+		this.author = author;
+		this.publisher = publisher;
+		this.quantity = quantity;
+	}
+
+
 
 	public Book(String isbn, String name, Date dateCreated, String author, String description, String publisher,
 			String image, Category category, short quantity) {

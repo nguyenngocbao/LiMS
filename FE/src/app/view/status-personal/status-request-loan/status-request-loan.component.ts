@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material';
 import { RejectInfoComponent } from './reject-info/reject-info.component';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { ConfirmType } from 'src/app/shared/utils/ConfirmType';
+import { AbtractComponents } from 'src/app/shared/utils/AbtractComponents';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 
 @Component({
@@ -11,10 +13,11 @@ import { ConfirmType } from 'src/app/shared/utils/ConfirmType';
   templateUrl: './status-request-loan.component.html',
   styleUrls: ['./status-request-loan.component.css']
 })
-export class StatusRequestLoanComponent implements OnInit {
+export class StatusRequestLoanComponent extends AbtractComponents implements OnInit {
   data;
   status
-  constructor(private service: ViewService,public dialog: MatDialog) {
+  constructor(private service: ViewService,public dialog: MatDialog, private toa: ToastrManager) {
+    super(toa)
    this.status =  {
     WAITING :{text:"Đang chờ phê duyệt",color: '#ffff00'} ,
     LOANING_ACCEPT: {text:"Đã chấp nhận",color: '#00E676'},
@@ -37,8 +40,11 @@ export class StatusRequestLoanComponent implements OnInit {
   }
  delete(id){
    this.service.deleteRequest(id).subscribe(data=>{
+     this.notifySucccess('Hủy yêu cầu thành công!')
 
-   },err=>{},()=>{
+   },err=>{
+    this.notifyError('Hủy yêu cầu thất bại!')
+   },()=>{
      this.loadRequest()
    })
  }

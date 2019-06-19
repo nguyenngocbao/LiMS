@@ -20,14 +20,13 @@ import com.fsoft.libms.repository.LoanBookRepository;
 import com.fsoft.libms.repository.UserRepository;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class RequestLoanBook extends BaseTestCase {
+public class ReturnBook extends BaseTestCase {
 	@Autowired
 	LoanBookRepository loanBookRepository;
 	@Autowired
 	BookRepository bookRepository;
 	@Autowired
 	private UserRepository userRepo;
-
 	/**
 	 * setup test case
 	 */
@@ -45,11 +44,13 @@ public class RequestLoanBook extends BaseTestCase {
 		bookRepository.save(book4);
 
 		LoanBook loanBook1 = new LoanBook();
+		loanBook1.setId(1);
 		loanBook1.setBook(bookRepository.findById(2));
 		loanBook1.setStatus(LoanStatus.WAITING);
 		loanBook1.setUser(userRepo.findByUsername("usernormal"));
 		loanBookRepository.save(loanBook1);
 		LoanBook loanBook2 = new LoanBook();
+		loanBook2.setId(2);
 		loanBook2.setBook(bookRepository.findById(3));
 		loanBook2.setStatus(LoanStatus.LOANING);
 		loanBook2.setUser(userRepo.findByUsername("usernormal"));
@@ -61,9 +62,9 @@ public class RequestLoanBook extends BaseTestCase {
 	 * test loan book successfully
 	 */
 	@Test
-	public void testLoanBookSuccessfully() throws Exception {
-		Id id = new Id(1);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
+	public void testReturnBookSuccessfully() throws Exception {
+		Id id = new Id(2);
+		mockMvc.perform(post("/api/loan/return").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
 				.andExpect(status().is(200)).andReturn();
 
 	}
@@ -72,9 +73,9 @@ public class RequestLoanBook extends BaseTestCase {
 	 * test loan book fail with no auth
 	 */
 	@Test
-	public void testLoanBookFailWithNoAuth() throws Exception {
-		Id id = new Id(1);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, "test").content(asJsonString(id)))
+	public void testReturnBookFailWithNoAuth() throws Exception {
+		Id id = new Id(2);
+		mockMvc.perform(post("/api/loan/return").header(HEADER_STRING, "test").content(asJsonString(id)))
 				.andExpect(status().is(401)).andReturn();
 
 	}
@@ -83,9 +84,9 @@ public class RequestLoanBook extends BaseTestCase {
 	 * test loan book fail with book not exist
 	 */
 	@Test
-	public void testLoanBookFailWithBookNotExists() throws Exception {
+	public void testReturnBookFailWithBookNotExists() throws Exception {
 		Id id = new Id(5);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
+		mockMvc.perform(post("/api/loan/return").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
 				.andExpect(status().is(400)).andReturn();
 
 	}
@@ -94,38 +95,14 @@ public class RequestLoanBook extends BaseTestCase {
 	 * test loan book fail with loaned book
 	 */
 	@Test
-	public void testLoanBookFailWithBookAvailable() throws Exception {
-		Id id = new Id(2);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
-				.andExpect(status().is(400)).andReturn();
-
-	}
-
-	/**
-	 * test loan book fail with loaned book
-	 */
-	@Test
-	public void testLoanBookFailWithLoanedBook() throws Exception {
-		Id id = new Id(3);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
-				.andExpect(status().is(400)).andReturn();
-
-	}
-
-	/**
-	 * test loan book fail with loaned book
-	 */
-	@Test
-	public void testLoanBookFailWithLoanedBookOver3() throws Exception {
-		LoanBook loanBook3 = new LoanBook();
-		loanBook3.setBook(bookRepository.findById(4));
-		loanBook3.setStatus(LoanStatus.WAITING);
-		loanBook3.setUser(userRepo.findByUsername("usernormal"));
-		loanBookRepository.save(loanBook3);
+	public void testReturnBookFailWithBookAvailable() throws Exception {
 		Id id = new Id(1);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
+		mockMvc.perform(post("/api/loan/return").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
 				.andExpect(status().is(400)).andReturn();
 
 	}
+
+	
+
 
 }

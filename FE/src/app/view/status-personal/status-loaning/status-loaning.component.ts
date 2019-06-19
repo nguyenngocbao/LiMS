@@ -3,16 +3,19 @@ import { ViewService } from 'src/app/shared/services/view.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
 import { ConfirmType } from 'src/app/shared/utils/ConfirmType';
+import { AbtractComponents } from 'src/app/shared/utils/AbtractComponents';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-status-loaning',
   templateUrl: './status-loaning.component.html',
   styleUrls: ['./status-loaning.component.css']
 })
-export class StatusLoaningComponent implements OnInit {
+export class StatusLoaningComponent extends AbtractComponents implements OnInit {
   data;
   status
-  constructor(private service: ViewService, public dialog: MatDialog) {
+  constructor(private service: ViewService, public dialog: MatDialog, toa: ToastrManager) {
+    super(toa)
   }
   ngOnInit() {
     this.loadRequest()
@@ -35,13 +38,15 @@ export class StatusLoaningComponent implements OnInit {
   }
   returnBook(id) {
     this.service.returnBooks(id).subscribe(data => {
-
-    }, err => { }, () => {
+      this.notifySucccess("Gửi yêu cầu trả sách thành công!")
+    }, err => {
+      this.notifyError('Gửi yêu cầu thất bại')
+    }, () => {
       this.loadRequest()
     })
 
   }
-  openConfirm(item:any) {
+  openConfirm(item: any) {
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '500px',
       data: { item: item.book, type: ConfirmType.RETURN }

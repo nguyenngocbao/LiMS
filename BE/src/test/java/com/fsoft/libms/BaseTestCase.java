@@ -22,6 +22,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsoft.libms.security.token.UserTokenState;
 
@@ -54,7 +56,9 @@ public abstract class BaseTestCase {
      */
     public String asJsonString( final Object obj ) {
 	try {
-	    return new ObjectMapper().writeValueAsString( obj );
+		ObjectMapper objectMapper = new ObjectMapper();
+	    objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+	    return objectMapper.writeValueAsString( obj );
 	} catch ( Exception e ) {
 	    throw new RuntimeException( e );
 	}

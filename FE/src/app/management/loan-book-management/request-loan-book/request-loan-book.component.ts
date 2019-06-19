@@ -3,18 +3,22 @@ import { BookService } from '../../book-management/shared/services/book.services
 import { MatDialog } from '@angular/material';
 import { ViewBookStatusComponent } from '../view-book-status/view-book-status.component';
 import { LoanBookService } from '../../book-management/shared/services/loanBook.services';
+import { AbtractComponents } from 'src/app/shared/utils/AbtractComponents';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-request-loan-book',
   templateUrl: './request-loan-book.component.html',
   styleUrls: ['./request-loan-book.component.css']
 })
-export class RequestLoanBookComponent implements OnInit {
+export class RequestLoanBookComponent extends AbtractComponents implements OnInit {
 
   displayedColumns: string[] = ['no', 'book', 'user', 'dateRequest','action'];
   dataSource ;
 
-  constructor(public service: LoanBookService,public dialog: MatDialog) { }
+  constructor(public service: LoanBookService,public dialog: MatDialog, public toar: ToastrManager) {
+    super(toar)
+  }
 
   ngOnInit() {
     //this.dataSource = this.service.getLoanBook();
@@ -32,7 +36,6 @@ export class RequestLoanBookComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
      this.refesh()
-     
     });
   }
   refesh(){
