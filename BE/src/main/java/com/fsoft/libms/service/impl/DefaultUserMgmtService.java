@@ -141,12 +141,15 @@ public class DefaultUserMgmtService implements IUserMgmtService {
 				LOGGER.info("Failed to create user with reason: " + "Email is Exist");
 				throw new LibMsException("Email is Exist");
 			}
-			String fileName = avatar.getOriginalFilename();
-			int index = fileName.lastIndexOf(".");
-			fileName = user.getUsername() + fileName.substring(index);
-			uploadFile.storeFileAvatar(avatar, fileName);
-			// set default image is avatardefault.png
-			user.setPathImages(String.format("%s%s", "/api/upload/user/", fileName));
+			if (avatar != null) {
+				
+				String fileName = avatar.getOriginalFilename();
+				int index = fileName.lastIndexOf(".");
+				fileName = user.getUsername() + fileName.substring(index);
+				uploadFile.storeFileAvatar(avatar, fileName);
+				// set default image is avatardefault.png
+				user.setPathImages(String.format("%s%s", "/api/upload/user/", fileName));
+			}
 
 			if (tokenProvider.getAuthToken() != null && tokenProvider.getAuthToken().isAuthenticated()) {
 				if (isAdmin()) {
@@ -297,6 +300,12 @@ public class DefaultUserMgmtService implements IUserMgmtService {
 
 	public Page<User> getList(Pageable pageable) {
 		return userRepo.findAll(pageable);
+	}
+
+	@Override
+	public void createUserByAdmin(String data) throws LibMsException, JsonProcessingException, IOException {
+		// TODO Auto-generated method stub
+		createUser(data, null);
 	}
 
 }

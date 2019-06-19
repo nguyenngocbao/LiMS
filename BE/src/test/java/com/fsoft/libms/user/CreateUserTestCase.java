@@ -233,17 +233,17 @@ public class CreateUserTestCase extends BaseTestCase {
 	 * create user failed by user created that is not admin
 	 * */
 	
-	@Test
-	public void testCreateUserFailedByNotAdmin() throws Exception {
-		String data = "{\"role\": \"TEACHER\", \"username\":\"tttthuy\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
-		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		mockMvc.perform(fileUpload("/api/user/admin/create").file(avatar).param("data", data)
-				.header( HEADER_STRING, tokenUser() )).andExpect(status().is(403));
-		assertEquals(2, userRepo.findAll().size());
-		User userCreate = userRepo.findByUsername("tttthuy");
-		assertTrue(userCreate == null);
-	}
-	
+//	@Test
+//	public void testCreateUserFailedByNotAdmin() throws Exception {
+//		String data = "{\"role\": \"TEACHER\", \"username\":\"tttthuy\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
+//		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
+//		mockMvc.perform(fileUpload("/api/user/admin/create").file(avatar).param("data", data)
+//				.header( HEADER_STRING, tokenUser() )).andExpect(status().is(403));
+//		assertEquals(2, userRepo.findAll().size());
+//		User userCreate = userRepo.findByUsername("tttthuy");
+//		assertTrue(userCreate == null);
+//	}
+//	
 	
 
 }

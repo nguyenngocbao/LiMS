@@ -1,0 +1,48 @@
+<div style="margin: 2em 2em " class="mat-elevation-z8">
+        <div style="display:flex;align-items: center;background-color: #eeeeee ;padding: 10px 1em 10px 0px">
+          <span style="margin-right: 12px;margin-left: 1em; font-family: Roboto;
+          font-size: 16px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: 1.19;
+          letter-spacing: 0.5px;
+          text-align: left;
+          color: #004750;">Quản lý tài khoản người dùng</span>
+          <span style="flex: 1 1 auto"></span>
+          <button mat-icon-button (click)="openDialog(1,0)" color="primary">
+            <mat-icon svgIcon="plus"></mat-icon>
+          </button>
+      
+        </div>
+        <mat-paginator [length] = "length"
+        [pageSize] = "pageSize"
+        [pageSizeOptions] = "pageSizeOptions"
+        (page) = "changePage($event)"
+      ></mat-paginator>
+        <table mat-table [dataSource]="dataSource" style="width: 100%">
+          <ng-container matColumnDef="stt">
+            <th mat-header-cell *matHeaderCellDef> Stt </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+          </ng-container>
+         
+          <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef> Tên tài khoản </th>
+            <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+          </ng-container>
+      
+          
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef> Vai trò </th>
+            <td mat-cell *matCellDef="let element"> {{displayRole(element.authorities)}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+      </div>

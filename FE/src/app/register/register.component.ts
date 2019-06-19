@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -14,60 +14,97 @@ import { UserService } from '../shared/services/user.service';
   templateUrl: './register.component.html'
 })
 export class RegisterComponent extends AbtractComponents implements OnInit {
-
+  isAdmin:boolean = false
   form: FormGroup;
   registerSubscription: Subscription
   selectedFile: File;
   fileName = '';
   imgsrc
+
+  roles = [{
+    key: 'ADMIN',
+    value: 'Quản trị'
+  },
+  {
+    key: 'USER',
+    value: 'Người dùng'
+  },
+  {
+    key: 'TEACHER',
+    value: 'Giáo viên'
+  }]
   constructor(public dialogRef: MatDialogRef<RegisterComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
     private userService: UserService,public toastr: ToastrManager) { 
       super(toastr)
     }
 
   ngOnInit() {
+    this.isAdmin = this.data && this.data.isAdmin
     this.initForm()
 
   }
   /*FORM */
   initForm() {
-    this.form = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      retypePassword: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@\\S+')]],
-      fullName: ['', [Validators.required]],
-      pathImages: ['', [Validators.required]]
-    })
+    if (this.isAdmin) {
+      this.form = this.fb.group({
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required]],
+        retypePassword: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@\\S+')]],
+        fullName: ['', [Validators.required]],
+        role: ['', [Validators.required]]
+      })
+    } else {
+
+      this.form = this.fb.group({
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required]],
+        retypePassword: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@\\S+')]],
+        fullName: ['', [Validators.required]],
+        pathImages: ['', [Validators.required]]
+      })
+    }
   }
   /*ACTION */
   onCancel(): void {
     this.onClose()
   }
 
-  onClose(): void {
-    this.dialogRef.close();
+  onClose(data?:any): void {
+    this.dialogRef.close(data);
 }
   onSubmit(): void {
     if (this.registerSubscription) {
       this.registerSubscription.unsubscribe()
     }
-    this.registerSubscription = this.userService.register(this.form.value, this.selectedFile)
-    .subscribe((_rs) => {
-        this.notifySucccess('Đăng ký thành công')
-      this.userService.login(this.form.controls.username.value, this.form.controls.password.value)
-        .subscribe((rs) => {
-            localStorage.setItem('token', rs.token)
-            ShareService.loginEvent.emit("login")
-            this.onClose()
-        }, (err) => {
-            this.notifyError(err.error ? err.error.message: 'Đăng ký không thành công')
-        })
+    if(!this.isAdmin) {
 
-    
-    }, (err) => {
-        this.notifyError(err.error ? err.error.message: 'Đăng ký không thành công')
-    })
+      this.registerSubscription = this.userService.register(this.form.value, this.selectedFile)
+      .subscribe((_rs) => {
+          this.notifySucccess('Đăng ký thành công')
+        this.userService.login(this.form.controls.username.value, this.form.controls.password.value)
+          .subscribe((rs) => {
+              localStorage.setItem('token', rs.token)
+              ShareService.loginEvent.emit("login")
+              this.onClose()
+          }, (err) => {
+              this.notifyError(err.error ? err.error.message: 'Đăng ký không thành công')
+          })
+  
+      
+      }, (err) => {
+          this.notifyError(err.error ? err.error.message: 'Đăng ký không thành công')
+      })
+    } else {
+      this.registerSubscription = this.userService.registerByAdmin(this.form.value)
+      .subscribe((_rs) => {
+          this.notifySucccess('Đăng ký thành công')
+          this.onClose({status: 'success'})
+          }, (err) => {
+              this.notifyError(err.error ? err.error.message: 'Đăng ký không thành công')
+          })
+    }
 
   }
 
