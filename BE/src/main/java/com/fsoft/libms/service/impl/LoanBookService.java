@@ -157,6 +157,7 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 		loan.setStatus(LoanStatus.RETURNED);
 		loan.setReturnDate(getTime());
 		loanBookRepo.saveAndFlush(loan);
+		autoChangeReserveBook(loan.getBook());
 		
 		
 	}
@@ -206,6 +207,14 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 	public List<LoanBook> loaningBook() {
 		
 		return null;
+	}
+	private void autoChangeReserveBook(Book book) {
+		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.RESERVE);
+		LoanBook liLoan = loanBookRepo.findByStatusInOrderByReserveDateDesc(liStatus).get(0);
+		liLoan.setStatus(LoanStatus.WAITING);
+		liLoan.setRequestDate(getTime());
+		loanBookRepo.saveAndFlush(liLoan);
+		
 	}
 	
 

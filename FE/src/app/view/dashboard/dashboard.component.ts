@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
   filter = 'name'
   category = '0'
   ngOnInit() {
-    this.loadBook({ page: 0, size: 6 })
+    this.searchBook()
     this.loadCategory()
   }
   loadBook(page?: any) {
@@ -93,7 +93,12 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result.status == 'ok') {
-        this.openLoanBook(item)
+        if(item.status){
+          this.openLoanBook(item.book)
+        }else{
+          this.openReserveBook(item.book)
+        }
+        
       }
     });
 

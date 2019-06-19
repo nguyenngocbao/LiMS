@@ -5,39 +5,40 @@
    
   <div class="row">
     <div class="col-md-4">
-      <img src="{{data.image | image}}" style="width: auto;height: 100%; margin: auto;display: block;">
+      <img src="{{data.book.image | image}}" style="width: auto;height: 100%; margin: auto;display: block;">
     </div>
     <div class="col-md-8">
       <div class="row" style=" display: flex; justify-content: center;margin-bottom: 1em">
         <h3 style="text-align: center ;    color: #212121;
         font-size: 30px;
         font-weight: 300;
-        line-height: 35px;">{{data.name}}</h3>
+        line-height: 35px;">{{data.book.name}}</h3>
       </div>
       <div class="row">
          <b class="col-md-3" style="color: #212121;
          font-size: 18px;
          font-weight: 300;
-         line-height: 35px;" >Tác giả:</b> <i> {{data.author}}</i>  
+         line-height: 35px;" >Tác giả:</b> <i> {{data.book.author}}</i>  
       </div>
       
       <div class="row">
        <b class="col-md-3" style="color: #212121;
        font-size: 18px;
        font-weight: 300;
-       line-height: 35px;">Thể loại:</b> <i> {{data.category.name}}</i> 
+       line-height: 35px;">Thể loại:</b> <i> {{data.book.category.name}}</i> 
 
       </div>
       <div class="row">
          <b class="col-md-3" style="color: #212121;
          font-size: 18px;
          font-weight: 300;
-         line-height: 35px;">Nhà xuất bản:</b > <i>{{data.publisher}}</i> 
+         line-height: 35px;">Nhà xuất bản:</b > <i>{{data.book.publisher}}</i> 
   
         </div>
       <div style="display: flex; justify-content: flex-start; margin-top: 1em">
         <!-- <button mat-stroked-button (click)="onCancel()">Quay về</button> -->
-        <button style="width: 200px" mat-stroked-button (click)="onSubmit()" color="primary">Mượn sách này</button>
+        <button *ngIf="data.status" style="width: 250px" mat-stroked-button (click)="onSubmit()" color="primary">Mượn sách này</button>
+        <button *ngIf="!data.status" style="width: 250px" mat-stroked-button (click)="onSubmit()" color="primary">Đặt trước sách này</button>
       </div>
     </div>
 
@@ -46,7 +47,7 @@
 
   <div class="row" style="padding: 1em 2em">
     <i style="font-size: 14px;line-height: 24px;">
-      {{data.description}}
+      {{data.book.description}}
     </i>
 
 

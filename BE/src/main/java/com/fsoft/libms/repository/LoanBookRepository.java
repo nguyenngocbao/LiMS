@@ -18,5 +18,6 @@ public interface LoanBookRepository extends JpaRepository<LoanBook, Long>  {
 	List<LoanBook> findByUserAndStatusIn(User user,Collection<LoanStatus> ages);
 	List<LoanBook> findByUserAndDisableAndStatusIn(User user,boolean disable,Collection<LoanStatus> ages);
 	Long countByBookAndStatusIn(Book book,Collection<LoanStatus> ages);
+	List<LoanBook> findByStatusInOrderByReserveDateDesc(List<LoanStatus> liStatus);
 
 }
