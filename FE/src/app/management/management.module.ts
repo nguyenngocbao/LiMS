@@ -18,6 +18,7 @@ import { RejectFormComponent } from './loan-book-management/view-book-status/rej
 import { ConfirmGetBookComponent } from './loan-book-management/confirm-get-book/confirm-get-book.component';
 import { CategoryListComponent } from './category-management/category-list/category-list.component';
 import { CategoryDetailComponent } from './category-management/category-detail/category-detail.component';
+import { UserListComponent } from './user-management/user-list/user-list.component';
 
 @NgModule({
   declarations: [ConfirmGetBookComponent,
@@ -31,7 +32,8 @@ import { CategoryDetailComponent } from './category-management/category-detail/c
     StatisticComponent, 
     ViewBookStatusComponent,
     CategoryListComponent,
-    CategoryDetailComponent
+    CategoryDetailComponent,
+    UserListComponent
   ],
   imports: [
     CommonModule,

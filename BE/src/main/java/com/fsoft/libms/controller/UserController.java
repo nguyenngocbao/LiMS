@@ -42,9 +42,9 @@ public class UserController extends AbstractController {
 
 	@Secured(Roles.ADMIN)
 	@PostMapping(value = "/admin/create")
-	public void addUserByAdmin(@RequestParam String data, @RequestParam("file") MultipartFile file)
+	public void addUserByAdmin(@RequestBody String data)
 			throws LibMsException, JsonParseException, JsonMappingException, IOException {
-		userService.createUser(data, file);
+		userService.createUserByAdmin(data);
 	}
 	
 	@PutMapping()
@@ -61,10 +61,16 @@ public class UserController extends AbstractController {
 	}
 	
 	@PutMapping(value="/change-password")
-	public void forgetPassword(@RequestBody String data) throws JsonProcessingException, IOException, LibMsException {
+	public void changePassword(@RequestBody String data) throws JsonProcessingException, IOException, LibMsException {
 		userService.changePassword(data);
 	}
+	@CrossOrigin
+	@PutMapping(value="/forget-password")
+	public void forgetPassword(@RequestBody String data) throws LibMsException {
+		userService.forgetPassword(data);
+	}
 	
+	@CrossOrigin
 	@GetMapping(value="/list")
 	public Page<User> getUsers(Pageable pageable) {
 		return userService.getList(pageable);

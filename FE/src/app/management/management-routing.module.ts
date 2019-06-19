@@ -5,6 +5,7 @@ import { LoanBookManagementComponent } from './loan-book-management/loan-book-ma
 import { RequestNewBookManagementComponent } from './request-new-book-management/request-new-book-management.component';
 import { StatisticComponent } from './statistic/statistic.component';
 import { CategoryListComponent } from './category-management/category-list/category-list.component';
+import { UserListComponent } from './user-management/user-list/user-list.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,10 @@ const routes: Routes = [
   {
     path: 'statistic',
     component: StatisticComponent
-  }
+  },
+  {path: 'user',
+  component: UserListComponent
+}
 ];
 
 @NgModule({

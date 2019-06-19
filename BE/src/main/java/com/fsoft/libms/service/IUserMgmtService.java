@@ -23,6 +23,7 @@ public interface IUserMgmtService {
      */
     public void createUser( String data, MultipartFile image ) throws LibMsException, JsonProcessingException, IOException;
 
+    public void createUserByAdmin(String data) throws LibMsException, JsonProcessingException, IOException;
     /**
      *
      * @param user
@@ -69,6 +70,8 @@ public interface IUserMgmtService {
     public void changePassword( String data ) throws JsonProcessingException, IOException, LibMsException;
     
     public Page<User> getList(Pageable pageable);
+    
+    public void forgetPassword(String data) throws LibMsException;
 
 
 

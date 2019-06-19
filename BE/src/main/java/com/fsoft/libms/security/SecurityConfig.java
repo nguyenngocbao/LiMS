@@ -104,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure( WebSecurity web ) throws Exception {
 	//let unauthenticated user can create account
-	web.ignoring().antMatchers( "/api/user/create", "/api/user/detail/**", "/api/upload/**", "/api/user/list" ,"/api/book/search","/api/category");
+	web.ignoring().antMatchers( "/api/user/create", "/api/user/detail/**", "/api/upload/**", "/api/user/list" ,"/api/book/search","/api/category", "/api/user/forget-password");
     }
 
 	@Bean

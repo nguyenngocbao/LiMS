@@ -44,11 +44,15 @@ export class BookManagementComponent extends AbtractComponents implements OnInit
     });
   }
 
-  listBook() {
+  listBook(pageInfo?: any) {
     if (this.loadSubscription) {
       this.loadSubscription.unsubscribe()
     }
-    this.loadSubscription = this.service.getBooks({size: this.pageSize, page: this.pageIndex})
+    let data = {
+      size: pageInfo ? pageInfo.pageSize : this.pageSize,
+      page: pageInfo ? pageInfo.pageIndex : this.pageIndex
+    }
+    this.loadSubscription = this.service.getBooks(data)
       .subscribe((books) => {
         this.dataSource = books.content
         this.length = books.totalElements
@@ -68,8 +72,8 @@ export class BookManagementComponent extends AbtractComponents implements OnInit
     })
   }
 
-  changePage(_) {
-    this.listBook()
+  changePage(event) {
+    this.listBook(event)
   }
 
 }

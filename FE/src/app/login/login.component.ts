@@ -9,6 +9,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { UserService } from '../shared/services/user.service';
 import { ShareService } from '../services/share.service';
 import { RegisterComponent } from '../register/register.component';
+import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
 
 @Component({
   selector: 'app-login',
@@ -55,17 +56,24 @@ export class LoginComponent extends AbtractComponents implements OnInit {
       this.onClose()
       localStorage.setItem('token', rs.token)
       localStorage.setItem('fullName', rs.fullName)
-      this.notifySucccess('Login successfully')
+      this.notifySucccess('Đăng nhập thành công')
       ShareService.loginEvent.emit("login")
-    }, (_) => {
-      this.notifyError('Login failed')
+    }, () => {
+      this.notifyError('Đăng nhập thất bại')
     })
 
   }
 
   register() {
-    this.onCancel()
+    this.onClose()
     const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '500px',
+    });
+  }
+
+  forgetPassword() {
+    this.onClose()
+    const dialogRef = this.dialog.open(ForgetPasswordComponent, {
       width: '500px',
     });
   }

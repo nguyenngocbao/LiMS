@@ -20,9 +20,12 @@ import { AuthService } from './services/auth.service';
 import { ShareService } from './services/share.service';
 import { RegisterComponent } from './register/register.component';
 import { CategoryService } from './services/category.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 @NgModule({
   declarations: [
-    AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent, RegisterComponent
+    AppComponent,NavbarComponent, SliderLeftComponent, LoginComponent, ProfileComponent, RegisterComponent,
+    ChangePasswordComponent, ForgetPasswordComponent
   ],
   imports: [
     BrowserModule,  BrowserAnimationsModule,
@@ -37,7 +40,7 @@ import { CategoryService } from './services/category.service';
     useClass: AuthInterceptor,
     multi   : true,
   }],
-  entryComponents:[LoginComponent, ProfileComponent, RegisterComponent],
+  entryComponents:[LoginComponent, ProfileComponent, RegisterComponent, ChangePasswordComponent, ForgetPasswordComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
