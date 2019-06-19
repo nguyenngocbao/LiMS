@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewService } from 'src/app/shared/services/view.service';
+import { MatDialog } from '@angular/material';
+import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.component';
+import { ConfirmType } from 'src/app/shared/utils/ConfirmType';
 
 @Component({
   selector: 'app-status-loaning',
@@ -9,12 +12,12 @@ import { ViewService } from 'src/app/shared/services/view.service';
 export class StatusLoaningComponent implements OnInit {
   data;
   status
-  constructor(private service: ViewService) {
-   }
+  constructor(private service: ViewService, public dialog: MatDialog) {
+  }
   ngOnInit() {
     this.loadRequest()
   }
-  onDelete(id){
+  onDelete(id) {
     console.log(id)
     this.delete(id);
   }
@@ -23,20 +26,33 @@ export class StatusLoaningComponent implements OnInit {
       this.data = data
     })
   }
- delete(id){
-   this.service.deleteRequest(id).subscribe(data=>{
+  delete(id) {
+    this.service.deleteRequest(id).subscribe(data => {
 
-   },err=>{},()=>{
-     this.loadRequest()
-   })
- }
- returnBook(id){
-  this.service.returnBooks(id).subscribe(data=>{
+    }, err => { }, () => {
+      this.loadRequest()
+    })
+  }
+  returnBook(id) {
+    this.service.returnBooks(id).subscribe(data => {
 
-  },err=>{},()=>{
-    this.loadRequest()
-  })
+    }, err => { }, () => {
+      this.loadRequest()
+    })
 
- }
+  }
+  openConfirm(item:any) {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '500px',
+      data: { item: item.book, type: ConfirmType.RETURN }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.status == 'ok') {
+        this.returnBook(item.id)
+      }
+    });
+
+  }
 
 }

@@ -3,16 +3,21 @@
     <div class="card-book">
       <div style="padding: 1em 1em 0em 1em">
         <span style="display: flex;justify-content: center;">
-          <img src="{{item.image}}"
-            style="width: auto;height: 100%; margin: auto;display: block;">
+          <img src="{{item.book.image | image}}" style="width: auto;height: 100%; margin: auto;display: block;">
         </span>
-        <h5>{{item.name}}</h5>
-        <p>Ngày yêu cầu: {{item.requestDate}}</p>
-        <p>Trạng thái: Đang chờ phê duyệt</p>
+        <h5>{{item.book.name}}</h5>
+        <p>Ngày yêu cầu: {{item.reserveDate | date }}</p>
+        <mat-chip-list style="display: inline;" aria-label="Fish selection">
+          <p >Trạng thái:
+            <mat-chip  [style.background-color]="status[item.status].color">{{status[item.status].text}}</mat-chip>
+          </p>
+        </mat-chip-list>
       </div>
       <mat-divider></mat-divider>
       <div style="display:flex; justify-content: flex-end;padding: 0.5em 1em">
-        <button mat-stroked-button style="color: red;margin-left:0.5em">Hủy yêu cầu</button></div>
+        <button  (click)=" openConfirm(item)" mat-stroked-button style="color: red;margin-left:0.5em">Hủy yêu cầu</button>
+  
+      </div>
     </div>
 
   </div>

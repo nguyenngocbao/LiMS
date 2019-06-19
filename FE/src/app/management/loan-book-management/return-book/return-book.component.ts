@@ -9,6 +9,7 @@ import { LoanBookService } from '../../book-management/shared/services/loanBook.
   styleUrls: ['./return-book.component.css']
 })
 export class ReturnBookComponent implements OnInit {
+  
 
   displayedColumns: string[] = ['no', 'book', 'user', 'dateRequest','action'];
   dataSource ;
@@ -18,6 +19,9 @@ export class ReturnBookComponent implements OnInit {
   ngOnInit() {
     //this.dataSource = this.service.getLoanBook();
     this.loadRequest()
+  }
+  refesh(): any {
+   this.loadRequest()
   }
   loadRequest(){
     this.service.loadRequestReturning().subscribe(data =>{

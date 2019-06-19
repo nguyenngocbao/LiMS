@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ViewService } from '../../services/view.service';
+import { ConfirmType } from '../../utils/ConfirmType';
 
 @Component({
   selector: 'app-confirm',
@@ -10,8 +11,29 @@ import { ViewService } from '../../services/view.service';
 export class ConfirmComponent implements OnInit {
 
   constructor(public service: ViewService, public dialogRef: MatDialogRef<ConfirmComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
-
+  content = ''
   ngOnInit() {
+    this.setContent()
+
+  }
+  setContent() {
+    switch (this.data.type) {
+      case ConfirmType.DASHBOARD:
+        this.content = 'Bạn muốn mượn quyển sách này?'
+        break;
+      case ConfirmType.RESERVE:
+        this.content = 'Bạn muốn đặt trước quyển sách này?'
+        break;
+      case ConfirmType.RETURN:
+        this.content = 'Bạn muốn trả quyển sách này?'
+        break;
+      case ConfirmType.CANCEL:
+        this.content = 'Bạn muốn bỏ lựa chọn này?'
+        break;
+
+      default:
+        break;
+    }
   }
   /*ACTION */
   onCancel(): void {
@@ -19,7 +41,18 @@ export class ConfirmComponent implements OnInit {
     this.dialogRef.close(data);
   }
   onSubmit(): void {
-    this.loanBook()
+    switch (this.data.type) {
+      case ConfirmType.DASHBOARD:
+        this.loanBook()
+        break;
+      case ConfirmType.RESERVE:
+        this.reserveBook()
+        break;
+      default:
+        const data = { status: 'ok' }
+        this.dialogRef.close(data);
+        break;
+    }
 
   }
   loanBook() {
@@ -32,9 +65,12 @@ export class ConfirmComponent implements OnInit {
 
   }
   reserveBook() {
-    this.service.reserveBooks(this.data.id).subscribe(data => { console.log(data) },
+    this.service.reserveBooks(this.data.item.id).subscribe(data => { console.log(data) },
       err => { },
-      () => { })
+      () => {
+        const data = { status: 'ok' }
+        this.dialogRef.close(data);
+       })
   }
   returnBook() {
     this.service.returnBooks(this.data.id).subscribe(data => { console.log(data) },

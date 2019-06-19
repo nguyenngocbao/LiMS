@@ -14,9 +14,11 @@ import { BookService } from '../management/book-management/shared/services/book.
 import { RequestNewBookComponent } from './request-new-book/request-new-book.component';
 import { ViewService } from '../shared/services/view.service';
 import { ConfirmComponent } from '../shared/components/confirm/confirm.component';
+import { RejectInfoComponent } from './status-personal/status-request-loan/reject-info/reject-info.component';
+import { BookDetailComponent } from './dashboard/book-detail/book-detail.component';
 
 @NgModule({
-  declarations: [DashboardComponent, StatusPersonalComponent, StatusRequestLoanComponent, StatusLoaningComponent,ConfirmComponent, StatusReserveComponent, StatusReturnedComponent, RequestNewBookComponent],
+  declarations: [DashboardComponent, StatusPersonalComponent, StatusRequestLoanComponent, StatusLoaningComponent,ConfirmComponent, StatusReserveComponent, StatusReturnedComponent, RequestNewBookComponent, RejectInfoComponent, BookDetailComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,
@@ -24,7 +26,7 @@ import { ConfirmComponent } from '../shared/components/confirm/confirm.component
     FormsModule,
     ReactiveFormsModule,
   ], providers: [BookService,ViewService]
-  ,entryComponents:[ConfirmComponent]
+  ,entryComponents:[ConfirmComponent,RejectInfoComponent,BookDetailComponent]
  
 })
 export class ViewModule { }

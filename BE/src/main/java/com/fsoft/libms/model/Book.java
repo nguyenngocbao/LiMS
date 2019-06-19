@@ -43,7 +43,7 @@ public class Book {
 	@Column
 	private String author;
 
-	@Column
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 

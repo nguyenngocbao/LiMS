@@ -31,9 +31,12 @@ export class RequestLoanBookComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.loadRequest()
+     this.refesh()
      
     });
+  }
+  refesh(){
+    this.loadRequest()
   }
 
 }

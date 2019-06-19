@@ -9,6 +9,7 @@ import { LoanBookService } from '../../book-management/shared/services/loanBook.
   styleUrls: ['./confirm-get-book.component.css']
 })
 export class ConfirmGetBookComponent implements OnInit {
+  
 
   
   displayedColumns: string[] = ['no', 'book', 'user', 'dateRequest','action'];
@@ -32,5 +33,9 @@ export class ConfirmGetBookComponent implements OnInit {
     this.service.confirmGetBook(id).subscribe(data =>{},err=>{},()=>{this.loadRequest()})
 
   }
+  refesh(): any {
+   this.loadRequest()
+  }
+
 
 }

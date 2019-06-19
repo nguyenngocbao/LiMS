@@ -86,8 +86,9 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 
 	@Override
 	public List<LoanBook> getReserve() {
-		// TODO Auto-generated method stub
-		return null;
+		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.RESERVE);
+		User user = userRepo.findByUsername(tokenProvider.getAuthToken().getName());
+		return loanBookRepo.findByUserAndDisableAndStatusIn(user,false, liStatus);
 	}
 
 	public long getTime() {
@@ -105,7 +106,7 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.WAITING, LoanStatus.LOANING_ACCEPT,
 				LoanStatus.LOANING_REJECT);
 		User user = userRepo.findByUsername(tokenProvider.getAuthToken().getName());
-		return loanBookRepo.findByUserAndStatusIn(user,liStatus);
+		return loanBookRepo.findByUserAndDisableAndStatusIn(user,false, liStatus);
 	}
 
 	@Transactional
@@ -199,6 +200,12 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 	public List<LoanBook> getRequestReturning() {
 		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.RETURNING);
 		return loanBookRepo.findByStatusIn(liStatus);
+	}
+
+	@Override
+	public List<LoanBook> loaningBook() {
+		
+		return null;
 	}
 	
 

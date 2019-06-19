@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import com.fsoft.libms.security.token.TokenProvider;
 import com.fsoft.libms.service.IUploadImageService;
 
 @Service
+@Profile("dev")
 public class UploadImageService implements IUploadImageService {
 	private final Path fileStorageLocation;
 	private final Path fileStorageLocationAvatar;

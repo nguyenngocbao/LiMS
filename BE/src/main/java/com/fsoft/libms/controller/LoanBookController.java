@@ -32,11 +32,14 @@ public class LoanBookController {
 	 */
 
 	@PostMapping("/reserve")
-	public long reserveBook(@RequestBody String books) throws LibMsException {
-		return conveter.convertToId(books);
+	public void reserveBook(@RequestBody String books) throws LibMsException {
+		loanBookService.reserveBook(conveter.convertToId(books));
 
 	}
-
+	@GetMapping("/reserve")
+	public List<LoanBook> getReserve() throws LibMsException {
+		return loanBookService.getReserve();
+	}
 	@DeleteMapping("/delete/{id}")
 	public void deleteRequest(@PathVariable("id") Long id) throws LibMsException {
 		loanBookService.deleteRequest(id);
@@ -125,6 +128,11 @@ public class LoanBookController {
 	@PostMapping("/confiReturnBook")
 	public void confirmReturnBook(@RequestBody String data) throws LibMsException {
 	   loanBookService.confirmReturn(conveter.convertToId(data));
+
+	}
+	@PostMapping("/loaningBook")
+	public List<LoanBook> LoaningBook() throws LibMsException {
+	    return loanBookService.loaningBook();
 
 	}
 	

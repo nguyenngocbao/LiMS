@@ -3,7 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-
+import * as $ from 'jquery';
 import { AbtractComponents } from '../shared/utils/AbtractComponents';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { ShareService } from '../services/share.service';
@@ -16,8 +16,10 @@ import { UserService } from '../shared/services/user.service';
 export class RegisterComponent extends AbtractComponents implements OnInit {
 
   form: FormGroup;
-  loginSubscription: Subscription
-
+  registerSubscription: Subscription
+  selectedFile: File;
+  fileName = '';
+  imgsrc
   constructor(public dialogRef: MatDialogRef<RegisterComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
     private userService: UserService,public toastr: ToastrManager) { 
       super(toastr)
@@ -30,8 +32,12 @@ export class RegisterComponent extends AbtractComponents implements OnInit {
   /*FORM */
   initForm() {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      retypePassword: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@\\S+')]],
+      fullName: ['', [Validators.required]],
+      pathImages: ['', [Validators.required]]
     })
   }
   /*ACTION */
@@ -43,20 +49,44 @@ export class RegisterComponent extends AbtractComponents implements OnInit {
     this.dialogRef.close();
 }
   onSubmit(): void {
-    localStorage.removeItem('token')
-    if (this.loginSubscription) {
-      this.loginSubscription.unsubscribe()
+    if (this.registerSubscription) {
+      this.registerSubscription.unsubscribe()
     }
-    this.loginSubscription = this.userService.login(this.form.controls.name.value, this.form.controls.password.value)
-    .subscribe((rs) => {
-      this.onClose()
-      localStorage.setItem('token', rs.token)
-      localStorage.setItem('fullName', rs.fullName)
-      this.notifySucccess('Login successfully')
-      ShareService.loginEvent.emit("login")
-    }, (_) => {
-      this.notifyError('Login failed')
+    this.registerSubscription = this.userService.register(this.form.value, this.selectedFile)
+    .subscribe((_rs) => {
+        this.notifySucccess('Đăng ký thành công')
+      this.userService.login(this.form.controls.username.value, this.form.controls.password.value)
+        .subscribe((rs) => {
+            localStorage.setItem('token', rs.token)
+            ShareService.loginEvent.emit("login")
+            this.onClose()
+        }, (err) => {
+            this.notifyError(err.error ? err.error.message: 'Đăng ký không thành công')
+        })
+
+    
+    }, (err) => {
+        this.notifyError(err.error ? err.error.message: 'Đăng ký không thành công')
     })
+
+  }
+
+  onFileSelected(event) {
+    this.selectedFile = <File>event.target.files[0];
+    this.form.get('pathImages').setValue(this.selectedFile.name.split('.')[0]);
+    if (this.selectedFile.size <= 1000000) {
+      const reader = new FileReader();
+      if (event.target.files && event.target.files.length > 0) {
+        reader.onload = function (e: any) {
+          $('#avatar').attr('src', e.target.result);
+          // console.log($('#avatar').attr('src'));
+        };
+        reader.readAsDataURL(this.selectedFile);
+      }
+    } else {
+
+      $('#avatar').attr('src', this.imgsrc);
+    }
 
   }
 

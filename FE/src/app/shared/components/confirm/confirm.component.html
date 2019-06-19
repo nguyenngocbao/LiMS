@@ -4,11 +4,11 @@
 </div>
 
 <div mat-dialog-content style="min-height: 5em;">
-    <div >
-        <img src="{{data.item.image}}" style="width: auto;height: 100%; margin: auto;display: block;">
+    <div style="margin-bottom: 0.5 em">
+        <img src="{{data.item.image | image}}" style="width: auto;height: 100%; margin: auto;display: block;">
     </div>
 
-  <h5 style="color: #00796b; text-align: center">Bạn muốn mượn quyển sách này?</h5>
+  <h5 style="color: #00796b; text-align: center">{{content}}</h5>
 </div>
 <div mat-dialog-actions style="display: flex; justify-content: flex-end;margin-top: 0.5em">
   <button mat-raised-button (click)="onCancel()">Hủy</button>

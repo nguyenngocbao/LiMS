@@ -8,7 +8,7 @@
                 <input matInput placeholder="Mã sách (IBSN)" formControlName="isbn">
         </mat-form-field>
         <mat-form-field style="width:50%" [hidden]="selectedFile || view != 1">
-          <input  disabled matInput placeholder="Image" formControlName="image">
+          <input  disabled matInput placeholder="Hình ảnh" formControlName="image">
         </mat-form-field>
         <img [hidden]="!selectedFile && view == 1" id="avatar" src="{{imgsrc}}" style=" border: 1px solid #a1a1a1; width:120px; height:120px;">
         <button mat-raised-button style="margin-left: 8px" (click)="fileinput.click()">Browse</button>
@@ -27,8 +27,12 @@
                 </mat-select>
         </mat-form-field>
         <mat-form-field style="width:100%">
-                <input matInput placeholder="Mô tả" formControlName="description">
-            </mat-form-field>
+                <!-- <input matInput placeholder="Mô tả" formControlName="description"> -->
+                <textarea cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="10"  placeholder="Mô tảo" matInput formControlName="description"></textarea>
+        </mat-form-field>
       </form>
       <input type="file" id="imgupload" (change)="onFileSelected($event)" style="display: none" #fileinput />
 </div>

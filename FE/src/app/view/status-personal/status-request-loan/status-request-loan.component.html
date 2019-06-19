@@ -3,7 +3,7 @@
     <div class="card-book">
       <div style="padding: 1em 1em 0em 1em">
         <span style="display: flex;justify-content: center;">
-          <img src="{{item.book.image}}" style="width: auto;height: 100%; margin: auto;display: block;">
+          <img src="{{item.book.image | image}}" style="width: auto;height: 100%; margin: auto;display: block;">
         </span>
         <h5>{{item.book.name}}</h5>
         <p>Ngày yêu cầu: {{item.requestDate | date }}</p>
@@ -15,7 +15,9 @@
       </div>
       <mat-divider></mat-divider>
       <div style="display:flex; justify-content: flex-end;padding: 0.5em 1em">
-        <button (click)="onDelete(item.id)" mat-stroked-button style="color: red;margin-left:0.5em">Hủy yêu cầu</button></div>
+        <button *ngIf="item.status != 'LOANING_REJECT'" (click)=" openConfirm(item)" mat-stroked-button style="color: red;margin-left:0.5em">Hủy yêu cầu</button>
+        <button *ngIf="item.status == 'LOANING_REJECT'" (click)="onViewReason(item)" mat-stroked-button style="margin-left:0.5em">Xem lý do</button>
+      </div>
     </div>
 
   </div>

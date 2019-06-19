@@ -1,0 +1,33 @@
+<div mat-dialog-title>
+    <h4 style="margin:0 0 8px 0;display: flex;justify-content: center;color: #00796b">Đăng ký</h4>
+  </div>
+  <div mat-dialog-content>
+    <form class="example-form" [formGroup]="form">
+      <mat-form-field style="width:100%">
+        <input  matInput placeholder="Tên đăng nhập" formControlName="username">
+      </mat-form-field>
+      <mat-form-field style="width:100%">
+        <input type="password" matInput placeholder="Mật khẩu" formControlName="password">
+      </mat-form-field>
+      <mat-form-field style="width:100%">
+        <input type="password" matInput placeholder="Nhập lại mật khẩu" formControlName="retypePassword">
+      </mat-form-field>
+      <mat-form-field style="width:100%">
+        <input matInput placeholder="Email" formControlName="email">
+      </mat-form-field>
+      <mat-form-field style="width:100%">
+        <input matInput placeholder="Tên đầy đủ" formControlName="fullName">
+      </mat-form-field>
+      <mat-form-field style="width:50%" [hidden]="selectedFile">
+        <input  disabled matInput placeholder="Hình ảnh" formControlName="pathImages">
+      </mat-form-field>
+      <img [hidden]="!selectedFile" id="avatar" src="{{imgsrc}}" style=" border: 1px solid #a1a1a1; width:120px; height:120px;">
+      <button mat-raised-button style="margin-left: 8px" (click)="fileinput.click()">Browse</button>
+    </form>
+    <input type="file" id="imgupload" (change)="onFileSelected($event)" style="display: none" #fileinput />
+  </div>
+  <div mat-dialog-actions style="display: flex; justify-content: flex-end; margin-top:0.5em">
+    <button mat-raised-button (click)="onCancel()">Hủy</button>
+    <button mat-raised-button (click)="onSubmit()" color="primary" [disabled] = "form.invalid">Đăng ký</button>
+  </div>
+  
