@@ -3,12 +3,15 @@ package com.fsoft.libms.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fsoft.libms.exception.LibMsException;
@@ -45,6 +48,7 @@ public class LoanBookController {
 		loanBookService.deleteRequest(id);
 
 	}
+	
 
 	@GetMapping("/all")
 	public List<LoanBook> get() throws LibMsException {
@@ -52,12 +56,14 @@ public class LoanBookController {
 	}
 
 	@GetMapping("/requestOnly")
-	public List<LoanBook> getRequestOnly() throws LibMsException {
-		return loanBookService.getRequestOnly();
+	public Page<LoanBook> getRequestOnly(Pageable page) throws LibMsException {
+		return loanBookService.getRequestOnly(page);
 	}
 	@GetMapping("/requestAccept")
-	public List<LoanBook> getRequestAccept() throws LibMsException {
-		return loanBookService.getRequestAccept();
+	public Page<LoanBook> getRequestAccept(
+			@RequestParam(value="search", required=false) String search,
+			@RequestParam(value="filter", required=false) String filter,Pageable page) throws LibMsException {
+		return loanBookService.getRequestAccept(search,filter,page);
 	}
 	@GetMapping("/requestLoaning")
 	public List<LoanBook> getRequestLoaning() throws LibMsException {
@@ -133,6 +139,11 @@ public class LoanBookController {
 	@PostMapping("/loaningBook")
 	public List<LoanBook> LoaningBook() throws LibMsException {
 	    return loanBookService.loaningBook();
+
+	}
+	@GetMapping("/history")
+	public Page<LoanBook> getHistory(Pageable pageable) throws LibMsException {
+	    return loanBookService.history(pageable);
 
 	}
 	

@@ -54,7 +54,7 @@ export class ChangePasswordComponent extends AbtractComponents implements OnInit
       this.onClose()
       this.notifySucccess('Thay đổi mật khẩu thành công')
     }, (err) => {
-      this.notifyError(err && err.error ? err.error.message : 'Thay đổi mật khẩu không thành công')
+      this.notifyError(err && err.error ? err.error : 'Thay đổi mật khẩu không thành công')
     })
 
   }

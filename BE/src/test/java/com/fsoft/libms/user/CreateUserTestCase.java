@@ -3,6 +3,7 @@ package com.fsoft.libms.user;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,9 @@ import org.codehaus.plexus.util.FileUtils;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.NestedServletException;
 
 import com.fsoft.libms.BaseTestCase;
@@ -79,14 +82,10 @@ public class CreateUserTestCase extends BaseTestCase {
 	public void testCreateUserFailAsUserExists() throws Exception {
 		String data = "{\"username\":\"usernormal\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
 		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		try {
-			mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
+			MvcResult result = mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
 					.andReturn();
-			fail("Exception not thrown");
-		} catch (Exception e) {
-			assertEquals(USER_EXIST, e.getCause().getMessage());
+			assertEquals(USER_EXIST, result.getResponse().getContentAsString());
 			assertEquals(2, userRepo.findAll().size());
-		}
 	}
 
 	/**
@@ -98,14 +97,10 @@ public class CreateUserTestCase extends BaseTestCase {
 	public void testCreateUserFailAsUsernameNotInput() throws Exception {
 		String data = "{\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
 		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		try {
-			mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
+		MvcResult result = mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
 					.andReturn();
-			fail("Exception not thrown");
-		} catch (Exception e) {
-			assertEquals("Username is required", e.getCause().getMessage());
+			assertEquals("Username is required", result.getResponse().getContentAsString());
 			assertEquals(2, userRepo.findAll().size());
-		}
 	}
 
 	/**
@@ -117,14 +112,10 @@ public class CreateUserTestCase extends BaseTestCase {
 	public void testCreateUserFailAsPasswordNotInput() throws Exception {
 		String data = "{\"username\":\"usernormal\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
 		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		try {
-			mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
+		MvcResult result =	mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
 					.andReturn();
-			fail("Exception not thrown");
-		} catch (Exception e) {
-			assertEquals("Password is required", e.getCause().getMessage());
+			assertEquals("Password is required", result.getResponse().getContentAsString());
 			assertEquals(2, userRepo.findAll().size());
-		}
 	}
 
 	/**
@@ -136,14 +127,10 @@ public class CreateUserTestCase extends BaseTestCase {
 	public void testCreateUserFailAsFullNameNotInput() throws Exception {
 		String data = "{\"username\":\"tttthuy\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\"}";
 		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		try {
-			mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
+		MvcResult result = mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
 					.andReturn();
-			fail("Exception not thrown");
-		} catch (Exception e) {
-			assertEquals("Full name is required", e.getCause().getMessage());
+			assertEquals("Full name is required", result.getResponse().getContentAsString());
 			assertEquals(2, userRepo.findAll().size());
-		}
 
 	}
 
@@ -156,15 +143,10 @@ public class CreateUserTestCase extends BaseTestCase {
 	public void testCreateUserFailAsEmailNotInput() throws Exception {
 		String data = "{\"username\":\"tttthuy\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"fullName\":\"Tran Thi Thu Thuy\"}";
 		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		try {
-			mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
+		MvcResult result	= mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
 					.andReturn();
-			fail("Exception not thrown");
-		}  catch (NestedServletException e) {
-			assertTrue(e.getCause() instanceof LibMsException);
-			assertEquals("Email is required", e.getCause().getMessage());
+			assertEquals("Email is required", result.getResponse().getContentAsString());
 			assertEquals(2, userRepo.findAll().size());
-		}
 
 	}
 
@@ -177,14 +159,10 @@ public class CreateUserTestCase extends BaseTestCase {
 	public void testCreateUserFailAsPasswordsNotMatched() throws Exception {
 		String data = "{\"username\":\"tttthuy\",\"password\":\"tttthuy1234\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
 		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		try {
-			mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
+			MvcResult result	= 	mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
 					.andReturn();
-			fail("Exception not thrown");
-		} catch (Exception e) {
-			assertEquals("Password and retype password are not matched", e.getCause().getMessage());
+			assertEquals("Password and retype password are not matched", result.getResponse().getContentAsString());
 			assertEquals(2, userRepo.findAll().size());
-		}
 
 	}
 	
@@ -197,14 +175,10 @@ public class CreateUserTestCase extends BaseTestCase {
 	public void testCreateUserFailAsEmailInvalid() throws Exception {
 		String data = "{\"username\":\"tttthuy\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy\",\"fullName\":\"Tran Thi Thu Thuy\"}";
 		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		try {
-			mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
+		MvcResult result =	mockMvc.perform(fileUpload("/api/user/create").file(avatar).param("data", data)).andExpect(status().is(400))
 					.andReturn();
-			fail("Exception not thrown");
-		} catch (Exception e) {
-			assertEquals(INVALID_EMAIL, e.getCause().getMessage());
+			assertEquals(INVALID_EMAIL, result.getResponse().getContentAsString());
 			assertEquals(2, userRepo.findAll().size());
-		}
 
 	}
 	
@@ -216,8 +190,7 @@ public class CreateUserTestCase extends BaseTestCase {
 	@Test
 	public void testCreateUserSuccessfullyByAdmin() throws Exception {
 		String data = "{\"role\": \"TEACHER\", \"username\":\"tttthuy\",\"password\":\"tttthuy123\",\"retypePassword\":\"tttthuy123\",\"email\":\"tttthuy@gmail.com\",\"fullName\":\"Tran Thi Thu Thuy\"}";
-		MockMultipartFile avatar = new MockMultipartFile("file", "user.png", "text/plain", loadFile("user.png"));
-		mockMvc.perform(fileUpload("/api/user/admin/create").file(avatar).param("data", data)
+		mockMvc.perform(post("/api/user/admin/create").contentType(MediaType.APPLICATION_JSON_VALUE).content(data)
 				.header( HEADER_STRING, tokenAdmin() )).andExpect(status().is(200));
 		assertEquals(3, userRepo.findAll().size());
 		User userCreate = userRepo.findByUsername("tttthuy");

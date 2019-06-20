@@ -14,17 +14,30 @@ export class ConfirmGetBookComponent implements OnInit {
   
   displayedColumns: string[] = ['no', 'book', 'user', 'dateRequest','action'];
   dataSource ;
-
+  length = 0
+  pageSize = 10
+  pageSizeOptions : number[] = [5, 10, 25, 100]
+  pageIndex = 0
+  filter = 'name'
+  search = '';
   constructor(public service:LoanBookService,public dialog: MatDialog) { }
 
   ngOnInit() {
     //this.dataSource = this.service.getLoanBook();
     this.loadRequest()
   }
-  loadRequest(){
-    this.service.loadRequestAccept().subscribe(data =>{
-      this.dataSource = data;
+  loadRequest(pageInfo ?){
+    let data = {
+      filter: this.filter,
+      search: this.search,
+      size: pageInfo ? pageInfo.pageSize : this.pageSize,
+      page: pageInfo ? pageInfo.pageIndex : this.pageIndex
+    }
+    this.service.loadRequestAccept(data).subscribe(data =>{
+      this.dataSource = data.content;
+      this.length = data.totalElements
     })
+   
   }
   openDialog( data): void {
    
@@ -36,6 +49,11 @@ export class ConfirmGetBookComponent implements OnInit {
   refesh(): any {
    this.loadRequest()
   }
-
+  searchBook(){
+    this.loadRequest()
+  }
+  changePage(event){
+    this.loadRequest(event)
+  }
 
 }

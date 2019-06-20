@@ -26,10 +26,12 @@
             <mat-option *ngFor="let role of roles" value="{{role.key}}">{{role.value}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <img *ngIf = "!isAdmin" [hidden]="!selectedFile" id="avatar" src="{{imgsrc}}" style=" border: 1px solid #a1a1a1; width:120px; height:120px;">
-      <button mat-raised-button style="margin-left: 8px" (click)="fileinput.click()" *ngIf = "!isAdmin">Browse</button>
+      <div *ngIf = "!isAdmin">
+        <img  [hidden]="!selectedFile" id="avatar" src="{{imgsrc}}" style=" border: 1px solid #a1a1a1; width:120px; height:120px;">
+        <button mat-raised-button style="margin-left: 8px" (click)="fileinput.click()">Browse</button>
+        <input type="file" id="imgupload" (change)="onFileSelected($event)" style="display: none" #fileinput />
+      </div>
     </form>
-    <input *ngIf = "!isAdmin" type="file" id="imgupload" (change)="onFileSelected($event)" style="display: none" #fileinput />
   </div>
   <div mat-dialog-actions style="display: flex; justify-content: flex-end; margin-top:0.5em">
     <button mat-raised-button (click)="onCancel()">Hủy</button>

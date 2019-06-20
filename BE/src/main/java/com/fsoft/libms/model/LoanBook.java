@@ -27,29 +27,13 @@ public class LoanBook implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "loan_id")
 	private long id;
-	@OneToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true )
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true )
 	@JoinColumn(name = "code_id")
 	private CodeId code;
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne()
 	@JoinColumn(name = "book_id")
 	private Book book;
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne()
 	@JoinColumn(name = "user_id")
 	private User user;
 	@Column(name = "reserve_date")

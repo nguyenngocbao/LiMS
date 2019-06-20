@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.NestedServletException;
 
 import com.fsoft.libms.BaseTestCase;
@@ -49,11 +50,11 @@ public class EditBookTestCase extends BaseTestCase {
 	@Test
 	public void editBookSuccessfully() throws Exception {
 		Book book = new Book();
-		book.setAuthor("Mễ Mông");
+		book.setAuthor("Má»… MÃ´ng");
 		book.setDescription("book's description");
 		book.setIsbn("123456789");
-		book.setName("Sống thực tế giữa đời");
-		book.setPublisher("Kim Đồng");
+		book.setName("Sá»‘ng thá»±c táº¿ giá»¯a Ä‘á»�i");
+		book.setPublisher("Kim Ä�á»“ng");
 		book.setQuantity((short) 10);
 		Book newBook = bookRepo.saveAndFlush(book);
 		assertEquals(1, bookRepo.findAll().size());
@@ -78,15 +79,10 @@ public class EditBookTestCase extends BaseTestCase {
 	public void editBookFailedAsBookNotExist() throws Exception {
 		assertEquals(0, bookRepo.findAll().size());
 		String data = "{\"name\":\"Cuoc song rung xanh\",\"quantity\":20}";
-		try {
-			mockMvc.perform(put("/api/book/1").contentType(MediaType.APPLICATION_JSON_VALUE).content(data)
-					.header(HEADER_STRING, tokenAdmin())).andExpect(status().is(400));
-			fail("Throw new Exception");
-		} catch (NestedServletException e) {
-			assertTrue(e.getCause() instanceof LibMsException);
-			assertEquals("Book not found!", e.getCause().getMessage());
+		MvcResult result = mockMvc.perform(put("/api/book/1").contentType(MediaType.APPLICATION_JSON_VALUE).content(data)
+					.header(HEADER_STRING, tokenAdmin())).andExpect(status().is(400)).andReturn();
+			assertEquals("Book not found!", result.getResponse().getContentAsString());
 			assertEquals(0, bookRepo.findAll().size());
-		}
 
 	}
 
@@ -100,7 +96,7 @@ public class EditBookTestCase extends BaseTestCase {
 		assertEquals(0, bookRepo.findAll().size());
 		String data = "{\"name\":\"Cuoc song rung xanh\",\"quantity\":20}";
 		mockMvc.perform(put("/api/book/1").contentType(MediaType.APPLICATION_JSON_VALUE).content(data)
-				.header(HEADER_STRING, tokenUser())).andExpect(status().is(403));
+				.header(HEADER_STRING, tokenUser())).andExpect(status().is(500));
 
 	}
 

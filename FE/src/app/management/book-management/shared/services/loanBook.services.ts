@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Page } from 'src/app/model/page.model';
 
 @Injectable({providedIn: 'root'})
 export class LoanBookService {
     public API_URL = `${environment.API}`;
     constructor(private http: HttpClient) { }
-    loadRequest(): Observable<any>{
-        let header = new HttpHeaders();
-        header = header.append('Authorization', localStorage.getItem('token'));
-        return this.http.get(`${this.API_URL}/api/loan/requestOnly`,
-            { headers: header });
+    loadRequest(data): Observable<any>{
+        let httpParams = new HttpParams()
+        .set('size', data.size || 10)
+        .set('page', data.page || 0)
+        return this.http.get<Page>(`${this.API_URL}/api/loan/requestOnly`, {params: httpParams})
     }
     getRequestByUser(id){
         let header = new HttpHeaders();
@@ -50,11 +51,14 @@ export class LoanBookService {
         return this.http.post(`${this.API_URL}/api/loan/confiGetBook`,JSON.stringify(body),
             { headers: header });
       }
-      loadRequestAccept() {
-        let header = new HttpHeaders();
-        header = header.append('Authorization', localStorage.getItem('token'));
-        return this.http.get(`${this.API_URL}/api/loan/requestAccept`,
-            { headers: header });
+      loadRequestAccept(data) {
+        let httpParams = new HttpParams()
+        .set('filter', data.filter)
+        .set('search', data.search)
+        .set('size', data.size || 10)
+        .set('page', data.page || 0)
+        return this.http.get<Page>(`${this.API_URL}/api/loan/requestAccept`, {params: httpParams})
+        
         
       }
       confirmReturn(id: any): any {

@@ -1,17 +1,16 @@
 package com.fsoft.libms.service.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fsoft.libms.exception.LibMsException;
 import com.fsoft.libms.model.Book;
-import com.fsoft.libms.model.BookStatus;
 import com.fsoft.libms.model.CodeId;
 import com.fsoft.libms.model.LoanBook;
 import com.fsoft.libms.model.LoanStatus;
@@ -114,7 +113,7 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 	@Transactional
 	@Override
 	public void reserveBook(long id) throws LibMsException {
-		if(loanBookRepo.exists(id)) { 
+		if(bookRepo.exists(id)) { 
 			Book book = bookRepo.findById(id);
 			validateReserve(book);
 			LoanBook request = new LoanBook();
@@ -241,14 +240,33 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 	}
 
 	@Override
-	public List<LoanBook> getRequestOnly() {
+	public Page<LoanBook> getRequestOnly(Pageable page) {
 		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.WAITING);
-		return loanBookRepo.findByStatusIn(liStatus);
+		return loanBookRepo.findByStatusIn(liStatus,page);
 	}
 	@Override
-	public List<LoanBook> getRequestAccept() {
+	public Page<LoanBook> getRequestAccept(Pageable page) {
 		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.LOANING_ACCEPT);
-		return loanBookRepo.findByStatusIn(liStatus);
+		return loanBookRepo.findByStatusIn(liStatus, page);
+		
+	}
+	@Override
+	public Page<LoanBook> getRequestAccept(String search, String filter, Pageable page) {
+		List<LoanStatus> liStatus = Arrays.asList(LoanStatus.LOANING_ACCEPT);
+		switch (filter) {
+		case "name":
+			LOGGER.info(filter + "baosearch");
+			return loanBookRepo.findByUser_UsernameContainingAndStatusIn(search,liStatus, page);
+			
+		case "book":
+			LOGGER.info(filter + "baosearch");
+			return loanBookRepo.findByBook_NameContainingAndStatusIn(search,liStatus, page);
+
+		default:
+			LOGGER.info(filter + "baosearchde");
+			return loanBookRepo.findByStatusIn(liStatus, page);
+		}
+		
 	}
 	
 	@Override
@@ -290,6 +308,14 @@ public class LoanBookService extends AbstractService implements ILoanBookService
 		
 		
 	}
+
+	@Override
+	public Page<LoanBook> history(Pageable pageable) {
+		User user = userRepo.findByUsername(tokenProvider.getAuthToken().getName());
+		return loanBookRepo.findByUserOrderByIdDesc(user,pageable);
+	}
+
+	
 	
 
 }

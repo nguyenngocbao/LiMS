@@ -1,5 +1,6 @@
 package com.fsoft.libms.loanbook;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.servlet.MvcResult;
 
 import com.fsoft.libms.BaseTestCase;
 import com.fsoft.libms.model.Book;
@@ -20,7 +22,7 @@ import com.fsoft.libms.repository.LoanBookRepository;
 import com.fsoft.libms.repository.UserRepository;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class RequestLoanBook extends BaseTestCase {
+public class RequestLoanBookTestCase extends BaseTestCase {
 	@Autowired
 	LoanBookRepository loanBookRepository;
 	@Autowired
@@ -74,8 +76,9 @@ public class RequestLoanBook extends BaseTestCase {
 	@Test
 	public void testLoanBookFailWithNoAuth() throws Exception {
 		Id id = new Id(1);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, "test").content(asJsonString(id)))
+		MvcResult result =  mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, "test").content(asJsonString(id)))
 				.andExpect(status().is(401)).andReturn();
+		assertEquals("", result.getResponse().getContentAsString());
 
 	}
 
@@ -85,8 +88,9 @@ public class RequestLoanBook extends BaseTestCase {
 	@Test
 	public void testLoanBookFailWithBookNotExists() throws Exception {
 		Id id = new Id(5);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
+		MvcResult result = mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
 				.andExpect(status().is(400)).andReturn();
+		assertEquals("Sách không tồn tại", result.getResponse().getContentAsString());
 
 	}
 
@@ -96,8 +100,9 @@ public class RequestLoanBook extends BaseTestCase {
 	@Test
 	public void testLoanBookFailWithBookAvailable() throws Exception {
 		Id id = new Id(2);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
+		MvcResult result = mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
 				.andExpect(status().is(400)).andReturn();
+		assertEquals("Sách đã bị mượn hết", result.getResponse().getContentAsString());
 
 	}
 
@@ -107,8 +112,9 @@ public class RequestLoanBook extends BaseTestCase {
 	@Test
 	public void testLoanBookFailWithLoanedBook() throws Exception {
 		Id id = new Id(3);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
+		MvcResult result = mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
 				.andExpect(status().is(400)).andReturn();
+		assertEquals("Bạn đã đang yêu cầu hoặc mượn quyển sách này rồi", result.getResponse().getContentAsString());
 
 	}
 
@@ -123,8 +129,9 @@ public class RequestLoanBook extends BaseTestCase {
 		loanBook3.setUser(userRepo.findByUsername("usernormal"));
 		loanBookRepository.save(loanBook3);
 		Id id = new Id(1);
-		mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
+		MvcResult result = mockMvc.perform(post("/api/loan/loan").header(HEADER_STRING, tokenUser()).content(asJsonString(id)))
 				.andExpect(status().is(400)).andReturn();
+		assertEquals("Bạn đã mượn quá 3 quyển sách", result.getResponse().getContentAsString());
 
 	}
 

@@ -20,7 +20,7 @@ import com.fsoft.libms.repository.LoanBookRepository;
 import com.fsoft.libms.repository.UserRepository;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class ReturnBook extends BaseTestCase {
+public class ReturnBookTestCase extends BaseTestCase {
 	@Autowired
 	LoanBookRepository loanBookRepository;
 	@Autowired

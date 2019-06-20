@@ -2,6 +2,9 @@ package com.fsoft.libms.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.fsoft.libms.exception.LibMsException;
 import com.fsoft.libms.model.LoanBook;
 
@@ -55,11 +58,14 @@ public interface ILoanBookService {
 	public void rejectLoaning(long id, String reason);
 	void confirmReturn(long id);
 	void confirmLoaning(long id);
-	public List<LoanBook> getRequestOnly();
-	List<LoanBook> getRequestAccept();
+	public Page<LoanBook> getRequestOnly(Pageable page);
+	Page<LoanBook> getRequestAccept(Pageable page);
 	List<LoanBook> getRequestLoaing();
 	public void disable(long id);
 	public List<LoanBook> getRequestReturning();
 	public List<LoanBook> loaningBook();
+	public Page<LoanBook> history(Pageable pageable);
+	public Page<LoanBook> getRequestAccept(String search, String filter, Pageable page);
+	
 
 }

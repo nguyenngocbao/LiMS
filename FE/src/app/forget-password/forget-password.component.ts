@@ -47,7 +47,8 @@ export class ForgetPasswordComponent extends AbtractComponents implements OnInit
       this.onClose()
       this.notifySucccess('Mật khẩu đã được đổi')
     }, (err) => {
-      this.notifyError(err && err.error ? err.error.message : 'Thay đổi mật khẩu không thành công')
+      console.log(err)
+      this.notifyError(err && err.error ? err.error : 'Thay đổi mật khẩu không thành công')
     })
 
   }

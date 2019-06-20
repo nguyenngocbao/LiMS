@@ -3,6 +3,8 @@ package com.fsoft.libms.repository;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -26,5 +28,9 @@ public interface LoanBookRepository extends JpaRepository<LoanBook, Long>  {
 	List<LoanBook> findByBookAndUserNotAndStatusIn(Book book ,User username,List<LoanStatus> liStatusRe);
 	@Query(value = "select s from LoanBook s")
 	LoanBook getBook();
+	Page<LoanBook> findByUserOrderByIdDesc(User user, Pageable pageable);
+	Page<LoanBook> findByStatusIn(List<LoanStatus> liStatus, Pageable page);
+	Page<LoanBook> findByBook_NameContainingAndStatusIn(String search, List<LoanStatus> liStatus, Pageable page);
+	Page<LoanBook> findByUser_UsernameContainingAndStatusIn(String search, List<LoanStatus> liStatus, Pageable page);
 
 }

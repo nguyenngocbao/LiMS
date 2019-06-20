@@ -15,7 +15,10 @@ export class RequestLoanBookComponent extends AbtractComponents implements OnIni
 
   displayedColumns: string[] = ['no', 'book', 'user', 'dateRequest','action'];
   dataSource ;
-
+  length = 0
+  pageSize = 10
+  pageSizeOptions : number[] = [5, 10, 25, 100]
+  pageIndex = 0
   constructor(public service: LoanBookService,public dialog: MatDialog, public toar: ToastrManager) {
     super(toar)
   }
@@ -24,9 +27,14 @@ export class RequestLoanBookComponent extends AbtractComponents implements OnIni
     //this.dataSource = this.service.getLoanBook();
     this.loadRequest()
   }
-  loadRequest(){
-    this.service.loadRequest().subscribe(data =>{
-      this.dataSource = data;
+  loadRequest(pageInfo?){
+    let data = {
+      size: pageInfo ? pageInfo.pageSize : this.pageSize,
+      page: pageInfo ? pageInfo.pageIndex : this.pageIndex
+    }
+    this.service.loadRequest(data).subscribe(data =>{
+      this.dataSource = data.content;
+      this.length = data.totalElements
     })
   }
   openDialog( data): void {

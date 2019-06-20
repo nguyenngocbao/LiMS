@@ -253,11 +253,11 @@ public class DefaultUserMgmtService implements IUserMgmtService {
 			throw new LibMsException("Mật khẩu cũ không đúng");
 		}
 		if (!newPassword.asText().equals(retypePassword.asText())) {
-			throw new LibMsException("Mật khẩu mới và nhập lại mật khẩu mới không khớp với nhau");
+			throw new LibMsException("Mật khẩu mới và nhập lại mật khẩu không khớp nhau");
 		}
 
 		if (newPassword.asText().length() < 6)
-			throw new LibMsException("Mật khẩu quá ngắn (<6 ký tự)");
+			throw new LibMsException("Mật khẩu mới quá ngắn (<6 ký tự)");
 
 		User user = userRepo.findByUsername(tokenProvider.getAuthToken().getName());
 		user.setPassword(passwordEncoder.encode(newPassword.asText()));
@@ -329,7 +329,7 @@ public class DefaultUserMgmtService implements IUserMgmtService {
 		String newPassword = String.format("%06d", numberRandom);
 		try {
 			
-			mailService.sendMail(mail, "Thay đổi mật khẩu", "Mật khẩu mới của bạn là: " + newPassword);
+			mailService.sendMail(mail, "Thay đổi mật khẩu", "Mật khẩu mới của bạn là : " + newPassword);
 			user.setPassword(passwordEncoder.encode(newPassword));
 			userRepo.save(user);
         } catch (Exception e) {
